@@ -4,7 +4,7 @@
         @foreach ($productos as $product)
         <div style="width:220px; padding: 20px; border: solid rgb(218, 218, 218) 1px; border-radius:15px">
             <figure style="width: 150px; height: 180px; display:flex; align-items:center">
-                <img src="{{$product->imagen}}" alt="" style="width: 150px">
+                <img src="/imagen/{{$product->imagen}}" alt="" style="width: 150px">
             </figure>
             <hr>
             <div style="height: 180px; position:relative">

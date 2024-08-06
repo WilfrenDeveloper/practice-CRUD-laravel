@@ -24,7 +24,7 @@
                         <td>{{$productos->modelo}}</td>
                         <td style="text-align: end">{{$productos->facturasDelProducto[0]->fecha_de_compra}}</td>
                         <td style="display:flex; justify-content:center; align-items:center">
-                            <img src="{{$productos->imagen}}" alt="" style="width:50px">
+                            <img src="/imagen/{{$productos->imagen}}" alt="" style="width:50px">
                         </td>
                     </tr>
                 @endforeach

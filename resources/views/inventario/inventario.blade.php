@@ -29,7 +29,7 @@
                         <td>{{$producto->modelo}}</td>
                         <td>{{$producto->sistema}}</td>
                         <td style="display:flex; justify-content:center; padding:0 5px; align-items:center">
-                            <img src="{{$producto->imagen}}" alt="" style="width:80px">
+                            <img src="/imagen/{{$producto->imagen}}" alt="" style="width:80px">
                         </td>
                         <td style="padding-left: 20px">
                             <form action="{{ route('inventario.destroy', $producto->id)}}" method="POST">

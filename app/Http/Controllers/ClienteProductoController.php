@@ -22,20 +22,20 @@ class ClienteProductoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validateData = $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'nacimiento' => 'required|date',
-            'telefono' => 'nullable|string|max:20',
+            'nacimiento' => 'required|date|before_or_equal:' . now()->subYears(18)->format('Y-m-d'), 
+            'telefono' => 'required|digits:10',
             'id_producto' => 'required|exists:productos,id',
         ]);
     
         // Crear nuevo cliente
         $cliente = new Cliente();
-        $cliente->nombre = $request->get('nombre');
-        $cliente->apellido = $request->get('apellido');
-        $cliente->nacimiento = $request->get('nacimiento');
-        $cliente->telefono = $request->get('telefono');
+        $cliente->nombre = $validateData['nombre'];
+        $cliente->apellido = $validateData['apellido'];
+        $cliente->nacimiento = $validateData['nacimiento'];
+        $cliente->telefono = $validateData['telefono'];
         $cliente->save();
     
         // Obtener el último cliente creado

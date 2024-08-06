@@ -29,14 +29,25 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $cliente = new Cliente();
-        $cliente->nombre = $request->get('nombre');
-        $cliente->apellido = $request->get('apellido');
-        $cliente->nacimiento = $request->get('nacimiento');
-        $cliente->telefono = $request->get('telefono');
+        // Validación de los datos de entrada
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:100',
+            'apellido' => 'required|max:100',
+            'nacimiento' => 'required|date|before_or_equal:' . now()->subYears(18)->format('Y-m-d'),
+            'telefono' => 'required|digits:10',
+        ]);
 
+        // Creación del nuevo cliente
+        $cliente = new Cliente();
+        $cliente->nombre = $validatedData['nombre'];
+        $cliente->apellido = $validatedData['apellido'];
+        $cliente->nacimiento = $validatedData['nacimiento'];
+        $cliente->telefono = $validatedData['telefono'];
+
+        // Guardar el cliente en la base de datos
         $cliente->save();
 
+        // Redireccionar a la lista de clientes
         return redirect('/clientes');
     }
 
@@ -45,9 +56,8 @@ class ClienteController extends Controller
      */
     public function show(string $id)
     {
-        $cliente= Cliente::find($id);
+        $cliente = Cliente::find($id);
         return view('clientes.comprasDelCliente', compact('cliente'));
-     
     }
 
     /**
@@ -64,11 +74,19 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Validación de los datos de entrada
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:255',
+            'apellido' => 'required|max:255',
+            'nacimiento' => 'required|date|before_or_equal:' . now()->subYears(18)->format('Y-m-d'),
+            'telefono' => 'required|digits:10',
+        ]);
+
         $cliente = Cliente::find($id);
-        $cliente->nombre = $request->get('nombre');
-        $cliente->apellido = $request->get('apellido');
-        $cliente->nacimiento = $request->get('nacimiento');
-        $cliente->telefono = $request->get('telefono');
+        $cliente->nombre = $validatedData['nombre'];
+        $cliente->apellido = $validatedData['apellido'];
+        $cliente->nacimiento = $validatedData['nacimiento'];
+        $cliente->telefono = $validatedData['telefono'];
 
         $cliente->save();
 

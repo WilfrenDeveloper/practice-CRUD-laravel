@@ -16,7 +16,7 @@
     </div>
     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
         <label for="nacimiento" class="form-label" >Fecha de nacimiento</label>
-        <input id="nacimiento" type="date" name="nacimiento" class="form-control" tabindex="3">
+        <input id="nacimiento" type="date" name="nacimiento" class="form-control" tabindex="3" min="01-01-1900" max="01-01-2001">
     </div>
     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
         <label for="telefono" class="form-label" >Telefono</label>

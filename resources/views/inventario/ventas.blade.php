@@ -22,7 +22,7 @@
                         <td>{{$factura->clienteDeLaFactura[0]->nombre}} {{$factura->clienteDeLaFactura[0]->apellido}}</td>
                         <td>{{$factura->fecha_de_compra}}</td>
                         <td style="display:flex; justify-content:center; align-items:center">
-                            <img src="{{$factura->productoDeLaFactura[0]->imagen}}" alt="" style="width:50px">
+                            <img src="/imagen/{{$factura->productoDeLaFactura[0]->imagen}}" alt="" style="width:50px">
                         </td>
                         
                     </tr>

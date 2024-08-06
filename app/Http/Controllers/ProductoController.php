@@ -10,8 +10,9 @@ class ProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(){
-        $productos= Producto::all();
+    public function index()
+    {
+        $productos = Producto::all();
         return view('inventario.inventario')->with('productos', $productos);
     }
 
@@ -28,14 +29,36 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $productos = new Producto();
-        $productos->producto = $request->get('producto');
-        $productos->marca = $request->get('marca');
-        $productos->modelo = $request->get('modelo');
-        $productos->sistema = $request->get('sistema');
-        $productos->imagen = $request->get('imagen');
+        $validateData = $request->validate([
+            'producto' => 'required|max:200|min:3',
+            'marca' => 'required|max:200|min:3',
+            'modelo' => 'required|max:200|min:3',
+            'sistema' => 'required|max:100|min:3',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg'
+        ]);
 
-        $productos->save();
+        $producto = new Producto();
+        $producto->producto = $validateData['producto'];
+        $producto->marca = $validateData['marca'];
+        $producto->modelo = $validateData['modelo'];
+        $producto->sistema = $validateData['sistema'];
+        $producto->imagen = $validateData['imagen'];
+
+        // Procesar y almacenar la imagen
+        if ($imagen = $request->file('imagen')) {
+            $rutaGuardarImagen = 'imagen/';
+            $imagenProducto = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
+
+            
+
+            // Mover la imagen a la ruta especificada
+            $imagen->move($rutaGuardarImagen, $imagenProducto);
+
+            // Almacenar el nombre de la imagen en la base de datos
+            $producto->imagen = $imagenProducto;
+        }
+
+        $producto->save();
 
         return redirect('/inventario');
     }
@@ -62,14 +85,34 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $productos = Producto::find($id);
-        $productos->producto = $request->get('producto');
-        $productos->marca = $request->get('marca');
-        $productos->modelo = $request->get('modelo');
-        $productos->sistema = $request->get('sistema');
-        $productos->imagen = $request->get('imagen');
+        //validacion de lo datos
+        $validateData = $request->validate([
+            'producto' => 'required|max:200|min:3',
+            'marca' => 'required|max:200|min:3',
+            'modelo' => 'required|max:200|min:3',
+            'sistema' => 'required|max:100|min:3',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg'
+        ]);
 
-        $productos->save();
+        $producto = Producto::find($id);
+        $producto->producto = $validateData['producto'];
+        $producto->marca = $validateData['marca'];
+        $producto->modelo = $validateData['modelo'];
+        $producto->sistema = $validateData['sistema'];
+        $producto->imagen = $validateData['imagen'];
+
+        if ($imagen = $request->file('imagen')) {
+            $rutaGuardarImagen = 'imagen/';
+            $imagenProducto = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
+
+            // Mover la imagen a la ruta especificada
+            $imagen->move($rutaGuardarImagen, $imagenProducto);
+
+            // Almacenar el nombre de la imagen en la base de datos
+            $producto->imagen = $imagenProducto;
+        }
+
+        $producto->save();
 
         return redirect('/inventario');
     }

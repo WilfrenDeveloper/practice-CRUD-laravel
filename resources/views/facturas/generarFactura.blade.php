@@ -6,7 +6,7 @@
     <div style="display: flex">
         <div style="padding: 20px;  border-radius:15px">
             <figure style="width: 200px; height: 180px; display:flex; align-items:center">
-                <img src="{{$producto->imagen}}" alt="" style="width: 200px">
+                <img src="/imagen/{{$producto->imagen}}" alt="" style="width: 200px">
             </figure>
             <hr>
             <div style="height: 180px; position:relative">
@@ -54,7 +54,7 @@
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="nacimiento" class="form-label" >Fecha de nacimiento</label>
-                        <input id="nacimiento" type="date" name="nacimiento" class="form-control" tabindex="3">
+                        <input id="nacimiento" type="date" name="nacimiento" class="form-control" tabindex="3" min="01-01-1900" max="d-m-Y">
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="telefono" class="form-label" >Telefono</label>

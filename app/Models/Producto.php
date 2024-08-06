@@ -11,6 +11,10 @@ class Producto extends Model
 
     public $timestamps = false; 
 
+    protected $table = 'productos';
+
+    protected $fillable = ['producto', 'marca', 'modelo', 'sistema', 'imagen']; 
+
     public function clientesDelProducto() {
         return $this->belongsToMany(Cliente::class, 'cliente_productos', 'id_producto', 'id_cliente');
     }
