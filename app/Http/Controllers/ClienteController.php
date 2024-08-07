@@ -98,6 +98,8 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+        return redirect('clientes');
     }
 }

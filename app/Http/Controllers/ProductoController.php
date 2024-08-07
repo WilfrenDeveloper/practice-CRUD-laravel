@@ -34,7 +34,7 @@ class ProductoController extends Controller
             'marca' => 'required|max:200|min:3',
             'modelo' => 'required|max:200|min:3',
             'sistema' => 'required|max:100|min:3',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg'
+            'imagen' => 'required|image|mimes:jpeg,png,jpg|max:3072|min:10'
         ]);
 
         $producto = new Producto();
@@ -91,7 +91,7 @@ class ProductoController extends Controller
             'marca' => 'required|max:200|min:3',
             'modelo' => 'required|max:200|min:3',
             'sistema' => 'required|max:100|min:3',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg'
+            'imagen' => 'required|image|mimes:jpeg,png,jpg|max:3072|min:10'
         ]);
 
         $producto = Producto::find($id);

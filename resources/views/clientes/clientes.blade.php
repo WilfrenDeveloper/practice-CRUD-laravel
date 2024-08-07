@@ -33,10 +33,8 @@
                             <form action="{{ route('clientes.destroy', $cliente->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                            <a href="/clientes/{{$cliente->id}}/edit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:5px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>
-                            <!---
+                            <a href="/clientes/{{$cliente->id}}/edit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:5px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>     
                             <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
-                            -->
                             </form>
                         </td>
                     </tr>

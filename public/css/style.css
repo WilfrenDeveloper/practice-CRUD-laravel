@@ -1,0 +1,17 @@
+
+.input:hover{
+    border-radius: 3px;
+    border: 1px solid rgb(131, 131, 255);
+    min-height: 18px;
+}
+
+button:hover{
+    box-shadow: 0 0 5px  rgb(191, 191, 191);
+    scale: 1.03;
+    opacity: 0.8;
+}
+
+button:active{
+    box-shadow: 0 0 5px  rgb(153, 153, 153);
+    scale: 0.95;
+}

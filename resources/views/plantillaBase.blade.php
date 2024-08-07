@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
+        <!--- archivos javascript -->
+        <script src="{{asset('js/isValid.js')}}"></script>
+
+        <!-- archivos CSS -->
+        <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -61,12 +66,8 @@
                 @yield('editarCliente')
             </div>
 
-
-
         </main>
 
-
-
-
     </body>
+
 </html>
