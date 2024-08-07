@@ -4,7 +4,7 @@
     <h1>Realizar Compra</h1>
 
     <div style="display:flex; gap:30px">
-        <div style="padding: 20px;  border-radius:15px">
+        <div style="padding: 20px; background-color:white">
             <figure style="width: 300px; height: 180px; display:flex; align-items:center">
                 <img src="/imagen/{{$producto->imagen}}" alt="" style="width: 300px">
             </figure>
@@ -17,22 +17,23 @@
             </div>
         </div>
 
-        <div>
+        <div style="padding: 20px; background-color:white">
             <h2>Datos del Cliente</h2>
 
             <div>
-                <h4>Eres Cliente Antiguo</h4>
-                <form action="/facturas">
+                
+                <form action="{{ route('generarfactura.store', $producto->id)}}" method="POST" style="display: flex; flex-direction:column">
                     @csrf
-                    <select name="id_cliente" id="id_cliente">
-                        <option value="">Seleccione un opción</option>
+                    <label for="id_cliente"><h4>Eres Cliente Antiguo</h4></label>
+                    <select name="id_cliente" id="id_cliente" style="padding: 5px 10px">
+                        <option value="" >Seleccione una opción</option>
                         @foreach ($clientes as $cliente)   
-                            <option value="{{$cliente->id}}">
-                                {{$cliente->nombre}} {{$cliente->apellido}}
+                            <option value="{{ $cliente->id }}" style="padding: 5px 10px">
+                                {{ $cliente->nombre }} {{ $cliente->apellido }}
                             </option>  
                         @endforeach
                     </select>
-
+            
                     <button type="submit" style="border-style:none; border-radius:5px;padding: 5px 30px; color:white; background-color:rgb(61, 141, 199)">Aceptar y Comprar</button>
                 </form>
             </div>

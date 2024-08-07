@@ -9,6 +9,7 @@ class Factura extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
     public function productoDeLaFactura() {
         return $this->belongsToMany(Producto::class, 'cliente_productos', 'id_factura', 'id_producto');
     }

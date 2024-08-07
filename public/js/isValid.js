@@ -6,11 +6,11 @@ function validateForm(fields) {
         if (!input.value.trim()) {
             isValid = false;
             input.style.backgroundColor = 'var(--color-error)';
-            input.style.border = 'solid 1px red'
+            input.style.border = 'solid 1px red';
             input.setAttribute('placeholder', 'Agrega un valor aquí');
         } else {
             input.style.backgroundColor = '';
-            input.style.border = ''
+            input.style.border = '';
             input.removeAttribute('placeholder');
         }
     });
@@ -41,18 +41,10 @@ function validateFormCliente() {
     const nacimiento = document.getElementById('nacimiento');
     const telefono = document.getElementById('telefono');
 
-    // Validar si el valor del input es string
+    // Validar si el valor del input es string y permite espacios
     function isString(str) {
-        let isString = true;
-        for (let i = 0; i < str.length; i++) {
-            if (!isNaN(Number(str[i]))) {
-                isString = false;
-            }
-        }
-        return isString;
+        return /^[a-zA-ZÀ-ÿ\s]+$/.test(str);
     }
-
-    
 
     const esNombre = isString(nombre.value.trim());
     const esApellido = isString(apellido.value.trim());
@@ -87,7 +79,7 @@ function validateFormCliente() {
         apellido.setAttribute('placeholder', 'Inserta un apellido válido');
         apellido.style.backgroundColor = 'var(--color-error)';
     } else {
-        apellido.style.backgroundolor = '';
+        apellido.style.backgroundColor = '';
     }
 
     if (!isDateValid) {

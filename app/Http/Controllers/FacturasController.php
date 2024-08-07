@@ -7,6 +7,7 @@ use App\Models\ClienteProducto;
 use App\Models\Factura;
 use App\Models\Producto;
 use DateTime;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class FacturasController extends Controller
@@ -32,22 +33,33 @@ class FacturasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {   $facturas = Factura::all();
-        $codigo = $facturas[count($facturas)-1]->codigo;
-        $numero = intval(substr($codigo, 3)) + 1;
-        $nuevocodigo = "VEN".str_pad($numero, 3, '0', STR_PAD_LEFT);
+    public function store(Request $request, $productoId)
+{
+    $request->validate([
+        'id_cliente' => 'required|exists:clientes,id',
+    ]);
 
+    // Crear nueva factura
+    $ultimoCodigo = Factura::latest('id')->value('codigo');
+    $numero = $ultimoCodigo ? intval(substr($ultimoCodigo, 3)) + 1 : 1;
+    $nuevocodigo = "VEN" . str_pad($numero, 3, '0', STR_PAD_LEFT);
 
-        $factura = new Factura();
-        $factura->codigo = $request->get($nuevocodigo);
-        $factura->decha_de_compra = $request->get(date('Y-m-d'));
-        $factura->save();
+    $factura = new Factura();
+    $factura->codigo = $nuevocodigo;
+    $factura->fecha_de_compra = date('Y-m-d');
+    $factura->save();
 
-        $nuevaFactura = Factura::find(count(Factura::all()));
+    // Obtener el último factura creada
+    $id_Factura = $factura->id;
 
-        return redirect('/ventas');
-    }
+    $pivote = new ClienteProducto();
+    $pivote->id_producto = $productoId;
+    $pivote->id_cliente = $request->input('id_cliente');
+    $pivote->id_factura = $id_Factura;
+    $pivote->save();
+
+    return redirect('/ventas');
+}
 
     /**
      * Display the specified resource.
