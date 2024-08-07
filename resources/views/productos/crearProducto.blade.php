@@ -23,11 +23,11 @@
         </div>
         <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
             <label for="imagen" class="form-label">Selecciona la imagen</label>
-            <input id="imagen" type="file" name="imagen" class="" tabindex="5" accept=".jpg,.jpeg,.png">
+            <input id="imagen" type="file" name="imagen" class="" tabindex="5"  >
         </div>
         <div>
-            <button type="submit" style="border-style:none; border-radius:5px; padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="6">Crear</button>
-            <a href="/inventario" style="text-decoration:none; border-radius:5px; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
+            <button type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="6">Crear</button>
+            <a href="/inventario" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
         </div>
     </form>
 @endsection

@@ -11,8 +11,23 @@ use Illuminate\Http\Request;
 
 class ClienteProductoController extends Controller
 {
-    public function index(){
-        $productos = Producto::all();
+    public function index(Request $request){
+        
+        $search = $request->search;
+        $productos = ""; 
+        if ($search) {
+            $productos = Producto::where('producto', 'LIKE', '%'.$search.'%')
+                ->orWhere('marca', 'LIKE', '%'.$search.'%')
+                ->orWhere('modelo', 'LIKE', '%'.$search.'%')
+                ->orWhere('sistema', 'LIKE', '%'.$search.'%')
+                ->get();
+            if($productos->isEmpty()){
+                $productos = Producto::all();
+            };
+        } else {
+            $productos = Producto::all();
+        };  
+
         return view('welcome', compact('productos'));
     }
 

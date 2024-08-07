@@ -6,7 +6,7 @@
         <h2 style="margin: 20px 0">
             El usuario {{$cliente->nombre}} {{$cliente->apellido}} ha hecho las siguiente compras:
         </h2>
-        <table style="border: 1px solid gray">
+        <table style="border: 1px solid gray; background-color:white">
             <thead  style="background-color: black; color:white; text-aling:center;" >
                 <th style="padding: 10px">factura</th>
                 <th style="padding: 10px">producto</th>

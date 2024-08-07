@@ -9,10 +9,10 @@
             <div>
                 
                 <a href="/ventas" style="text-decoration:none; color:black; padding:10px 20px; text-align:center">Ventas</a>
-                <a href="/crearproducto" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</a>
+                <a href="/crearproducto" style="text-decoration:none; border: 1px solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</a>
             </div>
         </div>
-        <table style="border: 1px solid gray">
+        <table style="border: 1px solid gray; background-color:white">
             <thead  style="background-color: black; color:white; text-aling:center;" >
                 <th style="padding: 10px">producto</th>
                 <th style="padding: 10px">marca</th>

@@ -1,8 +1,14 @@
 @extends('plantillaBase')
 @section('welcome')
+
+    <form action="{{ url('/') }}" style="margin-bottom: 20px">
+        <input class="input" id="search" name="search"  type="text" style="width: 300px">
+        <button type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:rgb(55, 168, 205)"> Buscar </button>
+    </form>
+
     <div style="display: flex; gap:10px; flex-wrap: wrap; justify-content:center">
         @foreach ($productos as $product)
-        <div style="width:220px; padding: 20px; border: solid rgb(218, 218, 218) 1px; border-radius:15px">
+        <div style="width:220px; padding: 20px; border: solid rgb(218, 218, 218) 1px; border-radius:15px; background-color:white">
             <figure style="width: 150px; height: 180px; display:flex; align-items:center">
                 <img src="/imagen/{{$product->imagen}}" alt="" style="width: 150px">
             </figure>

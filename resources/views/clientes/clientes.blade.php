@@ -10,7 +10,7 @@
                 <a href="/crearcliente" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Cliente</a>
             </div>
         </div>
-        <table style="border: 1px solid gray">
+        <table style="border: 1px solid gray; background-color:white">
             <thead style="background-color: black; color:white; text-aling:center;" >
                 <th style="padding: 10px">Nombre</th>
                 <th style="padding: 10px">Apellido</th>

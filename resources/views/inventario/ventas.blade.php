@@ -2,7 +2,7 @@
 @section('ventas')
     <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">
         <h1>Ventas</h1>
-        <table style="border: 1px solid gray">
+        <table style="border: 1px solid gray; background-color:white">
             <thead  style="background-color: black; color:white; text-aling:center;" >
                 <th style="padding: 10px">factura</th>
                 <th style="padding: 10px">producto</th>

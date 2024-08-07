@@ -16,9 +16,9 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
     </head>
-    <body class="font-sans antialiased dark:bg-black dark:text-white/50" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+    <body class="" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
 
-        <nav style="display:flex; gap:15px; justify-content:space-between; padding: 10px 30px ">
+        <nav style="display:flex; gap:15px; justify-content:space-between; padding: 10px 30px; background-color:white;">
             <a href="/">
                 <img id="background" src="https://mascontrolapp.com/pos_naranja/logo/logo44.png" style="width:250px"/>
             </a>
@@ -30,7 +30,7 @@
         </nav>
         <main style="margin-top:40px">
 
-            <div style="display: flex; justify-content:center; align-items:center">
+            <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">
                 @yield('welcome')
             </div>
 
