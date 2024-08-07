@@ -1,7 +1,8 @@
 html{
     --color-error : rgba(255, 0, 0, 0.137) ;
-
+    
     background-color: #f3f3f3;
+    
 }
 
 .input{
@@ -31,8 +32,28 @@ button{
     cursor: pointer;
 }
 
+figure:hover{
+    scale: 1.15;
+    transition: 0.5s;
+}
 
+figure{
+    transition: 0.5s;
+}
 
 a{
     cursor: pointer;
+}
+
+.a_button:hover{
+    box-shadow: 0 0 5px rgb(76, 235, 208);
+    scale: 1.1;
+    transition: 0.1s;
+}
+
+.a_editar:hover{
+    box-shadow: 0 0 5px rgb(174, 174, 174);
+    scale: 1.5;
+    transition: 0.1s;
+    opacity: 0.8;
 }

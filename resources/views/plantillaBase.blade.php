@@ -11,17 +11,21 @@
         <!-- archivos CSS -->
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
+        <link rel="" href="/fondo/fondo_pantalla">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
     </head>
-    <body class="" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+<body class="" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
 
         <nav style="display:flex; gap:15px; justify-content:space-between; padding: 10px 30px; background-color:white;">
+            <figure>
             <a href="/">
                 <img id="background" src="https://mascontrolapp.com/pos_naranja/logo/logo44.png" style="width:250px"/>
             </a>
+            </figure>
             <div style="display: flex; gap:10px; position:relative; font-size:25px">
                 <a href="/inventario" style="text-decoration:none; padding:10px">Inventario</a>
                 

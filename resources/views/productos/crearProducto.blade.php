@@ -27,7 +27,7 @@
         </div>
         <div>
             <button type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="6">Crear</button>
-            <a href="/inventario" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
+            <a href="/inventario"  class="a_editar" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
         </div>
     </form>
 @endsection

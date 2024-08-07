@@ -1,6 +1,6 @@
 @extends('../plantillaBase')
 @section('newProduct')
-    <h1 class="text-center">Crear Registro</h1>
+    <h1 class="text-center">Editar Registro</h1>
     
     <form action="/inventario/{{$producto->id}}" method="POST" enctype="multipart/form-data" onsubmit="return validateFormProduct()"  style="display:flex; flex-direction:column; gap: 20px; width:300px; padding: 20px">
         @csrf
@@ -26,8 +26,8 @@
             <input id="imagen" value="/imagen/{{$producto->imagen}}" type="file" name="imagen" accept=".jpg,.jpeg,.png"  class="" tabindex="3">
         </div>
         <div>
-            <button type="submit" class="btn btn-primary" style="border-style:none; border-radius:5px;padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="4">Editar</button>
-            <a href="/inventario" class="btn btn-secundary btn-danger" style="text-decoration:none; border-radius:5px; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104) " tabindex="5">Cancelar</a>
+            <button type="submit" style="border-style:none ;padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="4">Editar</button>
+            <a href="/inventario" class="a_editar"  style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104) " tabindex="5">Cancelar</a>
         </div>
     </form>
 

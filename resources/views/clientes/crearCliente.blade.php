@@ -24,8 +24,8 @@
     </div>
     <div>
     <button type="submit" style="border-style:none; padding: 12px 30px; color:white; background-color:rgb(28, 199, 221)"  tabindex="4">Aceptar</button>
-    <a href="/clientes" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(249, 57, 57)"  tabindex="5">Cancelar</a>
+    <a class="a_editar" href="/clientes" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(249, 57, 57)"  tabindex="5">Cancelar</a>
     </div>
 </form>
     
-@endsection
+@endsection 
