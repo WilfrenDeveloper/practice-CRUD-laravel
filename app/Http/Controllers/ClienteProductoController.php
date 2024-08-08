@@ -13,6 +13,7 @@ class ClienteProductoController extends Controller
 {
     public function index(Request $request){
         
+        $message="";
         $search = $request->search;
         $productos = ""; 
         if ($search) {
@@ -21,14 +22,17 @@ class ClienteProductoController extends Controller
                 ->orWhere('modelo', 'LIKE', '%'.$search.'%')
                 ->orWhere('sistema', 'LIKE', '%'.$search.'%')
                 ->get();
+            $message="";
             if($productos->isEmpty()){
+                $message = "El producto que buscas no se encuentra disponible";
                 $productos = Producto::all();
             };
         } else {
             $productos = Producto::all();
+            $message="";
         };  
 
-        return view('welcome', compact('productos'));
+        return view('welcome', compact('productos','message'));
     }
 
     public function create(){

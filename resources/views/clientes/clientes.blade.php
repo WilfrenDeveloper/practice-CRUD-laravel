@@ -1,16 +1,15 @@
 @extends('../plantillaBase')
 @section('clientes')
 
-    <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">
-        <div style="display: flex; justify-content:space-between; align-items:center; gap:20px;">
-            <h1 style="margin: 20px 0">
-                Clientes
-            </h1>
-            <div>
-                <a href="/crearcliente" class="a_editar" style="text-decoration:none; border: 1px solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Cliente</a>
+    <div style="display: flex; justify-content:center; align-items:center; flex-direction:column; position:relative">
+        <h1 class="title" style="position: absolute">Clientes</h1>
+
+        <div style="margin-top:40px">
+            <div class="a_editar">
+                <a href="/crearcliente"  style="text-decoration:none; border: 1px solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Cliente</a>
             </div>
         </div>
-        <table style="border: 1px solid gray; background-color:white">
+        <table style="margin-top:40px;border: 1px solid gray; background-color:white">
             <thead style="background-color: black; color:white; text-aling:center;" >
                 <th style="padding: 10px">Nombre</th>
                 <th style="padding: 10px">Apellido</th>

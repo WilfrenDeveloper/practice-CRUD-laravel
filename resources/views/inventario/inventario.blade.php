@@ -1,16 +1,16 @@
 @extends('../plantillaBase')
 @section('inventario')
 
-    <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">
-        <div style="display: flex; justify-content:space-between; align-items:center; gap:200px;">
-            <h1 style="margin: 20px 0">
-                Inventario
-            </h1>
-            <div>              
-                <a href="/ventas" style="text-decoration:none; color:black; padding:10px 20px; text-align:center">Ventas</a>
+                
+    <div style="display: flex; justify-content:center; align-items:center; flex-direction:column; position:relative">
+        
+        <h1 class="title" style="position: absolute">Inventario</h1>
+
+        <div style="margin:10px 0   ; width:600px; display: flex; justify-content:space-between; align-items:center;">              
+                <a href="/ventas" style="text-decoration:none; color:black; padding:10px 20px; text-align:center; font-size:28px">Ventas</a>
                 <a href="/crearproducto" class="a_editar" style="text-decoration:none; border: 1px rgba(220, 182, 182, 0) solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</a>
-            </div>
         </div>
+
         <table style="border: 1px solid gray; background-color:white">
             <thead  style="background-color: black; color:white; text-aling:center;" >
                 <th style="padding: 10px">producto</th>

@@ -11,7 +11,9 @@
         <!-- archivos CSS -->
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
-        <link rel="" href="/fondo/fondo_pantalla">
+        <!-- iconos -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,7 +22,7 @@
     </head>
 <body class="" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
 
-        <nav style="display:flex; gap:15px; justify-content:space-between; padding: 10px 30px; background-color:white;">
+        <nav style="display:flex; gap:15px; justify-content:space-between; align-items:center; margin:0; padding: 10px 30px; background-color:white;">
             <figure>
             <a href="/">
                 <img id="background" src="https://mascontrolapp.com/pos_naranja/logo/logo44.png" style="width:250px"/>
@@ -32,7 +34,7 @@
                 <a href="/clientes" style="text-decoration:none; padding:10px">Clientes</a>
             </div>
         </nav>
-        <main style="margin-top:40px">
+        <main style="margin-top:0px">
 
             <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">
                 @yield('welcome')

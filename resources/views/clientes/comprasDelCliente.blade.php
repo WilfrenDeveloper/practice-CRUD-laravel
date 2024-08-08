@@ -4,7 +4,7 @@
 
     <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">
         <h2 style="margin: 20px 0">
-            El usuario {{$cliente->nombre}} {{$cliente->apellido}} ha hecho las siguiente compras:
+            <span>Usuario: </span> <span>{{$cliente->nombre}} {{$cliente->apellido}}</span>
         </h2>
         <table style="border: 1px solid gray; background-color:white">
             <thead  style="background-color: black; color:white; text-aling:center;" >

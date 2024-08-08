@@ -5,7 +5,7 @@
 
     <div style="display:flex; gap:30px">
         <div style="padding: 20px; background-color:white">
-            <figure style="width: 300px; height: 180px; display:flex; align-items:center">
+            <figure class="card_factura" style="width: 300px; height: 300px; display:flex; align-items:center">
                 <img src="/imagen/{{$producto->imagen}}" alt="" style="width: 300px">
             </figure>
             <hr>
@@ -25,7 +25,7 @@
                 <form action="{{ route('generarfactura.store', $producto->id)}}" method="POST" style="display: flex; flex-direction:column">
                     @csrf
                     <label for="id_cliente"><h4>Eres Cliente Antiguo</h4></label>
-                    <select name="id_cliente" id="id_cliente" style="padding: 5px 10px">
+                    <select name="id_cliente" id="id_cliente" style="padding: 5px 10px; margin-bottom:20px">
                         <option value="" >Seleccione una opción</option>
                         @foreach ($clientes as $cliente)   
                             <option value="{{ $cliente->id }}" style="padding: 5px 10px">
@@ -63,7 +63,7 @@
                     </div>
                     <div>
                     <button type="submit" style="border-style:none; border-radius:5px;padding: 12px 30px; color:white; background-color:rgb(61, 141, 199)"  tabindex="4">Comprar</button>
-                    <a href="/" style="text-decoration:none; border-radius:5px; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)"  tabindex="5">Cancelar</a>
+                    <a href="/" class="a_editar" style="text-decoration:none; border-radius:5px; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)"  tabindex="5">Cancelar</a>
                     </div>
                 </form>
             <div>

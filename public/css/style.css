@@ -32,13 +32,27 @@ button{
     cursor: pointer;
 }
 
-figure:hover{
-    scale: 1.15;
+
+
+.img_product{
+    width: 180px;
+    
     transition: 0.5s;
 }
 
-figure{
+.figure{
     transition: 0.5s;
+    width: 200px; 
+    height: 180px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center;
+    padding: 0;
+    margin: 0;
+}
+
+.img_product:hover{
+    scale: 1.15;
 }
 
 a{
@@ -53,7 +67,45 @@ a{
 
 .a_editar:hover{
     box-shadow: 0 0 5px rgb(174, 174, 174);
-    scale: 1.5;
+    scale: 1.1;
     transition: 0.1s;
     opacity: 0.8;
+}
+
+.card_product{
+    position: relative;
+    width:200px; 
+    padding: 20px;
+    background-color:white;
+    
+}
+
+.card_product:hover{
+    top:-8px;
+    box-shadow: 0 8px 8px 5px rgb(194, 194, 194);
+    border: 1px rgb(225, 225, 225) solid;
+}
+
+.bx-cart{
+    font-size: 30px;
+    color: white;
+}
+
+.form_search{
+    position: relative;
+    top: -80px;
+    margin: 0;
+}
+
+.card_factura{
+    transition: 1s;
+}
+
+.card_factura:hover{
+    scale: 1.2;
+}
+
+.title{
+    position: relative;
+    top: -100px;
 }
