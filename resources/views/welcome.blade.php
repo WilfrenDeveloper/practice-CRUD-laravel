@@ -2,7 +2,7 @@
 @section('welcome')
 
     <form class="form_search" action="{{ url('/') }}">
-        <input class="input" id="search" name="search"  type="text" style="width: 300px">
+        <input class="input" id="search" name="search"  type="search" style="width: 300px">
         <button type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:#00c7c2"> Buscar </button>
     </form>
 

@@ -39,8 +39,10 @@ class ClienteProductoController extends Controller
         //
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        
+        //Validar si los datos obtenidos son correctos
+
         $validateData = $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',

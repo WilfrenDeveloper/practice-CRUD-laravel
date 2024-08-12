@@ -24,7 +24,7 @@
                 
                 <form action="{{ route('generarfactura.store', $producto->id)}}" method="POST" style="display: flex; flex-direction:column">
                     @csrf
-                    <label for="id_cliente"><h4>Eres Cliente Antiguo</h4></label>
+                    <label for="id_cliente"><h4>Cliente Antiguo</h4></label>
                     <select name="id_cliente" id="id_cliente" style="padding: 5px 10px; margin-bottom:20px">
                         <option value="" >Seleccione una opción</option>
                         @foreach ($clientes as $cliente)   
@@ -38,7 +38,7 @@
                 </form>
             </div>
             <br>
-                <h4>Eres Cliente Nuevo</h4>
+                <h4>Ingresar Nuevo Cliente</h4>
                 <form action="/" method="POST" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; gap: 20px; width:300px">
                     @csrf
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
