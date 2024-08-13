@@ -5,8 +5,30 @@ html{
     
 }
 
+#div_input{
+    display: flex;
+    position: relative;
+}
+
+div>.scroll{
+    position: relative;
+}
+
+#error{
+    display: none;
+    position: absolute;
+    left: 265px;
+    top: -5px;
+    color: rgb(185, 0, 0) ;
+    padding: 5px;
+    width: 200px;
+    border-radius: 10px;
+    margin: 0;
+}
+
 .input{
     height: 30px;
+    width: 250px;
     border: 1px solid rgb(100, 100, 100);
     padding: 5px;
 }

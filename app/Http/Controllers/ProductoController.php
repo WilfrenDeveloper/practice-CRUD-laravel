@@ -30,10 +30,10 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'producto' => 'required|max:200|min:3',
-            'marca' => 'required|max:200|min:3',
-            'modelo' => 'required|max:200|min:3',
-            'sistema' => 'required|max:100|min:3',
+            'producto' => 'required|max:200|min:2',
+            'marca' => 'required|max:200|min:2',
+            'modelo' => 'required|max:200|min:2',
+            'sistema' => 'required|max:100|min:2',
             'imagen' => 'required|image|mimes:jpeg,png,jpg|max:3072|min:10'
         ]);
 

@@ -7,6 +7,8 @@
         <title>Laravel</title>
         <!--- archivos javascript -->
         <script src="{{asset('js/isValid.js')}}"></script>
+        <script src="{{asset('js/jquery.js')}}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <!-- archivos CSS -->
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
