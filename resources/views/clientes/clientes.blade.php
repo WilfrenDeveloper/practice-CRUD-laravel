@@ -42,6 +42,4 @@
         </table>
     </div>
 
-    <div><div>hola</div></div>
-
 @endsection
