@@ -7,7 +7,6 @@
         <title>Laravel</title>
         <!--- archivos javascript -->
         <script src="{{asset('js/isValid.js')}}"></script>
-        <script src="{{asset('js/jquery.js')}}"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <!-- archivos CSS -->
@@ -16,6 +15,8 @@
         <!-- iconos -->
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+            
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -53,11 +54,11 @@
             <div style="display: flex; justify-content:center; align-items:center">
                 @yield('ventas')
             </div>
-
+            
             <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">
                 @yield('newProduct')
             </div>
-
+            
             <div style="display: flex; justify-content:center; align-items:center">
                 @yield('clientes')
             </div>

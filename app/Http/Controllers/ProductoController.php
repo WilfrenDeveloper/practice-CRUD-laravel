@@ -34,7 +34,7 @@ class ProductoController extends Controller
             'marca' => 'required|max:200|min:2',
             'modelo' => 'required|max:200|min:2',
             'sistema' => 'required|max:100|min:2',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg|max:3072|min:10'
+            'imagen' => 'required|image|mimes:jpeg,png,jpg|max:3072|min:1'
         ]);
 
         $producto = new Producto();
@@ -48,8 +48,6 @@ class ProductoController extends Controller
         if ($imagen = $request->file('imagen')) {
             $rutaGuardarImagen = 'imagen/';
             $imagenProducto = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
-
-            
 
             // Mover la imagen a la ruta especificada
             $imagen->move($rutaGuardarImagen, $imagenProducto);
@@ -77,7 +75,8 @@ class ProductoController extends Controller
     public function edit(string $id)
     {
         $producto = Producto::find($id);
-        return view('productos.editarProducto')->with('producto', $producto);
+        return response()->json($producto);
+        //return view('productos.editarProducto')->with('producto', $producto);
     }
 
     /**
@@ -87,11 +86,11 @@ class ProductoController extends Controller
     {
         //validacion de lo datos
         $validateData = $request->validate([
-            'producto' => 'required|max:200|min:3',
+            'producto' => 'required|max:200|min:2',
             'marca' => 'required|max:200|min:2',
-            'modelo' => 'required|max:200|min:3',
-            'sistema' => 'required|max:100|min:3',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg|min:10|max:3072'
+            'modelo' => 'required|max:200|min:2',
+            'sistema' => 'required|max:100|min:2',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg|min:1|max:3072'
         ]);
 
         $producto = Producto::find($id);

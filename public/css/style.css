@@ -6,7 +6,6 @@ html{
 }
 
 #div_input{
-    display: flex;
     position: relative;
 }
 
@@ -17,18 +16,18 @@ div>.scroll{
 #error{
     display: none;
     position: absolute;
-    left: 265px;
-    top: -5px;
+    left: -5px;
+    top: 35px;
     color: rgb(185, 0, 0) ;
     padding: 5px;
-    width: 200px;
     border-radius: 10px;
     margin: 0;
+    font-size: 13px;
 }
 
 .input{
     height: 30px;
-    width: 250px;
+    width: 296px;
     border: 1px solid rgb(100, 100, 100);
     padding: 5px;
 }
@@ -131,4 +130,11 @@ a{
 .title{
     position: relative;
     top: -100px;
+}
+
+#modal_crearProducto,
+#modal_editarProducto,
+#modal_crearCliente,
+#modal_editarCliente{
+    position:fixed;
 }

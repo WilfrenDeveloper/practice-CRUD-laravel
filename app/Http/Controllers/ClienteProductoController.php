@@ -44,9 +44,9 @@ class ClienteProductoController extends Controller
         //Validar si los datos obtenidos son correctos
 
         $validateData = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'nacimiento' => 'required|date|before_or_equal:' . now()->subYears(18)->format('Y-m-d'), 
+            'nombre' => 'required|max:255',
+            'apellido' => 'required|max:255',
+            'nacimiento' => 'required|date|before_or_equal:' . now()->subYears(18)->format('Y-m-d'),
             'telefono' => 'required|digits:10',
             'id_producto' => 'required|exists:productos,id',
         ]);

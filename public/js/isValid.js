@@ -1,7 +1,26 @@
-function validateFormProduct() {
+/****         VALIDAR DATOS DEL PRODUCTO   *****/
+function validateEditProduct(){
+    
+    // Obtener elementos del DOM
+    const producto = document.querySelector('.edit_producto');
+    const marca = document.querySelector('.edit_marca');
+    const modelo = document.querySelector('.edit_modelo');
+    const sistema = document.querySelector('.edit_sistema');
+    const imagen = document.querySelector('.edit_imagen');
 
-    let isValid = true;
+    console.log(producto.value);
+    console.log(marca.value);
+    console.log(modelo.value);
+    console.log(sistema.value);
+    console.log(imagen.value);
 
+    let isValid = validateProduct(producto, marca, modelo, sistema, imagen)
+
+    return isValid;
+}
+
+function validateFormProduct(){
+    
     // Obtener elementos del DOM
     const producto = document.getElementById('producto');
     const marca = document.getElementById('marca');
@@ -9,25 +28,30 @@ function validateFormProduct() {
     const sistema = document.getElementById('sistema');
     const imagen = document.getElementById('imagen');
 
+    let isValid = validateProduct(producto, marca, modelo, sistema, imagen)
+
+    return isValid;
+}
+
+function validateProduct(producto, marca, modelo, sistema, imagen) {
+
+    let isValid = true;
+
     // Validar si el valor del input es string y permite espacios
     function isString(str) {
         return /^[a-zA-ZÀ-ÿ\s]+$/.test(str);
     }
-    const esNombre = isString(producto.value.trim());
-    const esApellido = isString(marca.value.trim());
 
     const element = [producto, marca, modelo, sistema];
 
     function validateInfo(element){
         if(element.value.trim().length < 2){
-            //element.setAttribute('style', 'border: 1px solid red; background-color: var(--color-error)')
-            //element.nextSibling.nextSibling.setAttribute('style', "display:block");
             element.style.backgroundColor = "var(--color-error)";
             element.style.border = "1px solid red";
-            element.nextSibling.nextSibling.style.display = "block";
+            element.nextElementSibling.style.display = "block";
             isValid = false;
          } else {
-            element.nextSibling.nextSibling.style.display = "none";
+            element.nextElementSibling.style.display = "none";
             element.removeAttribute('style');
          };
     }
@@ -36,32 +60,53 @@ function validateFormProduct() {
         validateInfo(element)
     });
 
-     if(imagen.value.trim() === "" || !imagen.value.trim().endsWith("jpg" || !imagen.value.trim().endsWith("jpeg") || !imagen.value.trim().endsWith("ppg"))){
+     if(imagen.value.trim().endsWith("jpg") || imagen.value.trim().endsWith("jpeg") || imagen.value.trim().endsWith("png")){
+        imagen.nextElementSibling.style.display = "none";
+        imagen.removeAttribute('style');
+     } else {
         imagen.style.backgroundColor = "var(--color-error)";
         imagen.style.border = "1px solid red";
-        imagen.nextSibling.nextSibling.style.display = "block";
-        imagen.nextSibling.nextSibling.style.marginLeft = "45px";
+        imagen.nextElementSibling.style.display = "block";
+        imagen.nextElementSibling.style.top = "20px";
         isValid = false;
-     } else {
-        //imagen.nextSibling.nextSibling.setAttribute('style', "display:none");
-        imagen.nextSibling.nextSibling.style.display = "none";
-        imagen.removeAttribute('style');
      };
 
     return isValid;
 };
 
+/****         VALIDAR DATOS DEL CLIENTE   *****/
 
-
-function validateFormCliente() {
-
-    let isValid = true;
+function validateEditCliente(){
 
     // Obtener elementos del DOM
-    const nombre = document.getElementById('nombre');
-    const apellido = document.getElementById('apellido');
-    const nacimiento = document.getElementById('nacimiento');
-    const telefono = document.getElementById('telefono');
+    const nombre = document.querySelector('.edit_nombre');
+    const apellido = document.querySelector('.edit_apellido');
+    const nacimiento = document.querySelector('.edit_nacimiento');
+    const telefono = document.querySelector('.edit_telefono');
+
+    // Recibir el valor de ValidateCliente()
+    let isValid = validateCliente(nombre, apellido, nacimiento, telefono);
+
+    return isValid;
+}
+
+function validateFormCliente(){
+
+    // Obtener elementos del DOM
+    const nombre = document.querySelector('#nombre');
+    const apellido = document.querySelector('#apellido');
+    const nacimiento = document.querySelector('#nacimiento');
+    const telefono = document.querySelector('#telefono');
+    
+    // Recibir el valor de ValidateCliente()
+    let isValid = validateCliente(nombre, apellido, nacimiento, telefono);
+
+    return isValid;
+}
+
+function validateCliente(nombre, apellido, nacimiento, telefono) {
+
+    let isValid = true;
 
     // Validar si el valor del input es string y permite espacios
     function isString(str) {
@@ -122,12 +167,13 @@ function validateFormCliente() {
         nacimiento.nextSibling.nextSibling.style.display = "none";
     }
 
-    if (!isCel) {
+    if (!isCel || telefono.value.trim().length !== 10) {
         isValid = false;
         telefono.setAttribute('placeholder', 'Inserta un número de teléfono');
         telefono.style.backgroundColor = 'var(--color-error)';
         telefono.nextElementSibling.style.display = "block";
-    }else if(telefono.value.trim()[0] != '3'){
+    } else if (telefono.value.trim()[0] != '3'){
+        isValid = false;
         telefono.style.backgroundColor = 'var(--color-error)';
         telefono.nextElementSibling.style.display = "none";
         telefono.nextElementSibling.nextElementSibling.style.display = "block";

@@ -66,7 +66,8 @@ class ClienteController extends Controller
     public function edit(string $id)
     {
         $cliente = Cliente::find($id);
-        return view('clientes.editarCliente')->with('cliente', $cliente);
+        return response()->json($cliente);
+        //return view('clientes.editarCliente')->with('cliente', $cliente);
     }
 
     /**

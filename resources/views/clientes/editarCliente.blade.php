@@ -1,38 +1,33 @@
-@extends('../plantillaBase')
 
-@section('editarCliente')
-
-<h1>Editar Datos del Cliente</h1>
-
-    <form action="/clientes/{{$cliente->id}}" method="POST" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; gap: 20px; width:300px">
+    <form id="form_editarCliente"  method="POST" onsubmit="return validateEditCliente()" style="display:flex; flex-direction:column; align-items:center; gap: 35px; padding:30px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
         @csrf
         @method('PUT')
-        
+        <h1>Editar Datos del Cliente</h1>
         <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
             <label for="nombre" class="form-label" >Nombre</label>
             <div id="div_input">
-                <input id="nombre" type="text" name="nombre" value="{{$cliente->nombre}}"  class="input" tabindex="1">
+                <input id="nombre" type="text" name="nombre" class="input edit_nombre" value="">
                 <p id="error">No debe contener números, No debe contener carateres especiales: #$%&/-+*</p>
             </div>
         </div>
         <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
             <label for="apellido" class="form-label" >Apellido</label>
             <div id="div_input">
-                <input id="apellido" type="text" name="apellido" value="{{$cliente->apellido}}"  class="input" tabindex="2">
+                <input id="apellido" type="text" name="apellido" class="input edit_apellido" value="">
                 <p id="error">No debe contener números, No debe contener carateres especiales: #$%&/-+*</p>
             </div>
         </div>
         <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
             <label for="nacimiento" class="form-label" >Fecha de nacimiento</label>
             <div id="div_input">
-                <input id="nacimiento" type="date" name="nacimiento" value="{{$cliente->nacimiento}}"  class="input" tabindex="3" min="01-01-1900" max="01-01-2001">
+                <input id="nacimiento" type="date" name="nacimiento" class="input edit_nacimiento" value="" min="01-01-1900" max="01-01-2001">
                 <p id="error">Debes ser mayor de 18 años</p>
             </div>
         </div>
         <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
             <label for="telefono" class="form-label" >Telefono</label>
             <div id="div_input">
-                <input id="telefono" type="text" name="telefono" value="{{$cliente->telefono}}"  class="input" tabindex="3">
+                <input id="telefono" type="text" name="telefono" class="input edit_telefono" value="">
                 <p id="error">Inserta un número de 10 dígitos</p>
                 <p id="error">El número de teléfono debe comenzar con 3</p>
             </div>
@@ -43,5 +38,3 @@
         <a href="/clientes" style="text-decoration:none; border-radius:5px; padding: 10px 30px; color:white; background-color:rgb(249, 57, 57)"  tabindex="5">Cancelar</a>
         </div>
     </form>
-    
-@endsection

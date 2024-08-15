@@ -6,7 +6,7 @@
 
         <div style="margin-top:40px">
             <div class="a_editar">
-                <a href="/crearcliente"  style="text-decoration:none; border: 1px solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Cliente</a>
+                <button id="btn_crearCliente" style="text-decoration:none; border: 1px solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Cliente</button>
             </div>
         </div>
         <table style="margin-top:40px;border: 1px solid gray; background-color:white">
@@ -32,8 +32,9 @@
                             <form action="{{ route('clientes.destroy', $cliente->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                            <a href="/clientes/{{$cliente->id}}/edit" class="a_editar" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>     
-                            <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
+                                <input id="input_id" value="{{$cliente->id}}" type="text" style="display: none">
+                                <a class="btn-editarCliente a_editar" data-id="{{$cliente->id}}" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>
+                                <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -41,5 +42,53 @@
             </tbody>
         </table>
     </div>
+
+    <article id="modal_crearCliente" style="width:100%; height:100%; top:0; display:flex; justify-content:center; align-items:center; background-color: rgba(255, 255, 255, 0.874)">
+        @include('clientes.crearCliente')
+    </article>
+
+    <article id="modal_editarCliente" style="width:100%; height:100%; top:0; display:flex; justify-content:center; align-items:center; background-color: rgba(255, 255, 255, 0.874)">
+        @include('clientes.editarCliente')
+    </article>
+
+    <script>
+        $('#modal_crearCliente').hide();
+        $('#modal_editarCliente').hide();
+        $(document).ready(function () {
+            $('#btn_crearCliente').click(function (e) { 
+                e.preventDefault();
+                $('#modal_crearCliente').show();
+                return;
+            });
+
+            $('.btn-editarCliente').click(function (e) { 
+                e.preventDefault();
+                $('#modal_editarCliente').show();
+                peticion($(this).data('id'));
+                return;
+            });
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function peticion(id) {
+            $.ajax({
+                type: "GET",
+                url: `/clientes/${id}/edit`,
+                success: function(res){
+                    $('#modal_editarCliente').find('.edit_nombre').val(res.nombre);
+                    $('#modal_editarCliente').find(".edit_apellido").val(res.apellido);
+                    $('#modal_editarCliente').find(".edit_nacimiento").val(res.nacimiento);
+                    $('#modal_editarCliente').find(".edit_telefono").val(res.telefono); 
+
+                    $("#form_editarCliente").attr('action', `/clientes/${res.id}`);
+                }
+            });
+        }
+    </script>
 
 @endsection

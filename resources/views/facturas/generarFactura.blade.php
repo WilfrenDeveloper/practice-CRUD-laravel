@@ -45,21 +45,35 @@
                         <label for="id_producto" class="form-label" ></label>
                         <input id="id_producto" type="text" name="id_producto" class="input" tabindex="1" value="{{$producto->id}}" style="display:none">
                     </div>
-                    <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+                    
+                    <div style="display: flex; flex-direction:column; gap:5px; margin-top:-20px; padding-top:0" class="mb-3">
                         <label for="nombre" class="form-label" >Nombre</label>
-                        <input id="nombre" type="text" name="nombre" class="input" tabindex="1">
+                        <div id="div_input">
+                            <input id="nombre" type="text" name="nombre" class="input" tabindex="1">
+                            <p id="error">No debe contener números. <br> No debe contener carateres especiales: #$%&/-+*</p>
+                        </div>
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="apellido" class="form-label" >Apellido</label>
-                        <input id="apellido" type="text" name="apellido" class="input" tabindex="2">
+                        <div id="div_input">
+                            <input id="apellido" type="text" name="apellido" class="input" tabindex="2">
+                            <p id="error">No debe contener números, <br> No debe contener carateres especiales: #$%&/-+*</p>
+                        </div>
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="nacimiento" class="form-label" >Fecha de nacimiento</label>
-                        <input id="nacimiento" type="date" name="nacimiento" class="input" tabindex="3" min="01-01-1900" max="d-m-Y">
+                        <div id="div_input">
+                            <input id="nacimiento" type="date" name="nacimiento" class="input" tabindex="3" min="01-01-1900" max="01-01-2001">
+                            <p id="error">Debes ser mayor de 18 años</p>
+                        </div>
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="telefono" class="form-label" >Telefono</label>
-                        <input id="telefono" type="text" name="telefono" class="input" tabindex="3">
+                        <div id="div_input">
+                            <input id="telefono" type="text" name="telefono" class="input" tabindex="3">
+                            <p id="error">Inserta un número de 10 dígitos</p>
+                            <p id="error">El número de teléfono debe comenzar con 3</p>
+                        </div>
                     </div>
                     <div>
                     <button type="submit" style="border-style:none; border-radius:5px;padding: 12px 30px; color:white; background-color:rgb(61, 141, 199)"  tabindex="4">Comprar</button>
@@ -67,7 +81,6 @@
                     </div>
                 </form>
             <div>
-                
             </div>
         </div>
     </div>

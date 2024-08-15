@@ -1,23 +1,19 @@
-@extends('../plantillaBase')
 
-@section('crearCliente')
-
-<h1>Insertar Datos del Cliente</h1>
-
-<form action="/clientes" method="POST" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; gap: 20px; width:300px">
+<form id="clientesForm" action="/clientes" method="POST" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; align-items:center; gap: 35px; padding:30px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
     @csrf
-    <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+    <h1 style="margin:0; padding-bottom:0">Insertar Datos del Cliente</h1>
+    <div style="display: flex; flex-direction:column; gap:5px; margin-top:-20px; padding-top:0" class="mb-3">
         <label for="nombre" class="form-label" >Nombre</label>
         <div id="div_input">
             <input id="nombre" type="text" name="nombre" class="input" tabindex="1">
-            <p id="error">No debe contener números, No debe contener carateres especiales: #$%&/-+*</p>
+            <p id="error">No debe contener números. <br> No debe contener carateres especiales: #$%&/-+*</p>
         </div>
     </div>
     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
         <label for="apellido" class="form-label" >Apellido</label>
         <div id="div_input">
             <input id="apellido" type="text" name="apellido" class="input" tabindex="2">
-            <p id="error">No debe contener números, No debe contener carateres especiales: #$%&/-+*</p>
+            <p id="error">No debe contener números, <br> No debe contener carateres especiales: #$%&/-+*</p>
         </div>
     </div>
     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
@@ -41,5 +37,3 @@
     <a class="a_editar" href="/clientes" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(249, 57, 57)"  tabindex="5">Cancelar</a>
     </div>
 </form>
-    
-@endsection 

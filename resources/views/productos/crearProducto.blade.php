@@ -1,10 +1,7 @@
-@extends('../plantillaBase')
-
-@section('newProduct')
-    <h1 class="text-center">Crear Nuevo Producto</h1>
-    
-    <form id="productForm" action="{{ url('/inventario') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateFormProduct()" style="display:flex; flex-direction:column; gap: 20px; width:300px; padding: 20px">
+  
+    <form id="productForm" action="{{ url('/inventario') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateFormProduct()" style="display:flex; flex-direction:column; align-items:center; gap: 20px; padding: 20px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
         @csrf
+        <h1 style="margin: 0">Crear Nuevo Producto</h1>
         <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
             <label for="producto" class="form-label">Producto</label>
             <div id="div_input">
@@ -40,10 +37,10 @@
                 <p id="error">Debes adjuntar una imagen formato: jpg, jpeg o png</p>
             </div>
         </div>
-        <div>
+        <div style="margin-top: 22px">
             <button id="btn-crear" type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="6">Crear</button>
-            <a href="/inventario"  class="a_editar" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
+            <a id="btn-cancelar" href="/inventario" class="a_editar" style="border-style:none; text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
         </div>
     </form>
-@endsection
+
 
