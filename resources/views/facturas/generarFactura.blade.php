@@ -39,7 +39,7 @@
             </div>
             <br>
                 <h4>Ingresar Nuevo Cliente</h4>
-                <form action="/" method="POST" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; gap: 20px; width:300px">
+                <form action="/" method="POST" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; gap: 30px; width:300px">
                     @csrf
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="id_producto" class="form-label" ></label>

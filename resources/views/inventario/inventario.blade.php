@@ -31,12 +31,26 @@
                             <img src="/imagen/{{$producto->imagen}}" alt="" style="max-width:100px; max-height:60px">
                         </td>
                         <td style="padding-left: 20px">
-                            <form action="{{ route('inventario.destroy', $producto->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                            <div class="modal_eliminar_producto modal-{{$producto->id}}" style="display: none">
+                                <form  action="{{ route('inventario.destroy', $producto->id)}}" method="POST" >
+                                    @csrf
+                                    @method('DELETE')
+                                        <div id="div_modal_eliminar">
+                                            <p>Estás seguro de querer eliminar el producto <br> <strong>{{$producto->producto}} {{$producto->marca}} {{$producto->modelo}}</strong></p>
+                                            <a href="/inventario" id="btn_confirm-cancel" class="a_editar" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</a>
+                                            <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(31, 209, 0)">Aceptar</button>
+                                        </div>
+                                </form>
+                            </div>
                             <a class="btn-editarProducto a_editar" data-id="{{$producto->id}}" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>
-                            <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
-                            </form>
+                            <button id="btn_modal" onclick="confirmModal({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
+                            <script>
+                                function confirmModal(e) {
+                                    //e.preventDefault();
+                                    $(`.modal-${e}`).css('display', 'flex');
+                                    return;
+                                };
+                            </script>
                         </td>
                     </tr>
                 @endforeach
@@ -69,14 +83,18 @@
                 peticion($(this).data('id'));
                 return;
             });
+
+            
         });
+
+        
 
         function peticion(id) {
             $.ajax({
                 type: "GET",
                 url: `/inventario/${id}/edit`,
                 success: function(res){
-                    $('.edit_producto').val(res.producto);
+                    $(".edit_producto").val(res.producto);
                     $(".edit_marca").val(res.marca);
                     $(".edit_modelo").val(res.modelo);
                     $(".edit_sistema").val(res.sistema);
@@ -84,6 +102,8 @@
                     $("#form_editarProducto").attr('action', `/inventario/${res.id}`);
                 }
             });
-        }
+
+
+        };
     </script>
 @endsection

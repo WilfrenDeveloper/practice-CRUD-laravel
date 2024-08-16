@@ -29,13 +29,26 @@
                             <a href="/clientes/{{$cliente->id}}" style="text-decoration:none;  padding:12px 20px; text-align:center;">Ver historial de compras</a>
                         </td>
                        <td style="padding-left: 20px; ">
-                            <form action="{{ route('clientes.destroy', $cliente->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input id="input_id" value="{{$cliente->id}}" type="text" style="display: none">
-                                <a class="btn-editarCliente a_editar" data-id="{{$cliente->id}}" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>
-                                <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
-                            </form>
+                            <div class="modal_eliminar_cliente modal_{{$cliente->id}}" style="display: none">
+                                <form action="{{ route('clientes.destroy', $cliente->id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div id="div_modal_eliminar">
+                                        <p>Estás seguro de querer eliminar el Cliente <br> <strong>{{$cliente->nombre}} {{$cliente->apellido}}</strong></p>
+                                        <a href="/clientes" class="a_editar" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</a>
+                                        <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(9, 218, 43)">Aceptar</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <a class="btn-editarCliente a_editar" data-id="{{$cliente->id}}" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>
+                            <button onclick="confirmarModal({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
+                            <script>
+                                function confirmarModal(e) {
+                                    //e.preventDefault();
+                                    $(`.modal_${e}`).css('display', 'flex');
+                                    return;
+                                };
+                            </script>
                         </td>
                     </tr>
                 @endforeach
