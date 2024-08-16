@@ -1,9 +1,10 @@
 @extends('plantillaBase')
 @section('welcome')
 
-    <form class="form_search" action="{{ url('/') }}">
+    <form class="form_search">
+        @csrf
         <input class="input" id="search" name="search"  type="search" style="width: 300px">
-        <button type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:#00c7c2"> Buscar </button>
+        <button id="btn-search" type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:#00c7c2"> Buscar </button>
     </form>
 
     <div style="display:flex; align-items:center; gap:10px">
@@ -32,4 +33,28 @@
         </div>
         @endforeach
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#btn-search')click(function(e){
+                e.preventDefault()
+
+                $.ajax({
+                    type: "POST",
+                    url: "search.index",
+                    data: $('.form_search').serialize(),
+                    success: function (res) {
+                        alert('dato recibido')
+                    }
+                });
+
+            });
+
+
+
+
+        });
+    </script>
 @endsection

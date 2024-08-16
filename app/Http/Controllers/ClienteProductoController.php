@@ -32,6 +32,8 @@ class ClienteProductoController extends Controller
             $message="";
         };  
 
+        //return response()->json($productos);
+
         return view('welcome', compact('productos','message'));
     }
 
