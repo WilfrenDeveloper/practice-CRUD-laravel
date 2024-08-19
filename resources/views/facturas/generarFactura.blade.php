@@ -10,7 +10,7 @@
             </figure>
             <hr>
             <div style="height: 180px; position:relative">
-                <h3>{{$producto->nombre}} {{$producto->marca}} {{$producto->modelo}}</h3>
+                <h3>{{$producto->producto}} {{$producto->marca}} {{$producto->modelo}}</h3>
                 <p style="opacity: 0.6">Sistema Operativo:</p>
                 <p style="margin-top:-15px;">{{$producto->sistema}}</p>
 

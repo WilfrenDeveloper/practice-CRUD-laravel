@@ -84,6 +84,11 @@ function validateEditCliente(){
     const nacimiento = document.querySelector('.edit_nacimiento');
     const telefono = document.querySelector('.edit_telefono');
 
+    console.log(nombre)
+    console.log(apellido)
+    console.log(nacimiento)
+    console.log(telefono)
+
     // Recibir el valor de ValidateCliente()
     let isValid = validateCliente(nombre, apellido, nacimiento, telefono);
 

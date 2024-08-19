@@ -18,39 +18,30 @@
                 <th style="padding: 10px">Operaciones</th>
                 <th style="padding: 10px">Historial</th>
             </thead>
-            <tbody>
+            <tbody class="tbody_clientes">
                 @foreach ($clientes as $cliente)
-                    <tr style="height:40px">
-                        <td>{{$cliente->nombre}}</td>
-                        <td>{{$cliente->apellido}}</td>
-                        <td>{{$cliente->nacimiento}}</td>
-                        <td>{{$cliente->telefono}}</td>
-                        <td style="padding-left: 20px; ">
-                            <a href="/clientes/{{$cliente->id}}" style="text-decoration:none;  padding:12px 20px; text-align:center;">Ver historial de compras</a>
-                        </td>
-                       <td style="padding-left: 20px; ">
-                            <div class="modal_eliminar_cliente modal_{{$cliente->id}}" style="display: none">
-                                <form action="{{ route('clientes.destroy', $cliente->id)}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <div id="div_modal_eliminar">
-                                        <p>Estás seguro de querer eliminar el Cliente <br> <strong>{{$cliente->nombre}} {{$cliente->apellido}}</strong></p>
-                                        <a href="/clientes" class="a_editar" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</a>
-                                        <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(9, 218, 43)">Aceptar</button>
-                                    </div>
-                                </form>
+                <tr class="tr_operaciones tr_{{$cliente->id}}" style="height:40px" data-id="{{$cliente->id}}">
+                    <td class="td_nombre">{{$cliente->nombre}}</td>
+                    <td class="td_apellido">{{$cliente->apellido}}</td>
+                    <td class="td_nacimiento">{{$cliente->nacimiento}}</td>
+                    <td class="td_telefono">{{$cliente->telefono}}</td>
+                    <td style="padding-left: 20px; ">
+                        <a href="/clientes/{{$cliente->id}}" style="text-decoration:none;  padding:12px 20px; text-align:center">Ver historial de compras</a>
+                    </td>
+                    <td style="padding-left: 20px">
+                        <!-- modal confirmar eliminacion -->
+                        <div class="modal_eliminar_cliente modal_{{$cliente->id}}" style="display: none">
+                            <div id="div_modal_eliminar">
+                                @csrf
+                                <p>Estás seguro de querer eliminar el Cliente <br> <strong>{{$cliente->nombre}} {{$cliente->apellido}}</strong></p>
+                                <button onclick="cancelarEliminarCliente({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</button>
+                                <button onclick="confirmarEliminarCliente({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(9, 218, 43)">Aceptar</button>
                             </div>
-                            <a class="btn-editarCliente a_editar" data-id="{{$cliente->id}}" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>
-                            <button onclick="confirmarModal({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
-                            <script>
-                                function confirmarModal(e) {
-                                    //e.preventDefault();
-                                    $(`.modal_${e}`).css('display', 'flex');
-                                    return;
-                                };
-                            </script>
-                        </td>
-                    </tr>
+                        </div>
+                        <button onclick="editarClienteForm({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</button>
+                        <button onclick="activarmodalEliminar({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -64,44 +55,71 @@
         @include('clientes.editarCliente')
     </article>
 
+
     <script>
         $('#modal_crearCliente').hide();
         $('#modal_editarCliente').hide();
-        $(document).ready(function () {
-            $('#btn_crearCliente').click(function (e) { 
-                e.preventDefault();
-                $('#modal_crearCliente').show();
-                return;
-            });
-
-            $('.btn-editarCliente').click(function (e) { 
-                e.preventDefault();
-                $('#modal_editarCliente').show();
-                peticion($(this).data('id'));
-                return;
-            });
-        });
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-        function peticion(id) {
+        //Botón Editar Cliente que activa el modal
+        function editarClienteForm(id) {
+            $('#modal_editarCliente').show();
             $.ajax({
                 type: "GET",
                 url: `/clientes/${id}/edit`,
                 success: function(res){
-                    $('#modal_editarCliente').find('.edit_nombre').val(res.nombre);
-                    $('#modal_editarCliente').find(".edit_apellido").val(res.apellido);
-                    $('#modal_editarCliente').find(".edit_nacimiento").val(res.nacimiento);
-                    $('#modal_editarCliente').find(".edit_telefono").val(res.telefono); 
-
-                    $("#form_editarCliente").attr('action', `/clientes/${res.id}`);
+                    $(".edit_nombre").val(res.nombre);
+                    $(".edit_apellido").val(res.apellido);
+                    $(".edit_nacimiento").val(res.nacimiento);
+                    $(".edit_telefono").val(res.telefono);
+                    $(".cliente_id").val(res.id);
                 }
             });
-        }
+            return;
+        };
+        
+        //Botón Elminar que activa el modal
+        function activarmodalEliminar(id){
+            $(`.modal_${id}`).css('display', 'flex');
+        };
+        
+        
+        //Botón Cancelar la eliminacion del cliente
+        function cancelarEliminarCliente(id){
+            $(`.modal_${id}`).css('display', 'none');
+        };
+        
+        //Confirmar Eliminar Cliente
+        function confirmarEliminarCliente(id){
+            $.ajax({
+                type: "DELETE",
+                url: `/clientes/${id}`,
+                success: function (response) {
+                    let id = response.id_cliente;
+                    $(`.tr_${id}`).remove();
+                },
+                error: function (error){
+                        //manejo de errores
+                        console.error('error', error);
+                    }
+                });
+                
+                $(`.modal_${id}`).css('display', 'none');
+            };
+            
+            
+            $(document).ready(function () {
+                //botón crear Nuevo Cliente
+                $('#btn_crearCliente').click(function (e) { 
+                    e.preventDefault();
+                    $('#modal_crearCliente').show();
+                    return;
+                });
+            });
+            
     </script>
 
 @endsection

@@ -98,6 +98,7 @@
                     $(".edit_marca").val(res.marca);
                     $(".edit_modelo").val(res.modelo);
                     $(".edit_sistema").val(res.sistema);
+                    $(".edit_imagen").attr('file', `/imagen/${res.imagen}`);
 
                     $("#form_editarProducto").attr('action', `/inventario/${res.id}`);
                 }

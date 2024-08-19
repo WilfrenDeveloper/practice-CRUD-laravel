@@ -16,6 +16,7 @@ class ClienteController extends Controller
         return view('clientes.clientes', compact('clientes'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -47,8 +48,14 @@ class ClienteController extends Controller
         // Guardar el cliente en la base de datos
         $cliente->save();
 
-        // Redireccionar a la lista de clientes
-        return redirect('/clientes');
+        $cliente = $cliente;
+
+        // retornar el cliente creado
+        //return redirect('/clientes');
+        return response()->json([
+            'cliente' => $cliente,
+            'html' => view('clientes.dataCliente', compact('cliente'))->render(),
+        ]);
     }
 
     /**
@@ -67,7 +74,6 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::find($id);
         return response()->json($cliente);
-        //return view('clientes.editarCliente')->with('cliente', $cliente);
     }
 
     /**
@@ -91,7 +97,14 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        return redirect('/clientes');
+        //return redirect('/clientes');
+        //$clientes = Cliente::all();
+        return response()->json([
+            'id' => $cliente->id,
+            'html' => view('clientes.dataCliente', compact('cliente'))->render(),
+        ]);
+
+        //return response()->json($cliente);
     }
 
     /**
@@ -101,6 +114,6 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::find($id);
         $cliente->delete();
-        return redirect('clientes');
+        return response()->json(['id_cliente' => $id]);
     }
 }

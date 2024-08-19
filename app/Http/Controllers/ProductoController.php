@@ -64,9 +64,29 @@ class ProductoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(Request $request){
+        $search = $request->input('value');
+        $productos = ""; 
+        $message="";
+        if ($search) {
+            $productos = Producto::where('producto', 'LIKE', '%'.$search.'%')
+                ->orWhere('marca', 'LIKE', '%'.$search.'%')
+                ->orWhere('modelo', 'LIKE', '%'.$search.'%')
+                ->orWhere('sistema', 'LIKE', '%'.$search.'%')
+                ->get();
+            $message="";
+            if($productos->isEmpty()){
+                $message = "El producto que buscas no se encuentra disponible";
+                $productos = Producto::all();
+            };
+        } else {
+            $productos = Producto::all();
+            $message="";
+        };  
+
+        return response()->json([
+            'html' => view('productos.cardProducts', compact('productos'))->render(),
+            'message' => $message]);
     }
 
     /**
@@ -122,6 +142,7 @@ class ProductoController extends Controller
     public function destroy(string $id)
     {
         $producto = Producto::find($id);
+        $imagen = $producto->imagen;
         $producto->delete();
         return redirect('inventario');
     }

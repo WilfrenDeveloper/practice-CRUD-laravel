@@ -11,30 +11,16 @@ use Illuminate\Http\Request;
 
 class ClienteProductoController extends Controller
 {
-    public function index(Request $request){
-        
-        $message="";
-        $search = $request->search;
-        $productos = ""; 
-        if ($search) {
-            $productos = Producto::where('producto', 'LIKE', '%'.$search.'%')
-                ->orWhere('marca', 'LIKE', '%'.$search.'%')
-                ->orWhere('modelo', 'LIKE', '%'.$search.'%')
-                ->orWhere('sistema', 'LIKE', '%'.$search.'%')
-                ->get();
-            $message="";
-            if($productos->isEmpty()){
-                $message = "El producto que buscas no se encuentra disponible";
-                $productos = Producto::all();
-            };
-        } else {
-            $productos = Producto::all();
-            $message="";
-        };  
+    public function index(){
+        return view('welcome');
+    }
 
-        //return response()->json($productos);
+    public function show(){
+        $productos = Producto::all();
 
-        return view('welcome', compact('productos','message'));
+        return response()->json([
+            'html' => view('productos.cardProducts', compact('productos'))->render(),
+        ]);
     }
 
     public function create(){

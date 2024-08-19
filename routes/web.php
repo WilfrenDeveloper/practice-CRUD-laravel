@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\ClienteProductoController;
 use App\Http\Controllers\FacturasController;
+use App\Http\Controllers\ProductoController;
+use App\Models\ClienteProducto;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('/', 'App\Http\Controllers\ClienteProductoController');
+
+Route::get('/getproducts', [ClienteProductoController::class, 'show']);
 
 Route::resource('/inventario', 'App\Http\Controllers\ProductoController');
 
@@ -20,4 +24,10 @@ Route::post('/generarfactura/{producto}', [FacturasController::class, 'store'])-
 
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 
-Route::post('/', [ClienteProductoController::class, 'index'])->name('search.index');
+Route::get('/search', [ProductoController::class, 'show']);
+
+
+
+Route::get('/vistaParcial', function(){
+    return view('clientes.cardClientes');
+});

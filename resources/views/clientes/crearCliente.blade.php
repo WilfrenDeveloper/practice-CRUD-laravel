@@ -1,5 +1,5 @@
 
-<form id="clientesForm" action="/clientes" method="POST" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; align-items:center; gap: 35px; padding:30px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
+<form id="clientesForm" class="form_create_client" onsubmit="return validateFormCliente()" style="display:flex; flex-direction:column; align-items:center; gap: 35px; padding:30px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
     @csrf
     <h1 style="margin:0; padding-bottom:0">Insertar Datos del Cliente</h1>
     <div style="display: flex; flex-direction:column; gap:5px; margin-top:-20px; padding-top:0" class="mb-3">
@@ -34,6 +34,50 @@
     
     <div>
     <button type="submit" style="border-style:none; padding: 12px 30px; color:white; background-color:rgb(28, 199, 221)"  tabindex="4">Aceptar</button>
-    <a class="a_editar" href="/clientes" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(249, 57, 57)"  tabindex="5">Cancelar</a>
+    <a  class="a_editar btn_create_client_cancel" style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(249, 57, 57)" >Cancelar</a>
     </div>
 </form>
+
+<script>
+    $(document).ready(function () {
+        $('.btn_create_client_cancel').click(function() {
+            $('.form_create_client')[0].reset();
+            $('#nombre').css('background-color', 'white'),
+            $('#apellido').css('background-color', 'white'),
+            $('#nacimiento').css('background-color', 'white'),
+            $('#telefono').css('background-color', 'white'),
+            $('[id="error"]').hide(),
+            $('#modal_crearCliente').hide()
+        });
+
+        $('.form_create_client').submit(function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "/clientes",
+                data: $('#clientesForm').serialize(),
+                success: function (res) {
+                    //const cliente = res.cliente;
+                    alert('Cliente Creado Exitosamente');
+                    console.log(res)
+                    const cliente = res.cliente;
+                    $('.tbody_clientes').append(`
+                        <tr class="tr_operaciones tr_${cliente.id}" style="height:40px" data-id="${cliente.id}">
+                            ${res.html}
+                        </tr>
+                    `);
+                    
+
+                    //escodemos el modal crear cliente y lo reseteamos
+                    $('.form_create_client')[0].reset();
+                    $('#modal_crearCliente').hide();
+                },
+                error: function (error) {
+                    console.error('error', error);
+                }
+            });
+        });
+
+    });
+</script>
