@@ -1,5 +1,5 @@
   
-    <form id="productForm" action="{{ url('/inventario') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateFormProduct()" style="display:flex; flex-direction:column; align-items:center; gap: 20px; padding: 20px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
+    <form id="productsForm" class="form_create_product" enctype="multipart/form-data" style="display:flex; flex-direction:column; align-items:center; gap: 20px; padding: 20px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
         @csrf
         <h1 style="margin: 0">Crear Nuevo Producto</h1>
         <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
@@ -39,8 +39,58 @@
         </div>
         <div style="margin-top: 22px">
             <button id="btn-crear" type="submit" style="border-style:none;  padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="6">Crear</button>
-            <a id="btn-cancelar" href="/inventario" class="a_editar" style="border-style:none; text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
+            <a id="btn-cancelar" class="btn_create_product_cancel a_editar" style="border-style:none; text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104)" tabindex="7">Cancelar</a>
         </div>
     </form>
 
+    <script>
+        $(document).ready(function () {
+            $('.btn_create_product_cancel').click(function() {
+                $('.form_create_product')[0].reset();
+                $('#producto').css('background-color', 'white'),
+                $('#marca').css('background-color', 'white'),
+                $('#modelo').css('background-color', 'white'),
+                $('#sistema').css('background-color', 'white'),
+                $('#imagen').css('background-color', 'white'),
+                $('#imagen').css('border', 'none'),
+                $('[id="error"]').hide(),
+                $('#modal_crearProducto').hide()
+            });
+    
+            $('.form_create_product').on('submit', function(e){
+                e.preventDefault();
+
+                let formData = new FormData(this);
+
+                console.log([...formData.entries()]);
+
+                //validar datos
+                if (validateFormProduct()) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/productos",
+                        data: formData,
+                        contentType: false,  // Evitar que jQuery defina el contentType (lo hará automáticamente)
+                        processData: false,  // Evitar que jQuery procese el data
+                        success: function (res) {
+                            //const cliente = res.cliente;
+                            $('.tbody_productos').html(res.html);
+                            
+                            //escodemos el modal crear cliente y lo reseteamos
+                            $('.form_create_product')[0].reset();
+                            $('#modal_crearProducto').hide();
+
+                            
+                            alert('Cliente Creado Exitosamente');
+                        },
+                        error: function (error) {
+                            console.error('error', error);
+                            console.log(error.responseJSON);
+                        }
+                    });
+                };
+            });
+    
+        });
+    </script>
 

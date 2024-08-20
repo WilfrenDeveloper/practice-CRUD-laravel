@@ -30,7 +30,9 @@
             });
 
 
-            $('#btn-search').on('click', function(){
+            $('#btn-search').on('click', function(e){
+                e.preventDefault()
+
                 let inputValue = $('.input-search').val();
 
                 $.ajax({

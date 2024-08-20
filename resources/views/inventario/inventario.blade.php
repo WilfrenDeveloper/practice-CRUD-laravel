@@ -20,9 +20,9 @@
                 <th style="padding: 10px">imagen</th>
                 <th style="padding: 10px">operaciones</th>
             </thead>
-            <tbody>
+            <tbody class="tbody_productos">
                 @foreach ($productos as $producto)
-                    <tr>
+                    <tr class="tr_product_{{$producto->id}}">
                         <td>{{$producto->producto}}</td>
                         <td>{{$producto->marca}}</td>
                         <td>{{$producto->modelo}}</td>
@@ -32,25 +32,15 @@
                         </td>
                         <td style="padding-left: 20px">
                             <div class="modal_eliminar_producto modal-{{$producto->id}}" style="display: none">
-                                <form  action="{{ route('inventario.destroy', $producto->id)}}" method="POST" >
-                                    @csrf
-                                    @method('DELETE')
+                                @csrf
                                         <div id="div_modal_eliminar">
                                             <p>Estás seguro de querer eliminar el producto <br> <strong>{{$producto->producto}} {{$producto->marca}} {{$producto->modelo}}</strong></p>
-                                            <a href="/inventario" id="btn_confirm-cancel" class="a_editar" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</a>
-                                            <button type="submit" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(31, 209, 0)">Aceptar</button>
+                                            <button onclick="cancelarEliminarProducto({{$producto->id}})" href="/inventario" id="btn_confirm-cancel" class="a_editar" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</button>
+                                            <button onclick="aceptarEliminarProducto({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(31, 209, 0)">Aceptar</button>
                                         </div>
-                                </form>
                             </div>
-                            <a class="btn-editarProducto a_editar" data-id="{{$producto->id}}" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</a>
-                            <button id="btn_modal" onclick="confirmModal({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
-                            <script>
-                                function confirmModal(e) {
-                                    //e.preventDefault();
-                                    $(`.modal-${e}`).css('display', 'flex');
-                                    return;
-                                };
-                            </script>
+                            <button onclick="modalEditarProducto({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</button>
+                            <button onclick="modalEliminarProducto({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
                         </td>
                     </tr>
                 @endforeach
@@ -70,41 +60,70 @@
     <script>
         $('#modal_crearProducto').hide();
         $('#modal_editarProducto').hide();
-        $(document).ready(function () {
-            $('#btn_crearProducto').click(function (e) { 
-                e.preventDefault();
-                $('#modal_crearProducto').show();
-                return;
-            });
 
-            $('.btn-editarProducto').click(function (e) { 
-                e.preventDefault();
-                $('#modal_editarProducto').show();
-                peticion($(this).data('id'));
-                return;
-            });
-
-            
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
 
-        
+        //Botón eliminar que activa el modal Eliminar Producto
+        function modalEliminarProducto(id) {
+            $(`.modal-${id}`).css('display', 'flex');
+        };
 
-        function peticion(id) {
+        //Botón Cancelar que esconde el modal eliminar producto
+        function cancelarEliminarProducto(id){
+            $(`.modal-${id}`).css('display', 'none');
+        }
+        
+        //Botón Editar que activa el modal Editar Producto
+        function modalEditarProducto(id) { 
+            //id.preventDefault();
+            $('#modal_editarProducto').show();
+
             $.ajax({
                 type: "GET",
-                url: `/inventario/${id}/edit`,
+                url: `/productos/${id}/edit`,
                 success: function(res){
+                    $(".producto_id").val(res.id)
                     $(".edit_producto").val(res.producto);
                     $(".edit_marca").val(res.marca);
                     $(".edit_modelo").val(res.modelo);
                     $(".edit_sistema").val(res.sistema);
                     $(".edit_imagen").attr('file', `/imagen/${res.imagen}`);
-
+                    
                     $("#form_editarProducto").attr('action', `/inventario/${res.id}`);
-                }
+                },
+                error: function(error) {
+                    console.error('error', error);
+                },
             });
-
-
         };
+
+        //Botón Aceptar que confirma el modal Eliminar Producto
+        function aceptarEliminarProducto(id) {
+            $('.modal_eliminar_producto').css('display', 'none');
+            $.ajax({
+                type: "DELETE",
+                url: `/inventario/${id}`,
+                success: function (res) {
+                    $('.tbody_productos').html(res.html);
+                    alert('El Producto ha sido eliminado satisfactoriamente');
+                },
+                error: function(error){
+                    console.log(error);
+                },
+            });
+        };
+
+        
+        $(document).ready(function () {
+            $('#btn_crearProducto').click(function (e) { 
+                e.preventDefault();
+                $('#modal_crearProducto').show();
+                return;
+            }); 
+        });
     </script>
 @endsection

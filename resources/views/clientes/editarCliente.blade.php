@@ -1,5 +1,5 @@
 
-    <form id="form_editarCliente" class="form_edit_client" onsubmit="return validateEditCliente()" style="display:flex; flex-direction:column; align-items:center; gap: 35px; padding:30px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
+    <form id="form_editarCliente" class="form_edit_client"  style="display:flex; flex-direction:column; align-items:center; gap: 35px; padding:30px; background-color:white; border: 1px solid rgb(218, 216, 216) ">
         @csrf
         <h1>Editar Datos del Cliente</h1>
             <input id="cliente_id" name="cliente_id" class="cliente_id" type="hidden" >
@@ -43,21 +43,25 @@
     $(document).ready(function () {
 
         //Botón Editar que envía la información a ClienteController al metodo store
-        $('.form_edit_client').on('submit', function (e) { 
+        $('.form_edit_client').on('submit', function(e) { 
             e.preventDefault();
-            let id = $(".cliente_id").val();
-            $.ajax({
-                type: "PUT",
-                url: `/clientes/${id}`,
-                data: $('.form_edit_client').serialize(),
-                success: function(res) {
-                    $(`.tr_${res.id}`).html(res.html);
-                    $('#modal_editarCliente').hide();
-                },
-                error: function(error) {
-                    console.error('error', error);
-                }
-            });
+
+            //Validar datos 
+            if(validateEditCliente()) {
+                let id = $(".cliente_id").val();
+                $.ajax({
+                    type: "PUT",
+                    url: `/clientes/${id}`,
+                    data: $('.form_edit_client').serialize(),
+                    success: function(res) {
+                        $(`.tr_${res.id}`).html(res.html);
+                        $('#modal_editarCliente').hide();
+                    },
+                    error: function(error) {
+                        console.error('error', error);
+                    }
+                });
+            };
         });
 
         //Botón Cancelar el modal Editar cliente

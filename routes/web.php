@@ -14,7 +14,9 @@ Route::resource('/inventario', 'App\Http\Controllers\ProductoController');
 
 Route::get('/ventas', 'App\Http\Controllers\FacturasController@index');
 
-Route::get('/crearproducto', 'App\Http\Controllers\ProductoController@create');
+Route::resource('/productos', 'App\Http\Controllers\ProductoController');
+
+Route::put('/productos/{id}/update', [ProductoController::class, 'update']);
 
 Route::resource('/clientes', 'App\Http\Controllers\ClienteController');
 
@@ -25,9 +27,3 @@ Route::post('/generarfactura/{producto}', [FacturasController::class, 'store'])-
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 
 Route::get('/search', [ProductoController::class, 'show']);
-
-
-
-Route::get('/vistaParcial', function(){
-    return view('clientes.cardClientes');
-});

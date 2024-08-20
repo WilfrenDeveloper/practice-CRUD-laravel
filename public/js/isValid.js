@@ -8,14 +8,14 @@ function validateEditProduct(){
     const sistema = document.querySelector('.edit_sistema');
     const imagen = document.querySelector('.edit_imagen');
 
-    console.log(producto.value);
-    console.log(marca.value);
-    console.log(modelo.value);
-    console.log(sistema.value);
-    console.log(imagen.value);
+    //  console.log(producto.value)
+    //  console.log(marca.value)
+    //  console.log(modelo.value)
+    //  console.log(sistema.value)
+    //  console.log(imagen.value)
 
     let isValid = validateProduct(producto, marca, modelo, sistema, imagen)
-
+    console.log(isValid)
     return isValid;
 }
 
@@ -47,7 +47,6 @@ function validateProduct(producto, marca, modelo, sistema, imagen) {
     function validateInfo(element){
         if(element.value.trim().length < 2){
             element.style.backgroundColor = "var(--color-error)";
-            element.style.border = "1px solid red";
             element.nextElementSibling.style.display = "block";
             isValid = false;
          } else {
@@ -60,7 +59,7 @@ function validateProduct(producto, marca, modelo, sistema, imagen) {
         validateInfo(element)
     });
 
-     if(imagen.value.trim().endsWith("jpg") || imagen.value.trim().endsWith("jpeg") || imagen.value.trim().endsWith("png")){
+     if(imagen.value.trim().endsWith("jpg") || imagen.value.trim().endsWith("jpeg") || imagen.value.trim().endsWith("png")|| imagen.value.trim().endsWith("PNG")){
         imagen.nextElementSibling.style.display = "none";
         imagen.removeAttribute('style');
      } else {
@@ -84,10 +83,6 @@ function validateEditCliente(){
     const nacimiento = document.querySelector('.edit_nacimiento');
     const telefono = document.querySelector('.edit_telefono');
 
-    console.log(nombre)
-    console.log(apellido)
-    console.log(nacimiento)
-    console.log(telefono)
 
     // Recibir el valor de ValidateCliente()
     let isValid = validateCliente(nombre, apellido, nacimiento, telefono);

@@ -58,7 +58,11 @@ class ProductoController extends Controller
 
         $producto->save();
 
-        return redirect('/inventario');
+        $productos = Producto::all();
+
+        return response()->json([
+            'html' => view('productos.dataproducto', compact('productos'))->render(),
+        ]);
     }
 
     /**
@@ -104,14 +108,17 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         //validacion de lo datos
         $validateData = $request->validate([
             'producto' => 'required|max:200|min:2',
             'marca' => 'required|max:200|min:2',
             'modelo' => 'required|max:200|min:2',
             'sistema' => 'required|max:100|min:2',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg|min:1|max:3072'
+            'imagen' => 'sometimes|image|mimes:jpeg,png,jpg|max:3072'
         ]);
+
+
 
         $producto = Producto::find($id);
         $producto->producto = $validateData['producto'];
@@ -133,7 +140,14 @@ class ProductoController extends Controller
 
         $producto->save();
 
-        return redirect('/inventario');
+        $productos = Producto::all();
+        /***** 
+        return response()->json([
+            'html' => view('productos.dataProducto', compact('productos'))->render(),
+        ]);
+        */
+        $productos = Producto::all();
+        return view('inventario.inventario')->with('productos', $productos);
     }
 
     /**
@@ -144,6 +158,9 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $imagen = $producto->imagen;
         $producto->delete();
-        return redirect('inventario');
+        $productos = Producto::all();
+        return response()->json([
+            'html' => view('productos.dataproducto', compact('productos'))->render(),
+        ]);
     }
 }
