@@ -156,7 +156,17 @@ class ProductoController extends Controller
     public function destroy(string $id)
     {
         $producto = Producto::find($id);
-        $imagen = $producto->imagen;
+
+        // Verifica si el producto tiene una imagen asociada
+        if ($producto->imagen) {
+            $rutaImagen = public_path('imagen/' . $producto->imagen);
+            
+            // Verifica si la imagen existe en la carpeta antes de intentar eliminarla
+            if (file_exists($rutaImagen)) {
+                unlink($rutaImagen); // Elimina la imagen
+            }
+        }
+
         $producto->delete();
         $productos = Producto::all();
         return response()->json([
