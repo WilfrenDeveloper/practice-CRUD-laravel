@@ -15,20 +15,19 @@
     </div>
 
     <script>
+        $.ajax({
+            type: "GET",
+            url: "/getproducts",
+            success: function (res) {
+                $('.cards_products').html(res.html);                  
+            },
+            error: function(error) {
+                // Manejo de errores
+                console.error('Error:', error);
+            }
+        });
+
         $(document).ready(function() {
-
-            $.ajax({
-                type: "GET",
-                url: "/getproducts",
-                success: function (res) {
-                    $('.cards_products').html(res.html);                  
-                },
-                error: function(error) {
-                    // Manejo de errores
-                    console.error('Error:', error);
-                }
-            });
-
 
             $('#btn-search').on('click', function(e){
                 e.preventDefault()

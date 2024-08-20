@@ -33,6 +33,8 @@
         </div>
     </div>
     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+        <label for="edit_imagen">Imagen actual:</label>
+        <img src="" alt="Imagen actual" id="img_actual" style="max-width:80px; max-height:80px;">
         <label for="imagen" class="form-label">Selecciona la imagen</label>
         <div id="div_input">
             <input id="imagen" value=""  type="file" name="imagen" class="edit_imagen" accept=".jpg,.jpeg,.png" tabindex="5"  >
