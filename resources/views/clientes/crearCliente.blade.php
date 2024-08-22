@@ -61,18 +61,17 @@
                     success: function (res) {
                         //const cliente = res.cliente;
                         alert('Cliente Creado Exitosamente');
-                        console.log(res)
                         const cliente = res.cliente;
                         $('.tbody_clientes').append(`
                             <tr class="tr_operaciones tr_${cliente.id}" style="height:40px" data-id="${cliente.id}">
                                 ${res.html}
                             </tr>
                         `);
-                        
-
                         //escodemos el modal crear cliente y lo reseteamos
                         $('.form_create_client')[0].reset();
                         $('#modal_crearCliente').hide();
+
+                        alert('Cliente creado satisfactoriamente');
                     },
                     error: function (error) {
                         console.error('error', error);

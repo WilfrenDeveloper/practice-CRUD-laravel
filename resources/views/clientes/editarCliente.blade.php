@@ -56,6 +56,8 @@
                     success: function(res) {
                         $(`.tr_${res.id}`).html(res.html);
                         $('#modal_editarCliente').hide();
+
+                        alert('La información del cliente ha sido actualizada exitosamente')
                     },
                     error: function(error) {
                         console.error('error', error);
