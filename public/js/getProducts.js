@@ -44,9 +44,13 @@ function getProducts(search = "", offset = 0){
                                 <h5>${product.producto} ${product.marca} ${product.modelo}</h5>
                                 <p style="opacity: 0.6">Sistema Operativo:</p>
                                 <p style="margin-top:-15px;">${product.sistema}</p>
-                                <a class="btn_addToCart btn_style" data-id='${product.id}' style="position:absolute; bottom:0px;border-style:none; border-radius:10px; padding:5px 20px 5px 20px; background-color:#00c7c2 "  style="width: 22px">
-                                    <i class='bx bx-cart'></i>
-                                </a>
+                                
+                                <div style="display:flex; justify-content:space-between; position:absolute; bottom:0; width:100%">
+                                    <a class="btn_addToCart btn_style" data-id='${product.id}' style="bottom:0px;border-style:none; border-radius:10px; padding:5px 20px 5px 20px; background-color:#00c7c2 "  style="width: 22px">
+                                        <i class='bx bx-cart'></i>
+                                    </a>
+                                    <p>$${product.precio}</p>
+                                </div>
                             </div>
                         </div>    
                     `);

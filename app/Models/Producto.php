@@ -14,7 +14,7 @@ class Producto extends Model
 
     protected $table = 'productos';
 
-    protected $fillable = ['producto', 'marca', 'modelo', 'sistema', 'imagen']; 
+    protected $fillable = ['producto', 'marca', 'modelo', 'sistema', 'imagen', 'precio']; 
 
     public function clientesDelProducto() {
         return $this->belongsToMany(Cliente::class, 'cliente_productos', 'id_producto', 'id_cliente');

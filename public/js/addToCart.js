@@ -18,14 +18,20 @@ function addToCart (){
                                 <i class='bx bxs-trash'></i>
                             </button>
                         </div>
-                        <p class="card-text">Precio: <small class="text-body-secondary">5000</small></p>
+                        <p class="card-text">Precio: <small class="text-body-secondary">${producto.precio}</small></p>
                     </div>
                     </div>
                 </div>
             </div>
         `);
     });
-    const total = 0;
+
+    let total = 0;
+
+    arrayCart.forEach(product => {
+        total += (product.precio*product.quantity);
+    });
+
     $('.offcanvas-body').append(`
         <h5>Precio total: <strong>${total}</strong></h5>
     `)

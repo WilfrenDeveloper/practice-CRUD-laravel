@@ -66,7 +66,7 @@
                 type: "get",
                 url: `/productos/${id}`,
                 success: function (res) {
-                    localStorageCart(res.id, res.producto, res.marca, res.modelo, res.imagen);
+                    localStorageCart(res);
                 },
                 error: function(err){
                     console.error('error', err);

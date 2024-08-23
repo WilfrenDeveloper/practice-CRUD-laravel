@@ -6,6 +6,7 @@ function validateEditProduct(){
     const marca = document.querySelector('.edit_marca');
     const modelo = document.querySelector('.edit_modelo');
     const sistema = document.querySelector('.edit_sistema');
+    const precio = document.querySelector('.edit_precio');
     const imagen = document.querySelector('.edit_imagen');
 
     //  console.log(producto.value)
@@ -14,7 +15,7 @@ function validateEditProduct(){
     //  console.log(sistema.value)
     //  console.log(imagen.value)
 
-    let isValid = validateProduct(producto, marca, modelo, sistema, imagen)
+    let isValid = validateProduct(producto, marca, modelo, sistema, precio, imagen)
     console.log(isValid)
     return isValid;
 }
@@ -26,14 +27,15 @@ function validateFormProduct(){
     const marca = document.getElementById('marca');
     const modelo = document.getElementById('modelo');
     const sistema = document.getElementById('sistema');
+    const precio = document.getElementById('precio');
     const imagen = document.getElementById('imagen');
 
-    let isValid = validateProduct(producto, marca, modelo, sistema, imagen)
+    let isValid = validateProduct(producto, marca, modelo, sistema, precio, imagen)
 
     return isValid;
 }
 
-function validateProduct(producto, marca, modelo, sistema, imagen) {
+function validateProduct(producto, marca, modelo, sistema, precio, imagen) {
 
     let isValid = true;
 
@@ -42,7 +44,7 @@ function validateProduct(producto, marca, modelo, sistema, imagen) {
         return /^[a-zA-ZÀ-ÿ\s]+$/.test(str);
     }
 
-    const element = [producto, marca, modelo, sistema];
+    const element = [producto, marca, modelo, sistema, precio];
 
     function validateInfo(element){
         if(element.value.trim().length < 2){

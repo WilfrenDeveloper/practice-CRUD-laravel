@@ -22,7 +22,7 @@ class ProductoController extends Controller
         $message="";
             
         $productos = Producto::getProductBySearch($search)
-            ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
+            ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen', 'precio']);
         
         if ($productos->isEmpty()) {
             $productos = [];
@@ -31,7 +31,7 @@ class ProductoController extends Controller
             $productos = Producto::getProductBySearch($search)
                 ->offset($offset)
                 ->limit(4)
-                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
+                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen', 'precio']);
         }
 
         return response()->json([
@@ -57,6 +57,7 @@ class ProductoController extends Controller
             'marca' => 'required|max:200|min:2',
             'modelo' => 'required|max:200|min:2',
             'sistema' => 'required|max:100|min:2',
+            'precio' => 'required|min:1',
             'imagen' => 'required|image|mimes:jpeg,png,jpg|max:3072|min:1'
         ]);
 
@@ -66,6 +67,7 @@ class ProductoController extends Controller
         $producto->modelo = $validateData['modelo'];
         $producto->sistema = $validateData['sistema'];
         $producto->imagen = $validateData['imagen'];
+        $producto->precio = $validateData['precio'];
 
         // Procesar y almacenar la imagen
         if ($imagen = $request->file('imagen')) {
@@ -93,7 +95,7 @@ class ProductoController extends Controller
      */
     public function show(string $id){
 
-        $productos = Producto::find($id, ['id', 'producto', 'marca', 'modelo', 'imagen']);
+        $productos = Producto::find($id, ['id', 'producto', 'marca', 'modelo', 'imagen', 'precio']);
 
         return response()->json($productos);
     }
@@ -122,7 +124,8 @@ class ProductoController extends Controller
             'marca' => 'required|max:200|min:2',
             'modelo' => 'required|max:200|min:2',
             'sistema' => 'required|max:100|min:2',
-            'imagen' => 'sometimes|image|mimes:jpeg,png,jpg|max:3072'
+            'imagen' => 'sometimes|image|mimes:jpeg,png,jpg|max:3072',
+            'precio' => 'required|min:1',
         ]);
 
 
@@ -133,6 +136,7 @@ class ProductoController extends Controller
         $producto->modelo = $validateData['modelo'];
         $producto->sistema = $validateData['sistema'];
         $producto->imagen = $validateData['imagen'];
+        $producto->precio = $validateData['precio'];
 
         if ($imagen = $request->file('imagen')) {
             $rutaGuardarImagen = 'imagen/';

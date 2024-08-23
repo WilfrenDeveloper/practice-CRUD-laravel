@@ -1,5 +1,5 @@
 
-<form id="form_editarProducto" class="form_edit_product"  method="POST" onsubmit="return validateEditProduct()" enctype="multipart/form-data"  style="display:flex; flex-direction:column; align-items:center; gap: 20px; padding: 20px; background-color:white; border: 1px solid rgb(218, 216, 216)">
+<form id="form_editarProducto" class="form_edit_product"  method="POST" onsubmit="return validateEditProduct()" enctype="multipart/form-data"  style="display:flex; flex-direction:column; align-items:center; gap:5px; padding: 10px; background-color:white; border: 1px solid rgb(218, 216, 216)">
     @csrf
     @method('PUT')
     <h1 class="text-center">Editar Registro</h1>
@@ -30,6 +30,13 @@
         <div id="div_input">
             <input id="sistema" value="" type="text" name="sistema" class="input edit_sistema" tabindex="4">
             <p id="error">Debes insertar el sistema Operativo</p>
+        </div>
+    </div>
+    <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+        <label for="precio" class="form-label">Precio</label>
+        <div id="div_input">
+            <input id="precio" value="" type="precio" name="precio" class="input precio" tabindex="4">
+            <p id="error">Debes insertar el precio</p>
         </div>
     </div>
     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">

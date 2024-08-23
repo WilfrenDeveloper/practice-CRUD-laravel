@@ -17,6 +17,7 @@
                 <th style="padding: 10px">marca</th>
                 <th style="padding: 10px">modelo</th>
                 <th style="padding: 10px">sistema operativo</th>
+                <th style="padding: 10px">precio</th>
                 <th style="padding: 10px">imagen</th>
                 <th style="padding: 10px">operaciones</th>
             </thead>
@@ -27,6 +28,7 @@
                         <td>{{$producto->marca}}</td>
                         <td>{{$producto->modelo}}</td>
                         <td>{{$producto->sistema}}</td>
+                        <td>{{$producto->precio}}</td>
                         <td style="display:flex; justify-content:center; padding:0 5px; align-items:center">
                             <img src="/imagen/{{$producto->imagen}}" alt="" style="max-width:100px; max-height:60px">
                         </td>

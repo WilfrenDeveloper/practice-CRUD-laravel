@@ -35,12 +35,7 @@ div>.scroll{
 
 #error{
     display: none;
-    position: absolute;
-    left: -5px;
-    top: 35px;
     color: rgb(185, 0, 0) ;
-    padding: 5px;
-    border-radius: 10px;
     margin: 0;
     font-size: 13px;
 }
@@ -117,4 +112,8 @@ div>.scroll{
 .btn_style:hover{
     scale:1.05;
     opacity: 0.8;
+}
+
+.btn_style:active{
+    scale:0.9;
 }
