@@ -84,6 +84,7 @@
         //Botón Elminar que activa el modal
         function activarmodalEliminar(id){
             $(`.modal_${id}`).css('display', 'flex');
+            console.log('hola')
         };
         
         

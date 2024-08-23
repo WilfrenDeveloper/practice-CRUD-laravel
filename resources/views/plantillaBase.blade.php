@@ -8,9 +8,13 @@
         <!--- archivos javascript -->
         <script src="{{asset('js/isValid.js')}}"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{{asset('js/getProducts.js')}}"></script>
 
         <!-- archivos CSS -->
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+        <!--- BootsTrap Styles--->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
         <!-- iconos -->
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>

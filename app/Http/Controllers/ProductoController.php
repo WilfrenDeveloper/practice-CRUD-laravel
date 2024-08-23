@@ -70,28 +70,28 @@ class ProductoController extends Controller
      */
     public function show(Request $request){
         $search = $request->input('value');
-        $productos = ""; 
+        $offset = $request->input('offset');
         $message="";
-        if ($search) {
-            $productos = Producto::where('producto', 'LIKE', '%'.$search.'%')
-                ->orWhere('marca', 'LIKE', '%'.$search.'%')
-                ->orWhere('modelo', 'LIKE', '%'.$search.'%')
-                ->orWhere('sistema', 'LIKE', '%'.$search.'%')
-                ->get();
-            $message="";
-            if($productos->isEmpty()){
-                $message = "El producto que buscas no se encuentra disponible";
-                $productos = Producto::all();
-            };
+            
+        $productos = Producto::getProductBySearch($search)
+            ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
+        
+        if ($productos->isEmpty()) {
+            $productos = [];
+            $message = "El producto que buscas no se encuentra disponible";
         } else {
-            $productos = Producto::all();
-            $message="";
-        };  
+            $productos = Producto::getProductBySearch($search)
+                ->offset($offset)
+                ->limit(4)
+                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
+        }
 
         return response()->json([
-            'html' => view('productos.cardProducts', compact('productos'))->render(),
+            'productos' => $productos,
             'message' => $message]);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
