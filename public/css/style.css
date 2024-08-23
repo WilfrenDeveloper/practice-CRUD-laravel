@@ -5,6 +5,26 @@ html{
     
 }
 
+.card_product{
+    transition: 0.33s;
+}
+
+.card_product:hover{
+    margin:-8px;
+    box-shadow: 0 0 8px #a5ffff;
+}
+
+.img_product{
+    transition: 0.33s;
+}
+
+.img_product:hover{
+    scale: 1.15 ;
+}
+
+
+
+
 #div_input{
     position: relative;
 }
@@ -35,77 +55,6 @@ div>.scroll{
 .input:hover{
     border: 1px solid rgb(131, 131, 255);
     height: 30px;
-}
-
-button:hover{
-    box-shadow: 0 0 5px  rgb(191, 191, 191);
-    scale: 1.03;
-    opacity: 0.8;
-    
-}
-
-button:active{
-    box-shadow: 0 0 5px  rgb(153, 153, 153);
-    scale: 0.95;
-}
-
-button{
-    cursor: pointer;
-}
-
-
-
-.img_product{
-    max-width: 180px;
-    max-height: 160px;
-    transition: 0.5s;
-}
-
-.figure{
-    transition: 0.5s;
-    width: 200px; 
-    height: 180px; 
-    display:flex; 
-    align-items:center; 
-    justify-content:center;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-}
-
-.img_product:hover{
-    scale: 1.15;
-}
-
-a{
-    cursor: pointer;
-}
-
-.a_button:hover{
-    box-shadow: 0 0 5px rgb(76, 235, 208);
-    scale: 1.1;
-    transition: 0.1s;
-}
-
-.a_editar:hover{
-    box-shadow: 0 0 5px rgb(174, 174, 174);
-    scale: 1.1;
-    transition: 0.1s;
-    opacity: 0.8;
-}
-
-.card_product{
-    position: relative;
-    width:200px; 
-    padding: 20px;
-    background-color:white;
-    
-}
-
-.card_product:hover{
-    top:-8px;
-    box-shadow: 0 8px 8px 5px rgb(194, 194, 194);
-    border: 1px rgb(225, 225, 225) solid;
 }
 
 .bx-cart{
@@ -155,8 +104,17 @@ a{
 #div_modal_eliminar{
     width: 250px;
     padding: 0 20px 20px 20px; 
-    background-color: #fff;
+    background-color: #ffffff;
     text-align: center;
     border: 1px solid rgb(177, 177, 177);
     border-radius: 5px;
+}
+
+.btn_style{
+    transition: 0.2s;
+    cursor: pointer;
+}
+.btn_style:hover{
+    scale:1.05;
+    opacity: 0.8;
 }

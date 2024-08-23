@@ -24,4 +24,4 @@ Route::post('/generarfactura/{producto}', [FacturasController::class, 'store'])-
 
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 
-Route::get('/getproducts', [ProductoController::class, 'show']);
+Route::get('/getproducts', [ProductoController::class, 'getProducts']);

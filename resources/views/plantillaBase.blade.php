@@ -5,10 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
+
         <!--- archivos javascript -->
-        <script src="{{asset('js/isValid.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="{{asset('js/isValid.js')}}"></script>
         <script src="{{asset('js/getProducts.js')}}"></script>
+        <script src="{{asset('js/localStorageCart.js')}}"></script>
+        <script src="{{asset('js/addToCart.js')}}"></script>
 
         <!-- archivos CSS -->
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
@@ -29,18 +33,20 @@
     </head>
 <body class="" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
 
-        <nav style="display:flex; gap:15px; justify-content:space-between; align-items:center; margin:0; padding: 10px 30px; background-color:white;">
-            <figure>
-            <a href="/">
-                <img id="background" src="https://mascontrolapp.com/pos_naranja/logo/logo44.png" style="width:250px"/>
-            </a>
+        <nav class="navbar bg-body-tertiary p-4 bg-white mb-2">
+            <figure class="">
+              <a class="navbar-brand" href="/">
+                <img src="https://mascontrolapp.com/pos_naranja/logo/logo44.png" alt="Bootstrap" width="250" height="default">
+              </a>
             </figure>
-            <div style="display: flex; gap:10px; position:relative; font-size:25px">
-                <a href="/inventario" style="text-decoration:none; padding:10px">Inventario</a>
+            <div class="d-flex justify-content-end fs-4 gap-4 me-5">
+                <a href="/inventario" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Inventario</a>
                 
-                <a href="/clientes" style="text-decoration:none; padding:10px">Clientes</a>
+                <a href="/clientes" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover me-4">Clientes</a>
             </div>
         </nav>
+
+
         <main style="margin-top:0px">
 
             <div style="display: flex; justify-content:center; align-items:center; flex-direction:column">

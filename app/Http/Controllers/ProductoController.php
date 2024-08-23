@@ -16,6 +16,29 @@ class ProductoController extends Controller
         return view('inventario.inventario')->with('productos', $productos);
     }
 
+    public function getProducts(Request $request){
+        $search = $request->input('value');
+        $offset = $request->input('offset');
+        $message="";
+            
+        $productos = Producto::getProductBySearch($search)
+            ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
+        
+        if ($productos->isEmpty()) {
+            $productos = [];
+            $message = "El producto que buscas no se encuentra disponible";
+        } else {
+            $productos = Producto::getProductBySearch($search)
+                ->offset($offset)
+                ->limit(4)
+                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
+        }
+
+        return response()->json([
+            'productos' => $productos,
+            'message' => $message]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -68,27 +91,11 @@ class ProductoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request){
-        $search = $request->input('value');
-        $offset = $request->input('offset');
-        $message="";
-            
-        $productos = Producto::getProductBySearch($search)
-            ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
-        
-        if ($productos->isEmpty()) {
-            $productos = [];
-            $message = "El producto que buscas no se encuentra disponible";
-        } else {
-            $productos = Producto::getProductBySearch($search)
-                ->offset($offset)
-                ->limit(4)
-                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen']);
-        }
+    public function show(string $id){
 
-        return response()->json([
-            'productos' => $productos,
-            'message' => $message]);
+        $productos = Producto::find($id, ['id', 'producto', 'marca', 'modelo', 'imagen']);
+
+        return response()->json($productos);
     }
 
 
