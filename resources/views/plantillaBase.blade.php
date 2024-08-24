@@ -9,10 +9,10 @@
         <!--- archivos javascript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
         <script src="{{asset('js/isValid.js')}}"></script>
-        <script src="{{asset('js/getProducts.js')}}"></script>
-        <script src="{{asset('js/localStorageCart.js')}}"></script>
-        <script src="{{asset('js/addToCart.js')}}"></script>
+     
+        
 
         <!-- archivos CSS -->
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
@@ -30,6 +30,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
+        @yield('script_head')
     </head>
 <body class="" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
 

@@ -1,4 +1,13 @@
 @extends('plantillaBase')
+
+
+@section('script_head')
+<script src="{{asset('js/products/getProducts.js')}}"></script>
+<script src="{{asset('js/localStorage/localStorageCart.js')}}"></script>
+<script src="{{asset('js/cart/cartProducts.js')}}"></script>
+@endsection
+
+
 @section('welcome')
 
     <a class="fs-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="position:absolute; top:35px; right:30px">
@@ -10,8 +19,11 @@
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrito de Compras</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            
+
+        <div class="offcanvas-body container_productsCart"> </div>
+
+        <div class="ms-3"> 
+            <h5>Precio total: <strong class="totalPriceOfCart">0</strong></h5>
         </div>
     </div>
 
@@ -29,55 +41,5 @@
     
     <button class="btn_verMas btn btn-info rounded-0 text-light fs-6" >Ver más...</button>
 
-
-    <script>
-        $(document).ready(function() {
-            //Obtener todos los productos al recargar la página
-            getProducts();
-            addToCart();
-        });
-        
-        //Valor del input Search
-        let inputValue = "";
-        
-        //Obtener productos al presionar el botón VER MAS...
-        let offset = 0
-        $('body').on('click', '.btn_verMas', function (e) {
-            e.preventDefault();
-            offset += 4
-            getProducts(inputValue, offset);
-        });
-
-        $('body').on('click', '#btn-search', function(e){
-            e.preventDefault()
-            inputValue = $('.input-search').val();
-            if(inputValue){
-                offset = 0
-                getProducts(inputValue)
-                offset +=4
-            }
-            console.log(offset);
-        });
-        
-        $('body').on('click',  '.btn_addToCart', function(e){
-            e.preventDefault();
-            let id = $(this).data('id');
-            $.ajax({
-                type: "get",
-                url: `/productos/${id}`,
-                success: function (res) {
-                    localStorageCart(res);
-                },
-                error: function(err){
-                    console.error('error', err);
-                }
-            });
-        })
-
-        $('body').on('click', '.btn_deleteProductCart', function(){
-            let id = $(this).data('id');
-            deleteElementOfLocalStorage(id)
-        })
-    
-    </script>
+    <script src="{{asset('js/view_welcome/welcome.js')}}"></script>
 @endsection

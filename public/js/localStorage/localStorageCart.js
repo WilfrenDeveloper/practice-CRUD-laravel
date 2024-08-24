@@ -1,4 +1,4 @@
-function localStorageCart(product){
+function localStorageCart(product, operation = 'plus'){
     const productId = product.id;
     const producto = product.producto;
     const marca = product.marca;
@@ -10,18 +10,32 @@ function localStorageCart(product){
     const getItemCart = localStorage.getItem('cart');
     const arrayCart = JSON.parse(getItemCart) || [];
 
-    const matched = arrayCart.find((product) => product.productId === productId);
+    const productMatched = arrayCart.find((product) => product.productId === productId);
+    const addProductToLocalStorage = {productId, producto, marca, modelo, precio, imagen, quantity:1};
 
-    if(matched){
-        matched.quantity++
+    if(productMatched){
+        switch(operation){
+            case ('plus'):
+                productMatched.quantity++;
+                updateProductOfCart(productMatched);
+                break;
+            case ('minus'):
+                productMatched.quantity--;
+                updateProductOfCart(productMatched);
+                break;
+            default:
+                productMatched.quantity = operation;
+                updateProductOfCart(productMatched);
+                break;
+        }
     } else {
-        arrayCart.push({productId, producto, marca, modelo, precio, imagen, quantity: 1});
+        arrayCart.push(addProductToLocalStorage);
+        addProductToCart(addProductToLocalStorage);
     }
 
     const arrayJSON = JSON.stringify(arrayCart);
     localStorage.setItem('cart', arrayJSON);
 
-    addToCart();
     return arrayCart.length;
 }
 
@@ -33,7 +47,7 @@ function deleteElementOfLocalStorage(id){
 
     const arrayJSON = JSON.stringify(newArrayCart);
     localStorage.setItem('cart', arrayJSON);
+    deleteProductOfCart(id);
 
-    addToCart();
     return arrayCart.length;
 }
