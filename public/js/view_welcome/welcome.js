@@ -37,23 +37,23 @@ $('body').on('click',  '.btn_addToCart', function(e){
 
 $('body').on('click', '.btn_deleteProductCart', function(e){
     e.preventDefault();
-    let id = $(this).closest('#cart_product').data('id');
+    let id = $(this).closest('.cart_product').data('id');
     deleteElementOfLocalStorage(id)
 });
 
 $('body').on('click', '.btn_plus_cart', function(e){
     e.preventDefault();
-    let id = $(this).closest('#cart_product').data('id');
+    let id = $(this).closest('.cart_product').data('id');
     btnPlusProducts(id)
 });
 
 $('body').on('click', '.btn_minus_cart', function(e){
     e.preventDefault();
-    const input = $(this).closest('#cart_product').find('.product_quantity');
+    const input = $(this).closest('.cart_product').find('.product_quantity');
     if(input.val() <= 1){
         input.val(1)
     }else{
-        let id = $(this).closest('#cart_product').data('id');
+        let id = $(this).closest('.cart_product').data('id');
         btnMinusProducts(id)
     }
 });

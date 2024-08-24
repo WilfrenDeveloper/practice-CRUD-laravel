@@ -11,7 +11,10 @@
 @section('welcome')
 
     <a class="fs-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="position:absolute; top:35px; right:30px">
-        <i class='bx bxs-cart'></i>
+        <div style="position: relative">
+            <p class="totalQuantityOfCart" style="display:none; position:absolute; top:0; right:-5px; font-size:10px; color:white; background-color:red; border-radius:50%; padding:0 2px; text-align:center; min-width:15px; height:15px">0</p>
+            <i class='bx bxs-cart'></i>
+        </div>
     </a>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -22,7 +25,8 @@
 
         <div class="offcanvas-body container_productsCart"> </div>
 
-        <div class="ms-3"> 
+        <div class="ms-3">
+            <h6>Total items = <strong class="totalItemsOfCart">0</strong></h6> 
             <h5>Precio total: <strong class="totalPriceOfCart">0</strong></h5>
         </div>
     </div>

@@ -37,7 +37,7 @@ function getProducts(search = "", offset = 0){
                 productos.forEach(product => {
                     const array = JSON.stringify(product);
                     $('.cards_products').append(`
-                        <div class="card_product card_product_${product.id}" style="width:240px; border: 1px solid #e9e9e9; padding:10px">
+                        <div class="card_product_${product.id} card_product" style="width:240px; border: 1px solid #e9e9e9; padding:10px">
                             <figure class="figure" style="width:220px; height:220px; overflow: hidden; display:flex; justify-content: center; align-items:center">
                                 <img class="img_product" src="/imagen/${product.imagen}" alt="" style="max-width:180px; max-height:180px">
                             </figure>
@@ -50,7 +50,10 @@ function getProducts(search = "", offset = 0){
                                     <a class="btn_addToCart btn_style" data-id='${product.id}' style="bottom:0px;border-style:none; border-radius:10px; padding:5px 20px 5px 20px; background-color:#00c7c2 "  style="width: 22px">
                                         <i class='bx bx-cart'></i>
                                     </a>
-                                    <p>$${product.precio}</p>
+                                    <div class="justify-content-end">
+                                        <p class="m-0" style="text-align:end">$${product.precio}</p>
+                                        <p class="m-0">añadidos: <span class="products_added">0</span></p>
+                                    </div>
                                 </div>
                                 <input class="data_products_${product.id}" value='${array}' type="hidden"> 
                             </div>

@@ -2,40 +2,60 @@ function cartProducts() {
     const getItemCart = localStorage.getItem('cart');
     const arrayCart = JSON.parse(getItemCart) || [];
     $('.container_productsCart').html('');
+
     arrayCart.forEach(producto => {
         $('.container_productsCart').append(productOfCart(producto));
+        productsAdded(producto)
     });
     totalPriceProducts();
+}
+
+function productsAdded(producto){
+    $(`.card_product_${producto.productId}`).find(".products_added").html(producto.quantity);
 }
 
 function addProductToCart(producto){
     $('.container_productsCart').append(productOfCart(producto));
     totalPriceProducts();
+    productsAdded(producto);
 }
 
 function updateProductOfCart(producto){
     $(`.cart_product_${producto.productId}`).find(".product_quantity").val(producto.quantity);
     totalPriceProducts();
+    productsAdded(producto);
 }
 
 function deleteProductOfCart(id){
     $(`.cart_product_${id}`).remove();
+    $(`.card_product_${id}`).find(".products_added").html(0);
     totalPriceProducts();
 }
 
 function totalPriceProducts(){
-    let total = 0;
-
+    let priceTotal = 0;
+    let quantityTotal = 0;
+    
     const elements = $('.container_productsCart').children();
+    let itemsTotal = elements.length;
 
     for(let i=1; i<=elements.length; i++){
-        const element = $(`#cart_product:nth-child(${i})`)
-        const productPrice = element.find('.product_price').text();
-        const productQuantity = element.find('.product_quantity').val();
-        total += productPrice * productQuantity;
+        const element = $(`.cart_product:nth-child(${i})`)
+        const productPrice = parseFloat(element.find('.product_price').text());
+        const productQuantity = parseInt(element.find('.product_quantity').val());
+        priceTotal += productPrice * productQuantity;
+        quantityTotal += productQuantity;
     }
 
-    $('.totalPriceOfCart').html(total)
+    if(quantityTotal !== 0){
+        $('.totalQuantityOfCart').css('display', 'inline')
+    } else {
+        $('.totalQuantityOfCart').css('display', 'none')
+    }
+
+    $('.totalQuantityOfCart').html(quantityTotal)
+    $('.totalItemsOfCart').html(itemsTotal)
+    $('.totalPriceOfCart').html(priceTotal)
 }
 
 function btnPlusProducts(id){
@@ -52,7 +72,7 @@ function btnMinusProducts(id){
 
 function productOfCart(producto){
     return  `
-            <div id="cart_product" class="card mb-3 cart_product cart_product_${producto.productId}" data-id="${producto.productId}" style="max-width: 350px">
+            <div class="card mb-3 cart_product cart_product_${producto.productId}" data-id="${producto.productId}" style="max-width: 350px">
                 <div class="row g-0">
                     <div class="col-md-4 d-flex justify-content-center align-items-center" height="100%">
                         <img src="imagen/${producto.imagen}" class="img-fluid rounded-start" alt="..." style="height:80px">
