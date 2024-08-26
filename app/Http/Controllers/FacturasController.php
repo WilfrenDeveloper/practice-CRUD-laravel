@@ -62,7 +62,6 @@ class FacturasController extends Controller
     }
 
     public function generarFactura(){
-        return view('facturas.generarFactura');
     }
 
     /**
@@ -72,7 +71,7 @@ class FacturasController extends Controller
         $producto = Producto::find($id);
         $factura = Factura::all();
         $clientes = Cliente::all();
-        return view('facturas.generarFactura', compact('factura', 'producto', 'clientes'));
+        return response();
     }
 
     /**

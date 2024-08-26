@@ -5,6 +5,7 @@
 <script src="{{asset('js/products/getProducts.js')}}"></script>
 <script src="{{asset('js/localStorage/localStorageCart.js')}}"></script>
 <script src="{{asset('js/cart/cartProducts.js')}}"></script>
+<script src="{{asset('js/cart/productOfCart.js')}}"></script>
 <script src="{{asset('js/clientes/getAllClientes.js')}}"></script>
 @endsection
 
@@ -42,9 +43,6 @@
     
     
 
-    <div class="view_generarFactura" style="display: none">
-        @include('facturas/generarFactura')
-    </div>
 
     <script src="{{asset('js/view_welcome/welcome.js')}}"></script>
 @endsection

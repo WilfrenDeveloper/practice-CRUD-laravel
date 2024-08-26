@@ -1,30 +1,36 @@
 function cartProducts() {
     const getItemCart = localStorage.getItem('cart');
     const arrayCart = JSON.parse(getItemCart) || [];
-    $('.container_productsCart').html('');
+    $('.container_productsCart').find('tbody').html('');
 
     arrayCart.forEach(producto => {
-        $('.container_productsCart').append(productOfCart(producto));
-        productsAdded(producto)
+        productCart(producto);
+        productsAdded(producto);
     });
     totalPriceProducts();
+
+    requestAllClientes();
 }
 
 function productsAdded(producto){
-    $(`.card_product_${producto.productId}`).find(".products_added").html(producto.quantity);
+    $(`.card_product_${producto.productId}`).find(".products_added").text(producto.quantity);
 }
 
 function addProductToCart(producto){
-    $('.container_productsCart').append(productOfCart(producto));
-    totalPriceProducts();
     productsAdded(producto);
+    productCart(producto);
+    totalPriceProducts();
 }
+
 
 function updateProductOfCart(producto){
     $(`.cart_product_${producto.productId}`).find(".product_quantity").val(producto.quantity);
-    totalPriceProducts();
+    $(`.tr_product_${producto.productId}`).find('.productOfCart_product_quantity').val(producto.quantity);
     productsAdded(producto);
+    totalPriceProducts();
+    updateSubtotalOfProductOfCart(producto.productId);
 }
+
 
 function deleteProductOfCart(id){
     $(`.cart_product_${id}`).remove();
@@ -37,15 +43,16 @@ function totalPriceProducts(){
     let priceTotal = 0;
     let quantityTotal = 0;
     
-    const elements = $('.container_productsCart').children();
+    const elements =  $('.container_productsOfCart').find('tbody').children();
+    
     let itemsTotal = elements.length;
 
     for(let i=1; i<=elements.length; i++){
-        const element = $(`.cart_product:nth-child(${i})`)
-        const productPrice = element.find('.product_price').text();
+        const element = $(`.tr_product:nth-child(${i})`)
+        const productPrice = element.find('.productOfCart_total_price').text();
         const price = parseFloat(productPrice.replace(/,/g, ''));
-        const quantity = parseInt(element.find('.product_quantity').val());
-        priceTotal += price * quantity;
+        const quantity = parseInt(element.find('.productOfCart_product_quantity').val());
+        priceTotal += price;
         quantityTotal += quantity;
     }
 
@@ -62,48 +69,5 @@ function totalPriceProducts(){
     $('.totalPriceOfCart').html(priceTotal)
 }
 
-function btnPlusProducts(id){
-    const productInString = $(`.card_product_${id}`).find(`.data_products_${id}`).val();
-    const stringToObject = JSON.parse(productInString);
-    localStorageCart(stringToObject);
-}   
 
-function btnMinusProducts(id){
-    const productInString = $(`.card_product_${id}`).find(`.data_products_${id}`).val();
-    const stringToObject = JSON.parse(productInString);
-    localStorageCart(stringToObject, 'minus');
-}
-
-function productOfCart(producto){
-    const price = producto.precio;
-    var formattedNumber = numeral(price).format('0,0');
-    return  `
-            <div class="card mb-3 cart_product cart_product_${producto.productId}" data-id="${producto.productId}" style="max-width: 350px">
-                <div class="row g-0">
-                    <div class="col-md-4 d-flex justify-content-center align-items-center" height="100%">
-                        <img src="imagen/${producto.imagen}" class="img-fluid rounded-start" alt="..." style="height:80px">
-                    </div>
-                    <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title">${producto.producto} ${producto.marca} ${producto.modelo}</h6>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text">
-                                <small class="text-body-secondary">Cantidad: </small>
-                                <div>
-                                    <input class="product_quantity form-control" value="${producto.quantity}" data-id='${producto.productId}' min="1" type="" style="width:70px; height:24px"> 
-                                    <button class="btn_plus_cart" style="border-style:none; background:none; margin:0; padding:0"><i class='bx bxs-plus-circle'></i></button>
-                                    <button class="btn_minus_cart" style="border-style:none; background:none; margin:0; padding:0"><i class='bx bxs-minus-circle'></i></button>
-                                </div>
-                            </p>
-                            <button class="btn btn-primary btn_deleteProductCart" >
-                                <i class='bx bxs-trash'></i>
-                            </button>
-                        </div>
-                        <p class="card-text">Precio: <small class="text-body-secondary product_price">${formattedNumber}</small></p>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        `
-}
 

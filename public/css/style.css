@@ -22,7 +22,9 @@ html{
     scale: 1.15 ;
 }
 
-
+a{
+    cursor: pointer;
+}
 
 
 #div_input{

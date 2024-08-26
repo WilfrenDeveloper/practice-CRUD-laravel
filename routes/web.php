@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartProductoController;
 use App\Http\Controllers\ClienteProductoController;
 use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\ProductoController;
@@ -20,7 +21,6 @@ Route::resource('/clientes', 'App\Http\Controllers\ClienteController');
 
 Route::resource('/facturas', 'App\Http\Controllers\FacturasController');
 
-Route::get('/generarfactura', [FacturasController::class, 'generarFactura']);
 
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 
