@@ -1,6 +1,6 @@
 html{
     --color-error : rgba(255, 0, 0, 0.137) ;
-    
+    --primary-color: #00c7c2 ;
     background-color: #f3f3f3;
     
 }

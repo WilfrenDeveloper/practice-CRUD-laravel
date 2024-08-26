@@ -23,7 +23,6 @@ $('body').on('click', '#btn-search', function(e){
         getProducts(inputValue)
         offset +=4
     }
-    console.log(offset);
 });
 
 $('body').on('click',  '.btn_addToCart', function(e){
@@ -38,7 +37,7 @@ $('body').on('click',  '.btn_addToCart', function(e){
 $('body').on('click', '.btn_deleteProductCart', function(e){
     e.preventDefault();
     let id = $(this).closest('.cart_product').data('id');
-    deleteElementOfLocalStorage(id)
+    deleteProductOfCart(id)
 });
 
 $('body').on('click', '.btn_plus_cart', function(e){
@@ -58,13 +57,15 @@ $('body').on('click', '.btn_minus_cart', function(e){
     }
 });
 
-function valueChange(id){
-    const valueInput = $(`.cart_product_${id}`).find('.product_quantity');
-
-    if(valueInput.val() < 1){
+$('body').on('input', '.product_quantity', function(){
+    const id = $(this).data('id');
+    const valueInput = $(this);
+    valueInput.val(parseInt(valueInput.val()));
+    if(valueInput.val() == 0){
         valueInput.val(1)
     }
     const productInString = $(`.data_products_${id}`).val();
     const stringToObject = JSON.parse(productInString);
     localStorageCart(stringToObject, Number(valueInput.val()));
-}
+});
+

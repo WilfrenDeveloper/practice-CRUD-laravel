@@ -35,7 +35,8 @@ function getProducts(search = "", offset = 0){
             
             function addCardsProducts(productos){ 
                 productos.forEach(product => {
-                    const array = JSON.stringify(product);
+                var formattedNumber = numeral(product.precio).format('0,0');
+                const array = JSON.stringify(product);
                     $('.cards_products').append(`
                         <div class="card_product_${product.id} card_product" style="width:240px; border: 1px solid #e9e9e9; padding:10px">
                             <figure class="figure" style="width:220px; height:220px; overflow: hidden; display:flex; justify-content: center; align-items:center">
@@ -51,7 +52,7 @@ function getProducts(search = "", offset = 0){
                                         <i class='bx bx-cart'></i>
                                     </a>
                                     <div class="justify-content-end">
-                                        <p class="m-0" style="text-align:end">$${product.precio}</p>
+                                        <p class="m-0" style="text-align:end">$${formattedNumber}</p>
                                         <p class="m-0">añadidos: <span class="products_added">0</span></p>
                                     </div>
                                 </div>

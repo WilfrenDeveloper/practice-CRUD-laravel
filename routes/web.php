@@ -18,9 +18,9 @@ Route::put('/productos/{id}/update', [ProductoController::class, 'update']);
 
 Route::resource('/clientes', 'App\Http\Controllers\ClienteController');
 
-Route::resource('/generarfactura', 'App\Http\Controllers\FacturasController');
+Route::resource('/facturas', 'App\Http\Controllers\FacturasController');
 
-Route::post('/generarfactura/{producto}', [FacturasController::class, 'store'])->name('generarfactura.store');
+Route::get('/generarfactura', [FacturasController::class, 'generarFactura']);
 
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 

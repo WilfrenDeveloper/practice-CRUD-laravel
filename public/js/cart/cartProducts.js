@@ -30,6 +30,7 @@ function deleteProductOfCart(id){
     $(`.cart_product_${id}`).remove();
     $(`.card_product_${id}`).find(".products_added").html(0);
     totalPriceProducts();
+    deleteElementOfLocalStorage(id);
 }
 
 function totalPriceProducts(){
@@ -41,10 +42,11 @@ function totalPriceProducts(){
 
     for(let i=1; i<=elements.length; i++){
         const element = $(`.cart_product:nth-child(${i})`)
-        const productPrice = parseFloat(element.find('.product_price').text());
-        const productQuantity = parseInt(element.find('.product_quantity').val());
-        priceTotal += productPrice * productQuantity;
-        quantityTotal += productQuantity;
+        const productPrice = element.find('.product_price').text();
+        const price = parseFloat(productPrice.replace(/,/g, ''));
+        const quantity = parseInt(element.find('.product_quantity').val());
+        priceTotal += price * quantity;
+        quantityTotal += quantity;
     }
 
     if(quantityTotal !== 0){
@@ -52,6 +54,8 @@ function totalPriceProducts(){
     } else {
         $('.totalQuantityOfCart').css('display', 'none')
     }
+
+    priceTotal = numeral(priceTotal).format('0,0');
 
     $('.totalQuantityOfCart').html(quantityTotal)
     $('.totalItemsOfCart').html(itemsTotal)
@@ -71,6 +75,8 @@ function btnMinusProducts(id){
 }
 
 function productOfCart(producto){
+    const price = producto.precio;
+    var formattedNumber = numeral(price).format('0,0');
     return  `
             <div class="card mb-3 cart_product cart_product_${producto.productId}" data-id="${producto.productId}" style="max-width: 350px">
                 <div class="row g-0">
@@ -84,7 +90,7 @@ function productOfCart(producto){
                             <p class="card-text">
                                 <small class="text-body-secondary">Cantidad: </small>
                                 <div>
-                                    <input class="product_quantity form-control" value="${producto.quantity}" onchange="valueChange(${producto.productId})" min="0" type="number" style="width:50px; height:24px"> 
+                                    <input class="product_quantity form-control" value="${producto.quantity}" data-id='${producto.productId}' min="1" type="" style="width:70px; height:24px"> 
                                     <button class="btn_plus_cart" style="border-style:none; background:none; margin:0; padding:0"><i class='bx bxs-plus-circle'></i></button>
                                     <button class="btn_minus_cart" style="border-style:none; background:none; margin:0; padding:0"><i class='bx bxs-minus-circle'></i></button>
                                 </div>
@@ -93,7 +99,7 @@ function productOfCart(producto){
                                 <i class='bx bxs-trash'></i>
                             </button>
                         </div>
-                        <p class="card-text">Precio: <small class="text-body-secondary product_price">${producto.precio}</small></p>
+                        <p class="card-text">Precio: <small class="text-body-secondary product_price">${formattedNumber}</small></p>
                     </div>
                     </div>
                 </div>

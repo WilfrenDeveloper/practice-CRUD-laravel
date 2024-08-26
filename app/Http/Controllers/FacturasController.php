@@ -34,38 +34,41 @@ class FacturasController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request, $productoId)
-{
-    $request->validate([
-        'id_cliente' => 'required|exists:clientes,id',
-    ]);
+    {
+        $request->validate([
+            'id_cliente' => 'required|exists:clientes,id',
+        ]);
 
-    // Crear nueva factura
-    $ultimoCodigo = Factura::latest('id')->value('codigo');
-    $numero = $ultimoCodigo ? intval(substr($ultimoCodigo, 3)) + 1 : 1;
-    $nuevocodigo = "VEN" . str_pad($numero, 3, '0', STR_PAD_LEFT);
+        // Crear nueva factura
+        $ultimoCodigo = Factura::latest('id')->value('codigo');
+        $numero = $ultimoCodigo ? intval(substr($ultimoCodigo, 3)) + 1 : 1;
+        $nuevocodigo = "VEN" . str_pad($numero, 3, '0', STR_PAD_LEFT);
 
-    $factura = new Factura();
-    $factura->codigo = $nuevocodigo;
-    $factura->fecha_de_compra = date('Y-m-d');
-    $factura->save();
+        $factura = new Factura();
+        $factura->codigo = $nuevocodigo;
+        $factura->fecha_de_compra = date('Y-m-d');
+        $factura->save();
 
-    // Obtener el último factura creada
-    $id_Factura = $factura->id;
+        // Obtener el último factura creada
+        $id_Factura = $factura->id;
 
-    $pivote = new ClienteProducto();
-    $pivote->id_producto = $productoId;
-    $pivote->id_cliente = $request->input('id_cliente');
-    $pivote->id_factura = $id_Factura;
-    $pivote->save();
+        $pivote = new ClienteProducto();
+        $pivote->id_producto = $productoId;
+        $pivote->id_cliente = $request->input('id_cliente');
+        $pivote->id_factura = $id_Factura;
+        $pivote->save();
 
-    return redirect('/ventas');
-}
+        return redirect('/ventas');
+    }
+
+    public function generarFactura(){
+        return view('facturas.generarFactura');
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
+    public function show(string $id){
         $producto = Producto::find($id);
         $factura = Factura::all();
         $clientes = Cliente::all();

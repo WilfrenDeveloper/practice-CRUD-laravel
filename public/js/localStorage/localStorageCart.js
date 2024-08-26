@@ -47,7 +47,7 @@ function deleteElementOfLocalStorage(id){
 
     const arrayJSON = JSON.stringify(newArrayCart);
     localStorage.setItem('cart', arrayJSON);
-    deleteProductOfCart(id);
+    
 
     return arrayCart.length;
 }
