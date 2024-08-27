@@ -114,7 +114,7 @@
                     alert('El Producto ha sido eliminado satisfactoriamente');
                 },
                 error: function(error){
-                    console.log(error);
+                    console.error(error);
                 },
             });
         };

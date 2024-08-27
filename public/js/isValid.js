@@ -75,7 +75,11 @@ function validateProduct(producto, marca, modelo, sistema, precio, imagen) {
     return isValid;
 };
 
+
+/******************************************** */
 /****         VALIDAR DATOS DEL CLIENTE   *****/
+/******************************************** */
+
 
 function validateEditCliente(){
 
@@ -186,4 +190,110 @@ function validateCliente(nombre, apellido, nacimiento, telefono) {
     }
 
     return isValid;
+}
+
+function validateClienteOfCart() {
+
+    const element = document.querySelector('.generarFactura_form');
+    const nombre = element.querySelector('#nombre');
+    const apellido = element.querySelector('#apellido');
+    const direccion = element.querySelector('#direccion');
+    const telefono = element.querySelector('#telefono');
+    let isValid = true;
+
+    // Validar si el valor del input es string y permite espacios
+    function isString(str) {
+        return /^[a-zA-ZÀ-ÿ\s]+$/.test(str);
+    }
+
+    const esNombre = isString(nombre.value.trim());
+    const esApellido = isString(apellido.value.trim());
+
+
+    // Validar si el valor es un número de 10 dígitos
+    function isNumCel(num) {
+        return num.length === 10 && !isNaN(Number(num));
+    }
+
+    const isCel = isNumCel(telefono.value.trim());
+
+    if (nombre.value.trim().length < 3) {
+        isValid = false;
+        nombre.value = '';
+        nombre.setAttribute('placeholder', 'Inserta un nombre');
+        nombre.style.backgroundColor = 'var(--color-error)';
+        
+    } else if(!esNombre) {
+        isValid = false;
+        nombre.nextSibling.nextSibling.style.display = "block";
+    } else {
+        nombre.nextSibling.nextSibling.style.display = "none";
+        nombre.style.backgroundColor = '';
+    };
+
+    if (apellido.value.trim().length < 3) {
+        isValid = false;
+        apellido.value = '';
+        apellido.setAttribute('placeholder', 'Inserta un apellido');
+        apellido.style.backgroundColor = 'var(--color-error)';
+    } else if(!esApellido) {
+        isValid = false;
+        apellido.nextSibling.nextSibling.style.display = "block";
+    } else {
+        apellido.nextSibling.nextSibling.style.display = "none";
+        apellido.style.backgroundColor = '';
+    }
+
+    if (direccion.value.length < 5) {
+        isValid = false;
+        direccion.style.backgroundColor = 'var(--color-error)';
+        direccion.nextElementSibling.style.display = "block";
+    } else {
+        direccion.style.backgroundColor = '';
+        direccion.nextElementSibling.style.display = "none";
+    }
+
+    if (!isCel || telefono.value.trim().length !== 10) {
+        isValid = false;
+        telefono.setAttribute('placeholder', 'Inserta un número de teléfono');
+        telefono.style.backgroundColor = 'var(--color-error)';
+        telefono.nextElementSibling.style.display = "block";
+    } else if (telefono.value.trim()[0] != '3'){
+        isValid = false;
+        telefono.style.backgroundColor = 'var(--color-error)';
+        telefono.nextElementSibling.style.display = "none";
+        telefono.nextElementSibling.nextElementSibling.style.display = "block";
+    } else {
+        telefono.style.backgroundColor = '';
+        telefono.nextSibling.nextSibling.style.display = "none";
+        telefono.nextElementSibling.nextElementSibling.style.display = "none";
+    }
+
+    return isValid;
+}
+
+function allCorrectCliente() {
+    const element = document.querySelector('.generarFactura_form');
+    const nombre = element.querySelector('#nombre');
+    const apellido = element.querySelector('#apellido');
+    const direccion = element.querySelector('#direccion');
+    const telefono = element.querySelector('#telefono');
+
+    nombre.value = "";
+    nombre.nextSibling.nextSibling.style.display = "none";
+    nombre.style.backgroundColor = '';
+
+    apellido.value="";
+    apellido.nextSibling.nextSibling.style.display = "none";
+    apellido.style.backgroundColor = '';
+
+    direccion.value="";
+    direccion.style.backgroundColor = '';
+    direccion.nextElementSibling.style.display = "none";
+
+    telefono.value="";
+    telefono.style.backgroundColor = '';
+    telefono.nextElementSibling.style.display = "none";
+    telefono.nextElementSibling.nextElementSibling.style.display = "none";
+
 }

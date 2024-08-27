@@ -1,17 +1,11 @@
-$(document).ready(function () {
-    requestAllClientes()
-});
-
 
 
 $('body').on('click', '.btn_cartProducts-comprar', function () {
-    
+    $('.generarFactura').show();
 });
 
-
-
 $('body').on('input', '.productOfCart_product_quantity', function(){
-    const id = $(this).closest('.tr_product').data('id');
+    let id = $(this).closest('.tr_product').data('id');
     const valueInput = $(this);
     let cantidad = parseInt(valueInput.val().replace(/,/g, ''), 10) || 0;
     cantidad = Math.abs(cantidad);
@@ -19,6 +13,9 @@ $('body').on('input', '.productOfCart_product_quantity', function(){
     valueInput.val(formattedValue);
 
     updateSubtotalOfProductOfCart(id)
+    editElementOfLocalStorage(id);
+    console.log(id)
+    $(`div.card_product_${id}`).find('.products_added').text(cantidad);
 })
 
 $('body').on('input', '.productOfCart_descuento', function(){
@@ -28,7 +25,9 @@ $('body').on('input', '.productOfCart_descuento', function(){
     desc = Math.abs(desc);
     const formattedValue = numeral(desc).format('0,0.00');
     valueInput.val(formattedValue);
+
     updateSubtotalOfProductOfCart(id)
+    editElementOfLocalStorage(id);
 });
 
 $('body').on('click', '.productOfCart_delete_product', function(){
@@ -42,10 +41,6 @@ function updateSubtotalOfProductOfCart(id){
     let priceOfProduct = elementOfCart.find('.productOfCart_price').text();
     let quantityOfProducts = elementOfCart.find('.productOfCart_product_quantity').val();
     let descOfProduct = elementOfCart.find('.productOfCart_descuento').val();
-
-    console.log(priceOfProduct)
-    console.log(quantityOfProducts)
-    console.log(descOfProduct)
 
     const price = parseFloat(priceOfProduct.replace(/,/g, ''));
     const quantity = parseInt(quantityOfProducts.replace(/,/g, ''));
@@ -61,26 +56,6 @@ function calculateTotalPrice(price, quantity, desc = 0){
     return  price * quantity * porcentaje;
 };
 
-function requestAllClientes(){
-    $.ajax({
-        type: "GET",
-        url: "/clientes",
-        success: function (response) {
-            const clientes = response;
-            clientes.forEach(cliente => {
-                $('.productOfCart_selectCliente').append(`
-                    <option value="${cliente.id}" style="padding: 5px 10px">
-                        ${cliente.nombre} ${cliente.apellido}
-                    </option>
-                `);   
-            });
-        },
-        error: function(err){
-            console.error(err);
-        }
-    });
-}
-
 
 function productCart(product) {
     let totalPrice = calculateTotalPrice(product.precio, product.quantity);
@@ -92,7 +67,7 @@ function productCart(product) {
                 <td scope="col">${product.producto} ${product.marca} ${product.modelo}</td>   
                 <td scope="col" class="productOfCart_price" style="text-align:end">${unitPrice}</td>
                 <td scope="col"><input type="" class="productOfCart_product_quantity form-control" value="${product.quantity}" data-id='${product.productId}' min="1" placeholder="0.00" style="width:80px; text-align:end; height:30px"></td>
-                <td scope="col" style="display:flex; justify-content:end"><input type="" class="productOfCart_descuento form-control" value="0" placeholder="0.00" style="width:80px; text-align:end; height:30px">%</td>
+                <td scope="col" style="display:flex; justify-content:end"><input type="" class="productOfCart_descuento form-control" value="${product.descuento}" placeholder="0.00" style="width:80px; text-align:end; height:30px">%</td>
                 <td scope="col" style="text-align:end">
                     <span class="productOfCart_total_price" data-id='${product.productId}'>${totalPrice}</span>
                     <button class="productOfCart_delete_product" style="border-style:none; background:none; color:red"><i class='bx bxs-trash'></i></button>

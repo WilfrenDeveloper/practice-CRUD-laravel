@@ -8,8 +8,6 @@ function cartProducts() {
         productsAdded(producto);
     });
     totalPriceProducts();
-
-    requestAllClientes();
 }
 
 function productsAdded(producto){

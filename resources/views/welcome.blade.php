@@ -13,7 +13,7 @@
 @section('welcome')
 
     <div class="div_welcome" style="display: flex; justify-content:center; align-items:center; flex-direction:column">
-        <a class="fs-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="position:absolute; top:35px; right:30px">
+        <a class="fs-3 generarFactura_exit" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="position:absolute; top:35px; right:30px">
             <div style="position: relative">
                 <p class="totalQuantityOfCart" style="display:none; position:absolute; top:0; right:-5px; font-size:10px; color:white; background-color:red; border-radius:50%; padding:0 2px; text-align:center; min-width:15px; height:15px">0</p>
                 <i class='bx bxs-cart'></i>
@@ -40,6 +40,8 @@
     <div class="modal_cartProducts">
         @include('cart/cartProducts')
     </div>
+
+   
     
     
 

@@ -61,9 +61,49 @@ class FacturasController extends Controller
         return redirect('/ventas');
     }
 
-    public function generarFactura(){
-    }
+    
+    public function generarFacturaOfCart(Request $request){
 
+        $request->validate([
+            'cliente' => 'required|array',
+            'cart' => 'required|array',
+        ]);
+
+        $clienteDataArray = $request->input('cliente');
+        $cartDataArray = $request->input('cart');
+
+        // Convertir el array de objetos en un array asociativo
+        $clienteData = [];
+        foreach ($clienteDataArray as $item) {
+            $clienteData[$item['name']] = $item['value'];
+        }
+
+        $cliente = new Cliente();
+        $cliente->nombre = $clienteData['nombre'];
+        $cliente->apellido = $clienteData['apellido'];
+        $cliente->direccion = $clienteData['direccion'];
+        $cliente->telefono = $clienteData['telefono'];
+
+        //$idCliente = $cliente->id; 
+
+        // Crear nueva factura
+        $ultimoCodigo = Factura::latest('id')->value('codigo');
+        $numero = $ultimoCodigo ? intval(substr($ultimoCodigo, 3)) + 1 : 1;
+        $nuevocodigo = "VEN" . str_pad($numero, 3, '0', STR_PAD_LEFT);
+
+        $factura = new Factura();
+        $factura->codigo = $nuevocodigo;
+        $factura->fecha_de_compra = date('Y-m-d');
+        //$factura->save();
+
+        // Obtener el último factura creada
+        $id_Factura = $factura->id;
+
+        return response()->json([
+            'cliente' => $cliente,
+            'cart' => $cartDataArray[0],
+        ]);
+    }
     /**
      * Display the specified resource.
      */

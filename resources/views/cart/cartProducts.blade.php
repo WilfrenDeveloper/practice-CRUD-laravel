@@ -15,7 +15,7 @@
                     <th scope="col">Precio Unidad</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Descuento %</th>
-                    <th scope="col">Precio Total</th>
+                    <th scope="col">Subtotal</th>
                 </tr>
             </thead>
             <tbody>   
@@ -33,6 +33,11 @@
         <button class="btn_cartProducts-comprar btn btn-primary"  style="height: 40px">
             Comprar
         </button>
+
+        
+    </div>
+    <div class="modal_generarFactura">
+        @include('facturas/generarFactura')
     </div>
 </div>
     

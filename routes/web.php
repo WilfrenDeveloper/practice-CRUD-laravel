@@ -4,6 +4,7 @@ use App\Http\Controllers\CartProductoController;
 use App\Http\Controllers\ClienteProductoController;
 use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\ProductoController;
+use App\Models\Cliente;
 use App\Models\ClienteProducto;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,8 @@ Route::resource('/clientes', 'App\Http\Controllers\ClienteController');
 
 Route::resource('/facturas', 'App\Http\Controllers\FacturasController');
 
-
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 
 Route::get('/getproducts', [ProductoController::class, 'getProducts']);
+
+Route::post('/generarfactura', [FacturasController::class, 'generarFacturaOfCart']);

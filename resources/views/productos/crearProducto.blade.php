@@ -69,8 +69,6 @@
 
             let formData = new FormData(this);
 
-            console.log([...formData.entries()]);
-
             //validar datos
             if (validateFormProduct()) {
                 $.ajax({
