@@ -7,17 +7,18 @@ function cartProducts() {
         productCart(producto);
         productsAdded(producto);
     });
-    totalPriceProducts();
+    totalPriceAllProductsOfCart();
 }
 
 function productsAdded(producto){
     $(`.card_product_${producto.productId}`).find(".products_added").text(producto.quantity);
+    $(`.products_added_${producto.productId}`).text(producto.quantity);
 }
 
 function addProductToCart(producto){
     productsAdded(producto);
     productCart(producto);
-    totalPriceProducts();
+    totalPriceAllProductsOfCart();
 }
 
 
@@ -25,7 +26,7 @@ function updateProductOfCart(producto){
     $(`.cart_product_${producto.productId}`).find(".product_quantity").val(producto.quantity);
     $(`.tr_product_${producto.productId}`).find('.productOfCart_product_quantity').val(producto.quantity);
     productsAdded(producto);
-    totalPriceProducts();
+    totalPriceAllProductsOfCart();
     updateSubtotalOfProductOfCart(producto.productId);
 }
 
@@ -33,11 +34,11 @@ function updateProductOfCart(producto){
 function deleteProductOfCart(id){
     $(`.cart_product_${id}`).remove();
     $(`.card_product_${id}`).find(".products_added").html(0);
-    totalPriceProducts();
+    totalPriceAllProductsOfCart();
     deleteElementOfLocalStorage(id);
 }
 
-function totalPriceProducts(){
+function totalPriceAllProductsOfCart(){
     let priceTotal = 0;
     let quantityTotal = 0;
     
@@ -47,7 +48,7 @@ function totalPriceProducts(){
 
     for(let i=1; i<=elements.length; i++){
         const element = $(`.tr_product:nth-child(${i})`)
-        const productPrice = element.find('.productOfCart_total_price').text();
+        const productPrice = element.find('.productOfCart_total').text();
         const price = parseFloat(productPrice.replace(/,/g, ''));
         const quantity = parseInt(element.find('.productOfCart_product_quantity').val());
         priceTotal += price;
@@ -60,12 +61,13 @@ function totalPriceProducts(){
         $('.totalQuantityOfCart').css('display', 'none')
     }
 
-    priceTotal = numeral(priceTotal).format('0,0');
+    priceTotal = numeral(priceTotal).format('0,0.00');
 
     $('.totalQuantityOfCart').html(quantityTotal)
     $('.totalItemsOfCart').html(itemsTotal)
     $('.totalPriceOfCart').html(priceTotal)
 }
+
 
 
 

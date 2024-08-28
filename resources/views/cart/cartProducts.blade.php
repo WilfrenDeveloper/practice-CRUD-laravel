@@ -10,12 +10,13 @@
         <table class="table table-striped table-bordered" style="font-size:13px">
             <thead class="table-dark">
                 <tr style="text-align: center">
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Producto</th>   
-                    <th scope="col">Precio Unidad</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Descuento %</th>
+                    <th scope="col" style="width: 35px">Imagen</th>
+                    <th scope="col" style="width: 100px">Producto</th>   
+                    <th scope="col" style="width: 50px">Precio Unidad</th>
+                    <th scope="col" style="width: 40px">Cantidad</th>
                     <th scope="col">Subtotal</th>
+                    <th scope="col" >Descuento %</th>
+                    <th scope="col">Total</th>
                 </tr>
             </thead>
             <tbody>   

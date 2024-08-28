@@ -17,15 +17,13 @@ function getProducts(search = "", offset = 0){
                 $('.btn_verMas').show();
             };
             
-            //Si el valor del input no coincide con los nom bres de los producto, entonces aparece un mensaje
-            if(message){ //si la variable mensaje tiene algun valor se inserta los elementos
+            if(message){
                 $('.div_message').html(`<i class='bx bx-error-circle' style='font-size: 30px;color:#d90000;'></i> 
                     <p class="p_message" style="font-size: 20px">${message}</p>`);
-            } else { //si la variable mensaje no tiene algun valor se eliminan los elementos
+            } else {
                 $('.div_message').html('');
             };
             
-            //Resetea todo los elementos dentro la etiqueta .cards_products
             if(offset == 0){
                 $('.cards_products').html('');
                 addCardsProducts(productos);
@@ -53,7 +51,7 @@ function getProducts(search = "", offset = 0){
                                     </a>
                                     <div class="justify-content-end">
                                         <p class="m-0" style="text-align:end">$${formattedNumber}</p>
-                                        <p class="m-0">añadidos: <span class="products_added">0</span></p>
+                                        <p class="m-0">añadidos: <span class="products_added products_added_${product.id}">0</span></p>
                                     </div>
                                 </div>
                                 <input class="data_products_${product.id}" value='${array}' type="hidden"> 

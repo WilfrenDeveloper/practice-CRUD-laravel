@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    requestAllClientes();
 });
 
 $('body').on('click', '.generarFactura_exit', function () {
@@ -18,49 +17,22 @@ $('body').on('submit', '.generarFactura_form', function(e){
     const getItemCart = localStorage.getItem('cart');
     const cartLocalStorage = JSON.parse(getItemCart);
 
+    const total = $('.totalPriceOfCart').text();
+    const precio_total = parseFloat(total.replace(/,/g, ''));
+
     const cliente = $(this);
     
     if(Array.isArray(cartLocalStorage) && cartLocalStorage.length > 0){
         if(validateClienteOfCart()){
-            generarFactura(cliente, cartLocalStorage);
+            generarFactura(cliente, cartLocalStorage, precio_total);
         }
     } else {
         alert('Debes añadir productos al carrito antes de generar la factura')
     }
 })
 
-function requestAllClientes(){
-    $.ajax({
-        type: "GET",
-        url: "/clientes",
-        success: function (response) {
-            const clientes = response;
-            clientes.forEach(cliente => {
-                $('.generarFactura_select').append(`
-                    <option value="${cliente.id}" style="padding: 5px 10px">
-                        ${cliente.nombre} ${cliente.apellido}
-                    </option>
-                `);   
-            });
-        },
-        error: function(err){
-            console.error(err);
-        }
-    });
-}
 
-function getClienteById(id){
-
-    $.ajax({
-        type: "GET",
-        url: `/clientes/${id}`,
-        success: function (res) {
-            console.log(res)
-        }
-    });
-}
-
-function generarFactura(cliente, cart){
+function generarFactura(cliente, cart, precio_total){
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -71,14 +43,22 @@ function generarFactura(cliente, cart){
         url: "/generarfactura",
         data: {
             cliente : cliente.serializeArray(),
-            cart : cart
+            cart,
+            precio_total,
         },
-        success: function (response) {
-            console.log(response);
-            console.log('la respues ha sido exitosa')
+        success: function (res) {
+            alert('factura generada exitosamente');
+            console.log(res);
+            localStorage.removeItem('cart');
+            $('.container_productsOfCart').find('tbody').html('');
+            $('.totalQuantityOfCart').html('');
+            $('.totalQuantityOfCart').css('display', 'none');
+            $('#offcanvasRight').attr('class', 'offcanvas offcanvas-end');
+            $('.offcanvas-backdrop').remove();
+            $('body').css('overflow', 'auto');
+            $(".products_added").text('0');
         },
-        error: function (error) { 
-            console.log('la respuesta ha sido erronea')
+        error: function (error) {
             console.error(error);
         }
     });

@@ -6,7 +6,9 @@ use App\Models\Cliente;
 use App\Models\ProductosFacturas;
 use App\Models\Factura;
 use App\Models\Producto;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FacturasController extends Controller
 {
@@ -65,42 +67,84 @@ class FacturasController extends Controller
         $request->validate([
             'cliente' => 'required|array',
             'cart' => 'required|array',
+            'precio_total' => 'required'
         ]);
 
-        $clienteDataArray = $request->input('cliente');
-        $cartDataArray = $request->input('cart');
+        try {
+            //code...
+            DB::beginTransaction();
 
-        // Convertir el array de objetos en un array asociativo
-        $clienteData = [];
-        foreach ($clienteDataArray as $item) {
-            $clienteData[$item['name']] = $item['value'];
+            $clienteDataArray = $request->input('cliente');
+            $cartDataArray = $request->input('cart');
+            $precio_total = floatval($request->input(('precio_total')));
+            
+    
+            // Convertir el array de objetos en un array asociativo
+            $clienteData = [];
+            foreach ($clienteDataArray as $item) {
+                $clienteData[$item['name']] = $item['value'];
+            }
+    
+            $cliente = new Cliente();
+            $cliente->nombre = $clienteData['nombre'];
+            $cliente->apellido = $clienteData['apellido'];
+            $cliente->direccion = $clienteData['direccion'];
+            $cliente->telefono = $clienteData['telefono'];
+            $cliente->save();
+            $id_cliente = $cliente->id;
+    
+            //$idCliente = $cliente->id; 
+    
+            // Crear nueva factura
+            $ultimoCodigo = Factura::latest('id')->value('codigo');
+            $numero = $ultimoCodigo ? intval(substr($ultimoCodigo, 3)) + 1 : 1;
+            $nuevocodigo = "VEN" . str_pad($numero, 3, '0', STR_PAD_LEFT);
+    
+            $factura = new Factura();
+            $factura->codigo = $nuevocodigo;
+            $factura->fecha_de_compra = date('Y-m-d');
+            $factura->id_cliente = $id_cliente;
+            $factura->valor_total = $precio_total;
+            $factura->save();
+            // Obtener el último factura creada
+            $id_factura = $factura->id;
+    
+             function calculateTotalPrice($prod){
+                $porcentaje = 1 - ($prod['descuento']/100);
+                return  $prod['precio'] * $prod['quantity'] * $porcentaje;
+            };
+    
+            //throw new Exception("Error interno");
+    
+            foreach ($cartDataArray as $prod) {
+                $productoFactura = new ProductosFacturas();
+                $productoFactura->id_producto = $prod['productId'];
+                $productoFactura->id_factura = $id_factura;
+                $productoFactura->descuento = $prod['descuento'];
+                $productoFactura->cantidad = $prod['quantity'];
+                $productoFactura->precio_total = calculateTotalPrice($prod);
+                $productoFactura->save();
+            };
+
+            DB::commit();
+
+            return response()->json([
+                'factura' => $factura->codigo,
+                'cliente' => $cliente->nombre." ".$cliente->apellido,
+            ]);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $th->getMessage(),
+                'trace' => $th->getTrace(),
+            ]);
+
         }
 
-        $cliente = new Cliente();
-        $cliente->nombre = $clienteData['nombre'];
-        $cliente->apellido = $clienteData['apellido'];
-        $cliente->direccion = $clienteData['direccion'];
-        $cliente->telefono = $clienteData['telefono'];
-
-        //$idCliente = $cliente->id; 
-
-        // Crear nueva factura
-        $ultimoCodigo = Factura::latest('id')->value('codigo');
-        $numero = $ultimoCodigo ? intval(substr($ultimoCodigo, 3)) + 1 : 1;
-        $nuevocodigo = "VEN" . str_pad($numero, 3, '0', STR_PAD_LEFT);
-
-        $factura = new Factura();
-        $factura->codigo = $nuevocodigo;
-        $factura->fecha_de_compra = date('Y-m-d');
-        //$factura->save();
-
-        // Obtener el último factura creada
-        $id_Factura = $factura->id;
-
-        return response()->json([
-            'cliente' => $cliente,
-            'cart' => $cartDataArray[0],
-        ]);
+       
     }
     /**
      * Display the specified resource.

@@ -6,21 +6,7 @@
 
 
         <h3>Datos del Cliente</h3>
-        <!--
-        <div>
-            
-            <form class="input-group">
-                @csrf
-                <select class="generarFactura_select form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option value="">Seleccione una opción</option>
-                </select>
         
-                <button class="btn_selecionar_cliente btn btn-outline-secondary" type="button">Seleccionar</button>
-            </form>
-        </div>
-        <br>
-
-        --->
         <form class="generarFactura_form form-control" style="display:flex; flex-direction:column; gap: 30px; width:330px">
                 @csrf
                 
