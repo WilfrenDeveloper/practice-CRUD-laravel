@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Models\ClienteProducto;
+use App\Models\ProductosFacturas;
 use App\Models\Factura;
 use App\Models\Producto;
 use DateTime;
 use Illuminate\Http\Request;
 
-class ClienteProductoController extends Controller
+class ProductosFacturasController extends Controller
 {
     public function index(){
         return view('welcome');
@@ -64,7 +64,7 @@ class ClienteProductoController extends Controller
         $id_Factura = $factura->id;
     
         // Crear entrada en la tabla pivote
-        $pivote = new ClienteProducto();
+        $pivote = new ProductosFacturas();
         $pivote->id_producto = $request->get('id_producto');
         $pivote->id_cliente = $id_cliente;
         $pivote->id_factura = $id_Factura;

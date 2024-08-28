@@ -10,11 +10,11 @@ class Factura extends Model
     use HasFactory;
     public $timestamps = false;
 
-    public function productoDeLaFactura() {
-        return $this->belongsToMany(Producto::class, 'cliente_productos', 'id_factura', 'id_producto');
+    public function cliente() {
+        return $this->belongsTo(Cliente::class, 'id_cliente');
     }
 
-    public function clienteDeLaFactura() {
-        return $this->belongsToMany(Cliente::class, 'cliente_productos', 'id_factura', 'id_cliente');
+    public function productos() {
+        return $this->hasMany(ProductosFacturas::class, 'id_factura');
     }
 }

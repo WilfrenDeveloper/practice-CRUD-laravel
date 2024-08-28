@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Models\ClienteProducto;
+use App\Models\ProductosFacturas;
 use App\Models\Factura;
 use App\Models\Producto;
-use DateTime;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class FacturasController extends Controller
@@ -52,7 +50,7 @@ class FacturasController extends Controller
         // Obtener el último factura creada
         $id_Factura = $factura->id;
 
-        $pivote = new ClienteProducto();
+        $pivote = new ProductosFacturas();
         $pivote->id_producto = $productoId;
         $pivote->id_cliente = $request->input('id_cliente');
         $pivote->id_factura = $id_Factura;

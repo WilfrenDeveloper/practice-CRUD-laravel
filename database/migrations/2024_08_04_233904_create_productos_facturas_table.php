@@ -11,7 +11,7 @@ return new class extends Migration
      */  
     public function up(): void
     {
-        Schema::create('cliente_productos', function (Blueprint $table) {
+        Schema::create('productos_facturas', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('id_producto')
@@ -20,17 +20,15 @@ return new class extends Migration
             ->cascadeOnUpdate()
             ->nullOnDelete();
 
-            $table->foreignId('id_cliente')
-            ->nullable()
-            ->constrained('clientes')
-            ->cascadeOnUpdate()
-            ->nullOnDelete();
-
             $table->foreignId('id_factura')
             ->nullable()
             ->constrained('facturas')
             ->cascadeOnUpdate()
             ->nullOnDelete();
+
+            $table->double('descuento');
+
+            $table->double('precio_total');
         });
     }
 
@@ -39,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cliente_productos');
+        Schema::dropIfExists('productos_facturas');
     }
 };

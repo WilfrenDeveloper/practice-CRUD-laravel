@@ -12,13 +12,9 @@ class Cliente extends Model
 
     protected $table = 'clientes';
 
-    protected $fillable = ['nombre', 'apellido', 'nacimiento', 'telefono'];
+    protected $fillable = ['nombre', 'apellido', 'direccion', 'nacimiento', 'telefono'];
 
-    public function productosDelCliente() {
-        return $this->belongsToMany(Producto::class, 'cliente_productos', 'id_cliente', 'id_producto');
-    }
-
-    public function facturasDelCliente() {
-        return $this->belongsToMany(Factura::class, 'cliente_productos', 'id_cliente', 'id_factura');
+    public function factura() {
+        return $this->hasMany(Factura::class, 'id_cliente');
     }
 }

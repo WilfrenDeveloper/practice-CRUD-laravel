@@ -1,14 +1,14 @@
 <?php
 
 use App\Http\Controllers\CartProductoController;
-use App\Http\Controllers\ClienteProductoController;
+use App\Http\Controllers\ProductosFacturasController;
 use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\ProductoController;
 use App\Models\Cliente;
-use App\Models\ClienteProducto;
+use App\Models\ProductosFacturas;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('/', 'App\Http\Controllers\ClienteProductoController');
+Route::resource('/', 'App\Http\Controllers\ProductosFacturasController');
 
 Route::resource('/inventario', 'App\Http\Controllers\ProductoController');
 

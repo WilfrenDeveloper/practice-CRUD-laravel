@@ -16,13 +16,11 @@ class Producto extends Model
 
     protected $fillable = ['producto', 'marca', 'modelo', 'sistema', 'imagen', 'precio']; 
 
-    public function clientesDelProducto() {
-        return $this->belongsToMany(Cliente::class, 'cliente_productos', 'id_producto', 'id_cliente');
+    public function factura() {
+        return $this->hasMany(ProductosFacturas::class, 'id_producto');
     }
 
-    public function facturasDelProducto() {
-        return $this->belongsToMany(Factura::class, 'cliente_productos', 'id_producto', 'id_factura');
-    }
+    
 
     public function scopeGetProductBySearch(Builder $query, $search){
 

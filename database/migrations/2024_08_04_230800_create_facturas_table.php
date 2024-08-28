@@ -14,7 +14,16 @@ return new class extends Migration
         Schema::create('facturas', function (Blueprint $table) {
             $table->id();
             $table->string('codigo', 10);
+            
+            $table->foreignId('id_cliente')
+            ->nullable()
+            ->constrained('clientes')
+            ->cascadeOnUpdate()
+            ->nullOnDelete();
+
             $table->date('fecha_de_compra');
+
+            $table->double('valor_total');
         });
     }
 
