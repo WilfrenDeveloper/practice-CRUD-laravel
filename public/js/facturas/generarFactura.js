@@ -12,6 +12,7 @@ $('body').on('click', '.btn_selecionar_cliente', function(e){
     getClienteById(id_cliente);
 });
 
+/*
 $('body').on('submit', '.generarFactura_form', function(e){
     e.preventDefault();
     const getItemCart = localStorage.getItem('cart');
@@ -30,6 +31,26 @@ $('body').on('submit', '.generarFactura_form', function(e){
         alert('Debes añadir productos al carrito antes de generar la factura')
     }
 })
+*/
+
+$('body').on('click', '.generarFactura_btn_comprar', function(){
+    
+})
+
+function metodo_de_pago(){
+    
+    $.ajax({
+        type: "GET",
+        url: "/metodoDePago",
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error){
+            console.error(error )
+        }
+    });
+}
+
 
 
 function generarFactura(cliente, cart, precio_total){
@@ -38,6 +59,7 @@ function generarFactura(cliente, cart, precio_total){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
     $.ajax({
         type: "POST",
         url: "/generarfactura",

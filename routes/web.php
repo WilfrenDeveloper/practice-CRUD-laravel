@@ -27,3 +27,5 @@ Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 Route::get('/getproducts', [ProductoController::class, 'getProducts']);
 
 Route::post('/generarfactura', [FacturasController::class, 'generarFacturaOfCart']);
+
+Route::get('/metodoDePago', 'App\Http\Controllers\MetodoDePagoController@getAll');

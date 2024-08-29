@@ -2,7 +2,7 @@
 <div class="generarFactura" style="display:none; position:fixed; top:0; left:0; height:100%; width:50%; background-color:white; overflow-y:auto" z-index="100">
     
     <div class="position-relative" style="padding: 20px; background-color:white;">
-        <button class="generarFactura_exit btn position-absolute top-0 end-0 fs-5"><i class="bi bi-x-lg"></i> </button>
+        <button class="generarFactura_exit btn position-absolute top-0 end-0 fs-5" ><i class="bi bi-x-lg"></i> </button>
 
 
         <h3>Datos del Cliente</h3>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div>
-                <button class="btn btn-primary">Comprar</button>
+                <button class="generarFactura_btn_comprar btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Comprar</button>
                 <a class="generarFactura_exit btn btn-light">Cancelar</a>
                 </div>
             </form>
