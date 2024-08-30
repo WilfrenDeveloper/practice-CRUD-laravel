@@ -31,15 +31,16 @@
             <h5>Precio total: <strong class="totalPriceOfCart">0</strong></h5>
         </div>
         <!-- Button trigger modal -->
-        <button class="btn_cartProducts-comprar btn btn-primary"  style="height: 40px">
+        <button class="btn_cartProducts-comprar btn btn-primary btn_generarFactura_cancel" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="height: 40px; display:none">
             Comprar
         </button>
 
         
     </div>
-    <div class="modal_generarFactura">
-        @include('facturas/generarFactura')
-    </div>
+    
+    
+    
 </div>
+@include('facturas/generarFactura')
     
 <script src="{{asset('js/cart/productOfCart.js')}}"></script>

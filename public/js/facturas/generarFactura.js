@@ -2,18 +2,14 @@ $(document).ready(function () {
 });
 
 $('body').on('click', '.generarFactura_exit', function () {
-    $('.generarFactura').hide();
     allCorrectCliente();
+    $('.generarFactura_select').html(`
+        <option value="1">Efectivo</option>
+    `)
 });
 
-$('body').on('click', '.btn_selecionar_cliente', function(e){
-    e.preventDefault();
-    const id_cliente = $('.generarFactura_select').val();
-    getClienteById(id_cliente);
-});
 
-/*
-$('body').on('submit', '.generarFactura_form', function(e){
+$('body').on('click', '.btn_comprar_generarFactura', function(e){
     e.preventDefault();
     const getItemCart = localStorage.getItem('cart');
     const cartLocalStorage = JSON.parse(getItemCart);
@@ -21,11 +17,27 @@ $('body').on('submit', '.generarFactura_form', function(e){
     const total = $('.totalPriceOfCart').text();
     const precio_total = parseFloat(total.replace(/,/g, ''));
 
+    const cliente = $('.generarFactura_form'); 
+
+    const metodo_de_pago = $('.generarFactura_select').val();
+    if(validateClienteOfCart()){
+        generarFactura(cliente, cartLocalStorage, precio_total, metodo_de_pago);
+        $('.generarFactura_select').html(`
+            <option value="1">Efectivo</option>
+        `)
+    }
+});
+
+/*
+$('body').on('submit', '.generarFactura_form', function(e){
+    e.preventDefault();
+    
+
     const cliente = $(this);
     
     if(Array.isArray(cartLocalStorage) && cartLocalStorage.length > 0){
         if(validateClienteOfCart()){
-            generarFactura(cliente, cartLocalStorage, precio_total);
+            
         }
     } else {
         alert('Debes añadir productos al carrito antes de generar la factura')
@@ -37,29 +49,33 @@ $('body').on('click', '.generarFactura_btn_comprar', function(){
     
 })
 
-function metodo_de_pago(){
-    
+function metodo_de_pago(){   
     $.ajax({
         type: "GET",
         url: "/metodoDePago",
         success: function (response) {
-            console.log(response);
-        },
-        error: function (error){
-            console.error(error )
+            response['bancos'].forEach(element => {
+                $('.generarFactura_select').append(`
+                    <option value="${element[0].id}">${element[0].forma_de_pago} ${element[1].tipo_de_cuenta} - ${element[1].numero_de_cuenta}</option>
+                `);
+            });
+            response['cryptos'].forEach(element => {
+                $('.generarFactura_select').append(`
+                    <option value="${element[0].id}">${element[0].forma_de_pago} - ${element[1].wallet}</option>
+                `);
+            });
         }
     });
 }
 
 
 
-function generarFactura(cliente, cart, precio_total){
+function generarFactura(cliente, cart, precio_total, metodo){
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
     $.ajax({
         type: "POST",
         url: "/generarfactura",
@@ -67,10 +83,9 @@ function generarFactura(cliente, cart, precio_total){
             cliente : cliente.serializeArray(),
             cart,
             precio_total,
+            metodo,
         },
-        success: function (res) {
-            alert('factura generada exitosamente');
-            console.log(res);
+        success: function(res) {
             localStorage.removeItem('cart');
             $('.container_productsOfCart').find('tbody').html('');
             $('.totalQuantityOfCart').html('');
@@ -79,6 +94,13 @@ function generarFactura(cliente, cart, precio_total){
             $('.offcanvas-backdrop').remove();
             $('body').css('overflow', 'auto');
             $(".products_added").text('0');
+            
+            Swal.fire({
+                title: "The Internet?",
+                text: "That thing is still around?",
+                icon: "question"
+              });
+              
         },
         error: function (error) {
             console.error(error);

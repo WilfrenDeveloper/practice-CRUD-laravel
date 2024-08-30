@@ -11,4 +11,11 @@ class Crypto extends Model
     public $timestamps = false;
 
     protected $table = 'cryptos'; 
+
+    protected $fillable = ['wallet'];
+
+    public function metodo_de_pago()
+    {
+        return $this->belongsTo(MetodoDePago::class, 'metodo_de_pago_id');
+    }
 }

@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('clientes', function (Blueprint $table) {
-            $table->date('nacimiento')->nullable()->change();
-        });
+            Schema::rename('factura_metodo_de_pagos', 'factura_metodo_de_pagos');
     }
 
     /**
@@ -21,8 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('clientes', function (Blueprint $table) {
-            $table->date('nacimiento')->nullable(false)->change();
-        });
+        Schema::rename('factura_metodo_de_pagoss', 'factura_metodo_de_pagos');
     }
 };

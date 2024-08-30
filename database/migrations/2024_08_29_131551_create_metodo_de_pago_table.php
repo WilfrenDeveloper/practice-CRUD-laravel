@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('metodo_de_pago', function (Blueprint $table) {
             $table->id();
             $table->string('metodo_de_pago');
+            $table->string('forma_de_pago');
         });
     }
 

@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('cryptos', function (Blueprint $table) {
             $table->id();
-            $table->string('crypto');
+            $table->unsignedBigInteger('metodo_de_pago_id'); // Agregar clave foránea
             $table->string('wallet');
+            $table->foreign('metodo_de_pago_id')
+                ->references('id')
+                ->on('metodo_de_pago')
+                ->onDelete('cascade');
         });
     }
 

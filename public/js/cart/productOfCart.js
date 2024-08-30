@@ -1,7 +1,15 @@
 
 
-$('body').on('click', '.btn_cartProducts-comprar', function () {
+$('body').on('click', '.btn_cartProducts-comprar', function (e) {
+    e.preventDefault();
+    const getItemCart = localStorage.getItem('cart');
+    const cartLocalStorage = JSON.parse(getItemCart);
+    
     $('.generarFactura').show();
+    $('.generarFactura_select').html(`
+        <option value="1">Efectivo</option>
+    `)
+    metodo_de_pago();
 });
 
 $('body').on('input', '.productOfCart_product_quantity', function(){
@@ -11,6 +19,7 @@ $('body').on('input', '.productOfCart_product_quantity', function(){
     cantidad = Math.abs(cantidad);
     const formattedValue = cantidad === 0 ? 1 : numeral(cantidad).format('0,0');
     valueInput.val(formattedValue);
+    $(`.card_product_${id}`).find('.products_added').text(cantidad);
 
     updateSubtotalOfProductOfCart(id)
     editElementOfLocalStorage(id);
@@ -68,7 +77,6 @@ function productCart(product) {
     let total = calculateTotalPrice(product.precio, product.quantity, product.descuento);
         total = numeral(total).format('0,0.00');
     let unitPrice = numeral(product.precio).format('0,0');
-    
         $('.container_productsOfCart').find('tbody').append(`
             <tr class="tr_product tr_product_${product.productId}" data-id="${product.productId}">
                 <td scope="col"><img src="/imagen/${product.imagen}" alt=""  style="height:30px"></td>

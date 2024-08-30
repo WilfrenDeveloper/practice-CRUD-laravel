@@ -11,4 +11,11 @@ class Banco extends Model
     public $timestamps = false;
 
     protected $table = 'bancos'; 
+
+    protected $fillable = ['tipo_de_cuenta', 'numero_de_cuenta', 'metodo_de_pago_id'];
+
+    public function metodo_de_pago()
+    {
+        return $this->belongsTo(MetodoDePago::class, 'metodo_de_pago_id');
+    }
 }

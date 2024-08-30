@@ -17,4 +17,8 @@ class Factura extends Model
     public function productos() {
         return $this->hasMany(ProductosFacturas::class, 'id_factura');
     }
+
+    public function factura_metodoDePago() {
+        return $this->hasMany(FacturaMetodoDePago::class, 'id_factura');
+    }
 }

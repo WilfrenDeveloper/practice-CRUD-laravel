@@ -96,6 +96,8 @@ function validateEditCliente(){
     return isValid;
 }
 
+/************************************************************* */
+
 function validateFormCliente(){
 
     // Obtener elementos del DOM
@@ -109,6 +111,7 @@ function validateFormCliente(){
 
     return isValid;
 }
+/********************************************************* */
 
 function validateCliente(nombre, apellido, nacimiento, telefono) {
 
@@ -191,6 +194,8 @@ function validateCliente(nombre, apellido, nacimiento, telefono) {
 
     return isValid;
 }
+
+/************************************* */
 
 function validateClienteOfCart() {
 

@@ -10,8 +10,7 @@ class ProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(){
         $productos = Producto::all();
         return view('inventario.inventario')->with('productos', $productos);
     }

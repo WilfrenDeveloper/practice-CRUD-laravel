@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\ProductosFacturas;
 use App\Models\Factura;
+use App\Models\FacturaMetodoDePago;
+use App\Models\MetodoDePago;
 use App\Models\Producto;
 use Exception;
 use Illuminate\Http\Request;
@@ -77,14 +79,15 @@ class FacturasController extends Controller
             $clienteDataArray = $request->input('cliente');
             $cartDataArray = $request->input('cart');
             $precio_total = floatval($request->input(('precio_total')));
+            $metodo = $request->input('metodo');
             
-    
             // Convertir el array de objetos en un array asociativo
             $clienteData = [];
             foreach ($clienteDataArray as $item) {
                 $clienteData[$item['name']] = $item['value'];
             }
-    
+            
+                
             $cliente = new Cliente();
             $cliente->nombre = $clienteData['nombre'];
             $cliente->apellido = $clienteData['apellido'];
@@ -92,8 +95,6 @@ class FacturasController extends Controller
             $cliente->telefono = $clienteData['telefono'];
             $cliente->save();
             $id_cliente = $cliente->id;
-    
-            //$idCliente = $cliente->id; 
     
             // Crear nueva factura
             $ultimoCodigo = Factura::latest('id')->value('codigo');
@@ -113,9 +114,15 @@ class FacturasController extends Controller
                 $porcentaje = 1 - ($prod['descuento']/100);
                 return  $prod['precio'] * $prod['quantity'] * $porcentaje;
             };
+            
+
+            $metodo_de_pago = new FacturaMetodoDePago();
+            $metodo_de_pago->id_factura = $id_factura;
+            $metodo_de_pago->id_metodo_de_pago = $metodo;
+            $metodo_de_pago->save();
     
             //throw new Exception("Error interno");
-    
+            
             foreach ($cartDataArray as $prod) {
                 $productoFactura = new ProductosFacturas();
                 $productoFactura->id_producto = $prod['productId'];
@@ -127,10 +134,13 @@ class FacturasController extends Controller
             };
 
             DB::commit();
-
+            
             return response()->json([
-                'factura' => $factura->codigo,
-                'cliente' => $cliente->nombre." ".$cliente->apellido,
+                //'factura' => $factura->codigo,
+                //'cliente' => $cliente->nombre." ".$cliente->apellido,
+                'metodo' => $metodo_de_pago,
+                'cart' => $cartDataArray,
+                'cliente' => $clienteData,
             ]);
 
         } catch (\Throwable $th) {
