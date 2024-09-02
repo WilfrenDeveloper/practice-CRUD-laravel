@@ -14,6 +14,8 @@ Route::resource('/inventario', 'App\Http\Controllers\ProductoController');
 
 Route::get('/ventas', 'App\Http\Controllers\FacturasController@index');
 
+Route::get('/facturas/ventas', 'App\Http\Controllers\FacturasController@getAllFacturas');
+
 Route::resource('/productos', 'App\Http\Controllers\ProductoController');
 
 Route::put('/productos/{id}/update', [ProductoController::class, 'update']);

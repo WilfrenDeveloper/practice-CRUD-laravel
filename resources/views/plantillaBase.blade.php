@@ -65,7 +65,7 @@
                 @yield('comprasDelCliente')
             </div>
             
-            <div style="display: flex; justify-content:center; align-items:center">
+            <div class="ventas_page" style="display: flex; justify-content:center; align-items:center">
                 @yield('ventas')
             </div>
             

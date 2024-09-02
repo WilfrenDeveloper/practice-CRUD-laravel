@@ -12,16 +12,30 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPSTORM_META\map;
+
 class FacturasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
 
-    public function index()
-    {
-        $facturas = Factura::all();
-        return view('inventario/ventas', compact('facturas'));
+    public function index(){
+        return view('inventario.ventas');
+    }
+
+
+
+    public function getAllFacturas(){
+
+        $facturas = Factura::offset(0)
+        ->with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
+        ->limit(10)
+        ->orderby('id','desc')
+        ->get(['id', 'codigo', 'fecha_de_compra', 'valor_total','id_cliente']);
+        
+        
+
+        return response()->json([
+            'facturas' => $facturas,
+        ]);
     }
 
     /**

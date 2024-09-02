@@ -9,12 +9,13 @@ class FacturaMetodoDePago extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['id_factura', 'id_metodo_de_pago'];
 
-    public function facturaDelProducto() {
+    public function factura() {
         return $this->belongsTo(Factura::class, 'id_factura');
     }
 
-    public function productoDeLaFactura() {
+    public function metodoDePago() {
         return $this->belongsTo(MetodoDePago::class, 'id_metodo_de_pago');
     }
 }

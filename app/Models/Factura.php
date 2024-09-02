@@ -9,6 +9,7 @@ class Factura extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['codigo', 'fecha_de_compra', 'valor_total', 'id_cliente'];
 
     public function cliente() {
         return $this->belongsTo(Cliente::class, 'id_cliente');
@@ -19,6 +20,7 @@ class Factura extends Model
     }
 
     public function factura_metodoDePago() {
-        return $this->hasMany(FacturaMetodoDePago::class, 'id_factura');
+    
+        return $this->hasMany(FacturaMetodoDePago::class,'id_factura','id');
     }
 }

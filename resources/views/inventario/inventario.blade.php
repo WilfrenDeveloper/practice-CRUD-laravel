@@ -6,7 +6,7 @@
         
         <h1 class="title" style="position: absolute">Inventario</h1>
 
-        <div style="margin:10px 0   ; width:600px; display: flex; justify-content:space-between; align-items:center;">              
+        <div style="margin:10px 0; width:600px; display: flex; justify-content:space-between; align-items:center;">              
                 <a href="/ventas" style="text-decoration:none; color:black; padding:10px 20px; text-align:center; font-size:28px">Ventas</a>
                 <button id="btn_crearProducto" class="a_editar" style="text-decoration:none; border: 1px rgba(220, 182, 182, 0) solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</button>
         </div>

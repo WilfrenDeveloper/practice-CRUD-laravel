@@ -29,4 +29,5 @@ class MetodoDePago extends Model
     public function metodoDePagoDeFactura() {
         return $this->hasMany(FacturaMetodoDePago::class, 'id_metodo_de_pago');
     }
+
 }
