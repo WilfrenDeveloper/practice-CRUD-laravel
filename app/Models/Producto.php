@@ -14,7 +14,7 @@ class Producto extends Model
 
     protected $table = 'productos';
 
-    protected $fillable = ['producto', 'marca', 'modelo', 'sistema', 'imagen', 'precio']; 
+    protected $fillable = ['producto', 'marca', 'modelo', 'sistema', 'cantidad', 'imagen', 'precio']; 
 
     public function factura() {
         return $this->hasMany(ProductosFacturas::class, 'id_producto');

@@ -136,6 +136,7 @@ class FacturasController extends Controller
             $metodo_de_pago->save();
     
             //throw new Exception("Error interno");
+            $id_products = [];
             
             foreach ($cartDataArray as $prod) {
                 $productoFactura = new ProductosFacturas();
@@ -145,16 +146,18 @@ class FacturasController extends Controller
                 $productoFactura->cantidad = $prod['quantity'];
                 $productoFactura->precio_total = calculateTotalPrice($prod);
                 $productoFactura->save();
+
+                $producto = Producto::find($prod['productId']);
+                $producto->cantidad -= $prod['quantity'];
+                $producto->save();
+
+                $id_products[] = $producto->id; 
             };
 
             DB::commit();
             
             return response()->json([
-                //'factura' => $factura->codigo,
-                //'cliente' => $cliente->nombre." ".$cliente->apellido,
-                'metodo' => $metodo_de_pago,
-                'cart' => $cartDataArray,
-                'cliente' => $clienteData,
+                'cart' => $id_products,
             ]);
 
         } catch (\Throwable $th) {

@@ -1,5 +1,4 @@
 
-
 $('body').on('click', '.btn_cartProducts-comprar', function (e) {
     e.preventDefault();
     const getItemCart = localStorage.getItem('cart');
@@ -14,24 +13,28 @@ $('body').on('click', '.btn_cartProducts-comprar', function (e) {
 
 $('body').on('input', '.productOfCart_product_quantity', function(){
     let id = $(this).closest('.tr_product').data('id');
+    const max = Number($(`.card_product_${id}`).find('.cardProduct_disponible').data('disponible'));
     const valueInput = $(this);
     let cantidad = parseInt(valueInput.val().replace(/,/g, ''), 10) || 0;
     cantidad = Math.abs(cantidad);
+    if(Number(cantidad) > max) cantidad = max;
     const formattedValue = cantidad === 0 ? 1 : numeral(cantidad).format('0,0');
     valueInput.val(formattedValue);
     $(`.card_product_${id}`).find('.products_added').text(cantidad);
+    let disponibles = $(`.card_product_${id}`).find(".cardProduct_disponible").data('disponible');
+    $(`.card_product_${id}`).find(".cardProduct_disponible").text(disponibles - cantidad);
 
-    updateSubtotalOfProductOfCart(id)
+    updateSubtotalOfProductOfCart(id);
     editElementOfLocalStorage(id);
 })
 
-$('body').on('input', '.productOfCart_descuento', function(){
+$('body').on('change', '.productOfCart_descuento', function(){
     const id = $(this).closest('.tr_product').data('id');
     const valueInput = $(this);
     let desc = parseFloat(valueInput.val().replace(/,/g, ''));
     desc = Math.abs(desc);
-    const formattedValue = numeral(desc).format('0,0.00');
-    valueInput.val(formattedValue);
+    if(parseFloat(desc) > 100){desc = 100};
+    valueInput.val((Number.isInteger(desc))?desc:numeral(desc).format('0,0.00'));
 
     updateSubtotalOfProductOfCart(id)
     editElementOfLocalStorage(id);
@@ -40,7 +43,10 @@ $('body').on('input', '.productOfCart_descuento', function(){
 $('body').on('click', '.productOfCart_delete_product', function(){
     let id = $(this).closest('.tr_product').data('id');
     $(this).closest('.tr_product').remove();
-    deleteProductOfCart(id)
+
+    let disponibles = $(`.card_product_${id}`).find(".cardProduct_disponible").data('disponible');
+    $(`.card_product_${id}`).find(".cardProduct_disponible").html(disponibles);
+    deleteProductOfCart(id);
 })
 
 function updateSubtotalOfProductOfCart(id){
@@ -53,10 +59,10 @@ function updateSubtotalOfProductOfCart(id){
     const quantity = parseInt(quantityOfProducts.replace(/,/g, ''));
     const desc = parseFloat(descOfProduct.replace(/,/g, ''));
 
-    const totalPrice= calculateTotalPrice(price, quantity, desc);
-    elementOfCart.find('.productOfCart_total').text(numeral(totalPrice).format('0,0.00'));
     const subtotalPrice= calculateSubtotalPrice(price, quantity);
     elementOfCart.find('.productOfCart_subtotal').text(numeral(subtotalPrice).format('0,0.00'));
+    const totalPrice= calculateTotalPrice(price, quantity, desc);
+    elementOfCart.find('.productOfCart_total').text(numeral(totalPrice).format('0,0.00'));
     totalPriceAllProductsOfCart();
 }
 
@@ -71,7 +77,7 @@ function calculateTotalPrice(price, quantity, desc = 0){
 };
 
 
-function productCart(product) {
+function productOfCart(product) {
     let subtotal = calculateSubtotalPrice(product.precio, product.quantity);
         subtotal = numeral(subtotal).format('0,0.00');
     let total = calculateTotalPrice(product.precio, product.quantity, product.descuento);
@@ -87,7 +93,7 @@ function productCart(product) {
                     <span class="productOfCart_subtotal" data-id='${product.productId}'>${subtotal}</span>
                 </td>
                 <td scope="col" class="input-group mb-3" >
-                    <input class="productOfCart_descuento form-control" value="${product.descuento}" placeholder="0.00" style="width:40px; text-align:end; height:25px; padding:5px">
+                    <input class="productOfCart_descuento form-control" value="${product.descuento}" min="0" style="width:40px; text-align:end; height:25px; padding:5px">
                     <span class="input-group-text" style="height:25px; padding:5px">%</span>
                 </td>
                 <td scope="col" style="text-align:end; padding:8px 3px">

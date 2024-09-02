@@ -30,7 +30,7 @@ class ProductoController extends Controller
             $productos = Producto::getProductBySearch($search)
                 ->offset($offset)
                 ->limit(4)
-                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen', 'precio']);
+                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'cantidad', 'imagen', 'precio']);
         }
 
         return response()->json([

@@ -28,23 +28,6 @@ $('body').on('click', '.btn_comprar_generarFactura', function(e){
     }
 });
 
-/*
-$('body').on('submit', '.generarFactura_form', function(e){
-    e.preventDefault();
-    
-
-    const cliente = $(this);
-    
-    if(Array.isArray(cartLocalStorage) && cartLocalStorage.length > 0){
-        if(validateClienteOfCart()){
-            
-        }
-    } else {
-        alert('Debes añadir productos al carrito antes de generar la factura')
-    }
-})
-*/
-
 $('body').on('click', '.generarFactura_btn_comprar', function(){
     
 })
@@ -68,8 +51,6 @@ function metodo_de_pago(){
     });
 }
 
-
-
 function generarFactura(cliente, cart, precio_total, metodo){
     $.ajaxSetup({
         headers: {
@@ -86,21 +67,27 @@ function generarFactura(cliente, cart, precio_total, metodo){
             metodo,
         },
         success: function(res) {
+            console.log(res)
             localStorage.removeItem('cart');
             $('.container_productsOfCart').find('tbody').html('');
             $('.totalQuantityOfCart').html('');
             $('.totalQuantityOfCart').css('display', 'none');
-            $('#offcanvasRight').attr('class', 'offcanvas offcanvas-end');
-            $('.offcanvas-backdrop').remove();
-            $('body').css('overflow', 'auto');
+            //$('#offcanvasRight').attr('class', 'offcanvas offcanvas-end');
+            //$('.offcanvas-backdrop').remove();
+            //$('body').css('overflow', 'auto');
             $(".products_added").text('0');
+
+            res.cart.forEach(id => {
+                let disponible = $(`.card_product_${id}`).find('.cardProduct_disponible').text();
+                console.log(disponible)
+                $(`.card_product_${id}`).find('.cardProduct_disponible').attr('data-disponible', `${disponible}`)
+            });
             
             Swal.fire({
                 title: "The Internet?",
                 text: "That thing is still around?",
                 icon: "question"
               });
-              
         },
         error: function (error) {
             console.error(error);

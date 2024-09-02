@@ -1,5 +1,4 @@
 function getProducts(search = "", offset = 0){
-
     $.ajax({
         type: "GET",
         url: "/getproducts",
@@ -31,7 +30,7 @@ function getProducts(search = "", offset = 0){
                 addCardsProducts(productos);
             }
             
-            function addCardsProducts(productos){ 
+            function addCardsProducts(productos){
                 productos.forEach(product => {
                 var formattedNumber = numeral(product.precio).format('0,0');
                 const array = JSON.stringify(product);
@@ -41,10 +40,11 @@ function getProducts(search = "", offset = 0){
                                 <img class="img_product" src="/imagen/${product.imagen}" alt="" style="max-width:180px; max-height:180px">
                             </figure>
                             <hr>
-                            <div style="height: 180px; position:relative">
+                            <div style="height: 200px; position:relative">
                                 <h5>${product.producto} ${product.marca} ${product.modelo}</h5>
-                                <p style="opacity: 0.6">Sistema Operativo:</p>
-                                <p style="margin-top:-15px;">${product.sistema}</p>
+                                <p style="opacity: 0.6; margin:0">Sistema Operativo:</p>
+                                <p style="margin:0;">${product.sistema}</p>
+                                <p style="margin-top:5px"><span style="opacity: 0.6">Cantidad disponible: </span><span class="cardProduct_disponible" data-disponible=${product.cantidad}>${product.cantidad}</span></p>
                                 <div style="display:flex; justify-content:space-between; position:absolute; bottom:0; width:100%">
                                     <a class="btn_addToCart btn_style" data-id='${product.id}' style="bottom:0px;border-style:none; border-radius:10px; padding:5px 20px 5px 20px; background-color:#00c7c2 "  style="width: 22px">
                                         <i class='bx bx-cart'></i>

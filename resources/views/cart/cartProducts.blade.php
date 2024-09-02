@@ -25,15 +25,20 @@
 
     </div>
 
-    <div class="ms-3 d-flex justify-content-between">
-        <div>
-            <h6>Total items = <strong class="totalItemsOfCart">0</strong></h6> 
-            <h5>Precio total: <strong class="totalPriceOfCart">0</strong></h5>
+    <div class="ms-3 d-flex justify-content-between me-3 mb-2">
+        <div style="font-size: 13px">
+            <p class="m-0">Total items = <strong class="totalItemsOfCart">0</strong></p>
+            <p class="m-0">Total bruto = <strong class="totalBrutoOfCart">0</strong></p>
+            <p class="m-0">Subtotal = <strong class="totalSubtotalOfCart">0</strong></p> 
+            <p class="m-0">Total descuentos = <strong class="totalDescOfCart">0</strong></p>
         </div>
         <!-- Button trigger modal -->
-        <button class="btn_cartProducts-comprar btn btn-primary btn_generarFactura_cancel" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="height: 40px; display:none">
-            Comprar
-        </button>
+        <div class="position-relative">
+            <p class="m-0">Precio total: <strong class="totalPriceOfCart" style="font-size: 20px">0</strong></p>
+            <button class="btn_cartProducts-comprar btn btn-primary btn_generarFactura_cancel right-0 position-absolute end-0" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="height: 40px; display:none">
+                Comprar
+            </button>
+        </div>
 
         
     </div>
