@@ -1,16 +1,22 @@
 $(document).ready(function () {
-    getAllFacturas()
+    const search = $('.ventas_form_search').serializeArray();
+    $('.ventas_tbody').html('');
+    getAllFacturas(0, search);
+    formaDePago();
 });
 
 let offset = 0;
 $('body').on('click', '.ventas_btn_verMas', function(){
     offset += 10;
-    getAllFacturas(offset);
+    $('.ventas_noFound').hide();
+    const search = $('.ventas_form_search').serializeArray();
+    getAllFacturas(offset, search);
 })
 
 $('body').on('click', '.btn_ventas_form_search', function(e){
     e.preventDefault();
     offset = 0;
+    $('.ventas_noFound').hide();
     const search = $('.ventas_form_search').serializeArray();
     $('.ventas_tbody').html('');
     getAllFacturas(offset, search);
@@ -36,7 +42,7 @@ $('body').on('click', '.ventas_factura', function(e) {
 });
 
 
-function getAllFacturas (offset=0, search = []){
+function getAllFacturas(offset=0, search = []){
     $.ajax({
         type: "GET",
         url: "/facturas/ventas",
@@ -45,14 +51,18 @@ function getAllFacturas (offset=0, search = []){
             search,
         },
         success: function (response) {
-            console.log(response.message)
-            console.log(response.buscar)
-            console.log(response.offset)
+            //console.log(response.message)
+            //console.log(response.buscar)
+            //console.log(response.facturas)
             $('.ventas_btn_verMas').show();
             response.facturas.forEach(factura => {
                 $('.ventas_tbody').append(addAllFacturasInTable(factura));
             });
-            
+
+            if(response.facturas.length === 0) {
+                $('.ventas_noFound').show();
+            }
+
             if(response.facturas.length === 0) $('.ventas_btn_verMas').hide();
         },
         error: function (error){
@@ -60,7 +70,6 @@ function getAllFacturas (offset=0, search = []){
         }
     });
 };
-
 
 function addAllFacturasInTable(factura){
     const data_factura = JSON.stringify(factura);
@@ -126,3 +135,24 @@ function calcularTotalesdeLaFactura(){
     $('.factura_descuento').text(numeral(descuentos).format('0,0.00'));
     $('.factura_valorTotal').text(numeral(valorTotal).format('0,0.00'));
 };
+
+function formaDePago(){  
+        $.ajax({
+            type: "GET",
+            url: "/metodoDePago",
+            success: function (response) {
+                response['bancos'].forEach(element => {
+                    
+                    $('.ventas_formSelect_metodos').append(`
+                        <option value="${element[0].forma_de_pago}">${element[0].forma_de_pago}</option>
+                    `);
+                });
+                response['cryptos'].forEach(element => {
+                    $('.ventas_formSelect_metodos').append(`
+                        <option value="${element[0].forma_de_pago}">${element[0].forma_de_pago}</option>
+                    `);
+                });
+                
+            }
+        }); 
+}

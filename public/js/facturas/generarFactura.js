@@ -84,9 +84,9 @@ function generarFactura(cliente, cart, precio_total, metodo){
             });
             
             Swal.fire({
-                title: "The Internet?",
-                text: "That thing is still around?",
-                icon: "question"
+                title: "Felicidades por tu Compra",
+                text: "La compra fué realizada exitosamente",
+                icon: "success"
               });
         },
         error: function (error) {

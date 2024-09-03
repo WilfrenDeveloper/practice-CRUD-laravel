@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use function PHPSTORM_META\map;
+use function PHPUnit\Framework\isEmpty;
 
 class FacturasController extends Controller
 {
@@ -21,6 +22,39 @@ class FacturasController extends Controller
         return view('inventario.ventas');
     }
 
+
+/*
+    public function getAllFacturas(Request $request){
+
+        try {
+            DB::beginTransaction();
+            $offset = $request->input('offset');
+
+            $facturas = Factura::with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
+            ->offset($offset)
+            ->limit(10)
+            ->orderby('id','asc')
+            ->get(['id', 'codigo', 'fecha_de_compra', 'valor_total','id_cliente']);
+
+            DB::commit();
+
+            
+            return response()->json([
+                'message' => 'la petición se ha realizado exitosamente',
+                'facturas' => $facturas,
+            ]);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $th->getMessage(),
+                'trace' => $th->getTrace(),
+            ]);
+        }
+        
+    }*/
 
 
     public function getAllFacturas(Request $request){
@@ -33,14 +67,26 @@ class FacturasController extends Controller
             $buscar = [];
             if ($search) {
                 foreach ($search as $item) {
-                    if($item['value'])$buscar[$item['name']] = $item['value'];
+                    $buscar[$item['name']] = $item['value'];
                 };
             }
 
-            $facturas = Factura::with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
+            $codigo = $buscar['codigo'];
+            $cliente = $buscar['cliente'];
+            $desde = $buscar['desde'];
+            $hasta = $buscar['hasta'];
+            $metodo_de_pago = $buscar['metodo_de_pago'];
+            $rango_precio = $buscar['rango_precios'];
+
+            $facturas = Factura::getFacturaByClient($cliente)
+            ->getFacturaByCode($codigo)
+            ->getFacturaByDate($desde, $hasta)
+            ->getFacturaByMetodoDePago($metodo_de_pago)
+            ->getFacturaByRangoDePrecios($rango_precio)
+            ->with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
             ->offset($offset)
             ->limit(10)
-            ->orderby('id','asc')
+            ->orderby('id','desc')
             ->get(['id', 'codigo', 'fecha_de_compra', 'valor_total','id_cliente']);
 
             DB::commit();

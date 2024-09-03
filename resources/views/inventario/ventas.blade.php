@@ -10,8 +10,8 @@
 
   <form class="ventas_form_search">
     <div>
-      <label for="factura">No. Factura</label>
-      <input id="" name="factura" type="text" >
+      <label for="codigo">Código de la Factura</label>
+      <input id="" name="codigo" type="text" >
     </div>
     <div>
       <label for="cliente">Cliente</label>
@@ -19,23 +19,28 @@
     </div>
     <div>
       <label for="desde">Desde</label>
-      <input id="" name="desde" type="date" >
+      <input id="" name="desde" type="date" max="{{date('Y-m-d')}}">
     </div>
     <div>
       <label for="hasta">Hasta</label>
-      <input id="" name="hasta" type="date" >
+      <input id="" name="hasta" type="date" value="{{date('Y-m-d')}}" max="{{date('Y-m-d')}}">
     </div>
     <div>
-      <label for="metodo_de_pago">Forma de pago:</label>
-      <input id="" name="metodo_de_pago" type="text" >
+      <label for="metodo_de_pago">Metodo de Pago</label>
+      <select class="ventas_formSelect_metodos" name="metodo_de_pago" id="">
+        <option value="">Todos</option>
+        <option value="Efectivo">Efectivo</option>
+      </select>
     </div>
     <div>
       <label for="rango_precios">Rango de precios</label>
       <input id="" name="rango_precios" type="text" >
     </div>
+
     <button class="btn_ventas_form_search btn btn-primary">Buscar</button>
   </form>
 
+    <!-- Tabla de Todas las Facturas -->
     <div class="ventas_container" style="display: flex; justify-content:center; align-items:center; flex-direction:column">
         <table class="table table-striped table-bordered table-hover">
             <thead class="table-dark text-center"  style="background-color: black; color:white; text-aling:center;" >
@@ -51,14 +56,13 @@
             
         </table>
     </div>
+    
+    <p class="ventas_noFound" style="display: none"> <i class="bi bi-info-circle-fill text-danger"></i> No se encontraron más registros.</p>
 
     <button class="ventas_btn_verMas btn btn-dark">Ver más...</button>
 
 
-
-
-      
-      <!-- Modal Cliente -->
+      <!-- Modal Factura Individual -->
       <div class="ventas_modal_cliente modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">

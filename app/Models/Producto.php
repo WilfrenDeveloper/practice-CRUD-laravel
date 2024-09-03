@@ -23,7 +23,6 @@ class Producto extends Model
     
 
     public function scopeGetProductBySearch(Builder $query, $search){
-
         if($search !== ""){
             return $query->where('producto', 'LIKE', '%'.$search.'%')
                         ->orWhere('marca', 'LIKE', '%'.$search.'%')
