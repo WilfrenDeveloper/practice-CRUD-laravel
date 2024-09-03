@@ -23,19 +23,45 @@ class FacturasController extends Controller
 
 
 
-    public function getAllFacturas(){
+    public function getAllFacturas(Request $request){
 
-        $facturas = Factura::offset(0)
-        ->with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
-        ->limit(10)
-        ->orderby('id','desc')
-        ->get(['id', 'codigo', 'fecha_de_compra', 'valor_total','id_cliente']);
-        
-        
+        try {
+            DB::beginTransaction();
+            $search = $request->input('search');
+            $offset = $request->input('offset');
 
-        return response()->json([
-            'facturas' => $facturas,
-        ]);
+            $buscar = [];
+            if ($search) {
+                foreach ($search as $item) {
+                    if($item['value'])$buscar[$item['name']] = $item['value'];
+                };
+            }
+
+            $facturas = Factura::with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
+            ->offset($offset)
+            ->limit(10)
+            ->orderby('id','asc')
+            ->get(['id', 'codigo', 'fecha_de_compra', 'valor_total','id_cliente']);
+
+            DB::commit();
+
+            
+            return response()->json([
+                'message' => 'la petición se ha realizado exitosamente',
+                'facturas' => $facturas,
+                'buscar' => $buscar,
+            ]);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $th->getMessage(),
+                'trace' => $th->getTrace(),
+            ]);
+        }
+        
     }
 
     /**
