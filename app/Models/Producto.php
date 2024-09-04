@@ -23,13 +23,21 @@ class Producto extends Model
     
 
     public function scopeGetProductBySearch(Builder $query, $search){
-        if($search !== ""){
-            return $query->where('producto', 'LIKE', '%'.$search.'%')
-                        ->orWhere('marca', 'LIKE', '%'.$search.'%')
-                        ->orWhere('modelo', 'LIKE', '%'.$search.'%')
-                        ->orWhere('sistema', 'LIKE', '%'.$search.'%');
-            
+        if($search){
+            $products = explode(' ', $search);
+
+            return $query->where(function($q) use ($products){
+                foreach($products as $product){
+                    $q->where(function ($subQuery) use ($product) {
+                        $subQuery->where('producto', 'LIKE', '%'.$product.'%')
+                                 ->orWhere('marca', 'LIKE', '%'.$product.'%')
+                                 ->orWhere('modelo', 'LIKE', '%'.$product.'%')
+                                 ->orWhere('sistema', 'LIKE', '%'.$product.'%');
+                    });
+                }
+            });
         }
 
+        return $query;
     }
 };

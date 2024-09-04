@@ -3,18 +3,14 @@ function getProducts(search = "", offset = 0){
         type: "GET",
         url: "/getproducts",
         data: {
-            value: search,
+            search,
             offset
         },
         success: function (res) {
             let productos = res.productos;
             let message = res.message;
 
-            if(productos.length === 0){
-                $('.btn_verMas').hide();
-            } else {
-                $('.btn_verMas').show();
-            };
+            (productos.length === 0) ? $('.btn_verMas').hide() : $('.btn_verMas').show() ;
             
             if(message){
                 $('.div_message').html(`<i class='bx bx-error-circle' style='font-size: 30px;color:#d90000;'></i> 
@@ -44,11 +40,15 @@ function getProducts(search = "", offset = 0){
                                 <h5>${product.producto} ${product.marca} ${product.modelo}</h5>
                                 <p style="opacity: 0.6; margin:0">Sistema Operativo:</p>
                                 <p style="margin:0;">${product.sistema}</p>
-                                <p style="margin-top:5px"><span style="opacity: 0.6">Cantidad disponible: </span><span class="cardProduct_disponible" data-disponible=${product.cantidad}>${product.cantidad}</span></p>
+                                <p style="margin-top:5px">
+                                    <span style="opacity: 0.6">Cantidad disponible: </span>
+                                    <span class="cardProduct_disponible">${product.cantidad}</span>
+                                    <input class="cardProduct_disponibleOnDB" value="${product.cantidad}" type="hidden">
+                                </p>
                                 <div style="display:flex; justify-content:space-between; position:absolute; bottom:0; width:100%">
-                                    <a class="btn_addToCart btn_style" data-id='${product.id}' style="bottom:0px;border-style:none; border-radius:10px; padding:5px 20px 5px 20px; background-color:#00c7c2 "  style="width: 22px">
+                                    <button class="btn_addToCart btn_style" data-id='${product.id}' style="bottom:0px;border-style:none; border-radius:10px; padding:5px 20px 5px 20px; background-color:#00c7c2 "  style="width: 22px">
                                         <i class='bx bx-cart'></i>
-                                    </a>
+                                    </button>
                                     <div class="justify-content-end">
                                         <p class="m-0" style="text-align:end">$${formattedNumber}</p>
                                         <p class="m-0">añadidos: <span class="products_added products_added_${product.id}">0</span></p>
@@ -59,6 +59,8 @@ function getProducts(search = "", offset = 0){
                         </div>    
                     `);
                 });
+
+                cartProducts();
             }                         
             
         },

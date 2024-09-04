@@ -4,40 +4,46 @@
 @endsection
 
 @section('ventas')
-<div>
-
-  <h1 class="title">Ventas</h1>
-
-  <form class="ventas_form_search">
-    <div>
-      <label for="codigo">Código de la Factura</label>
-      <input id="" name="codigo" type="text" >
-    </div>
-    <div>
-      <label for="cliente">Cliente</label>
-      <input id="" name="cliente" type="text" >
-    </div>
-    <div>
-      <label for="desde">Desde</label>
-      <input id="" name="desde" type="date" max="{{date('Y-m-d')}}">
-    </div>
-    <div>
-      <label for="hasta">Hasta</label>
-      <input id="" name="hasta" type="date" value="{{date('Y-m-d')}}" max="{{date('Y-m-d')}}">
-    </div>
-    <div>
-      <label for="metodo_de_pago">Metodo de Pago</label>
-      <select class="ventas_formSelect_metodos" name="metodo_de_pago" id="">
-        <option value="">Todos</option>
-        <option value="Efectivo">Efectivo</option>
-      </select>
-    </div>
-    <div>
-      <label for="rango_precios">Rango de precios</label>
-      <input id="" name="rango_precios" type="text" >
+<div class="mt-4">
+  <form class="ventas_form_search form container mb-3">
+    <div class="row d-flex justify-content-between">
+      <div class="col-auto">
+        <label class="form-label me-2" for="codigo">Código de la Factura</label>
+        <input id="" name="codigo" type="text" class="form-control form-control-sm" >
+      </div>
+      <div class="col-auto">
+        <label class="form-label me-2" for="cliente">Cliente</label>
+        <input id="" name="cliente" type="text" class="form-control form-control-sm" >
+      </div>
+  
+      <div class="col-auto">
+        <label class="form-label me-2" for="rango_precios">Rango de precios</label>
+        <input id="" name="rango_precios" type="text" class="form-control form-control-sm" >
+      </div>
+  
+      <div class="d-flex flex-column" style="width:150px">
+        <label class="form-label me-2" for="metodo_de_pago">Metodo de Pago</label>
+        <select class="ventas_formSelect_metodos form-select form-select-sm mb-3" aria-label="Small select example" name="metodo_de_pago" id="">
+          <option value="">Todos</option>
+          <option value="Efectivo">Efectivo</option>
+        </select>
+      </div>
     </div>
 
-    <button class="btn_ventas_form_search btn btn-primary">Buscar</button>
+    <div class="row">
+      <div class="col-auto">
+        <label class="form-label me-2" for="desde">Desde</label>
+        <input id="" name="desde" type="date" class="form-control form-control-sm" max="{{date('Y-m-d')}}">
+      </div>
+      <div class="col-auto">
+        <label class="form-label me-2" for="hasta">Hasta</label>
+        <input id="" name="hasta" type="date" class="form-control form-control-sm" value="{{date('Y-m-d')}}" max="{{date('Y-m-d')}}">
+      </div>
+      <div class="col position-relative">
+        <button class="btn_ventas_form_search btn btn-primary position-absolute end-0 bottom-0 me-2">Buscar</button>
+      </div>
+    </div>
+
   </form>
 
     <!-- Tabla de Todas las Facturas -->

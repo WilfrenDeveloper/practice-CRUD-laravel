@@ -11,13 +11,14 @@ class ProductoController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $productos = Producto::all();
+        $productos = Producto::get(['id', 'producto', 'marca', 'modelo', 'sistema', 'cantidad', 'imagen', 'precio']);
         return view('inventario.inventario')->with('productos', $productos);
     }
 
     public function getProducts(Request $request){
-        $search = $request->input('value');
-        $offset = $request->input('offset');
+        $search = ($request->input('search'))? $request->input('search') : "" ;
+        $offset = ($request->input('offset'))? $request->input('offset') : 0;
+        $limit = ($request->input('limit'))? $request->input('limit') : 5;
         $message="";
             
         $productos = Producto::getProductBySearch($search)
@@ -29,7 +30,7 @@ class ProductoController extends Controller
         } else {
             $productos = Producto::getProductBySearch($search)
                 ->offset($offset)
-                ->limit(4)
+                ->limit($limit)
                 ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'cantidad', 'imagen', 'precio']);
         }
 
@@ -94,7 +95,7 @@ class ProductoController extends Controller
      */
     public function show(string $id){
 
-        $productos = Producto::find($id, ['id', 'producto', 'marca', 'modelo', 'imagen', 'precio']);
+        $productos = Producto::find($id, ['id', 'producto', 'marca', 'modelo', 'sistema', 'cantidad', 'imagen', 'precio']);
 
         return response()->json($productos);
     }

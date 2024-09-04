@@ -37,16 +37,54 @@
     </head>
 <body class="" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
 
-        <nav class="navbar bg-body-tertiary p-4 bg-white mb-2">
-            <figure class="">
-              <a class="navbar-brand" href="/">
-                <img src="https://mascontrolapp.com/pos_naranja/logo/logo44.png" alt="Bootstrap" width="250" height="default">
-              </a>
+        <nav class="navbar bg-body-secondary px-5 py-4" >
+            <figure class="m-0">
+                <a class="navbar-brand" href="/">
+                    <img src="https://mascontrolapp.com/pos_naranja/logo/logo44.png" alt="Bootstrap" width="200" height="default">
+                </a>
             </figure>
-            <div class="d-flex justify-content-end fs-4 gap-4 me-5">
-                <a href="/inventario" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover">Inventario</a>
+
+            <div class="div_title m-0">
                 
-                <a href="/clientes" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover me-4">Clientes</a>
+            </div>
+
+            <div class="d-flex justify-content-end fs-5 gap-3">
+                <div class="btn-group">
+                    <button class="dropdown-toggle border-0 bg-transparent text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-clipboard-check-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="pb-1">
+                            <a href="/inventario" class="text-black link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover ps-2">
+                                <i class="bi bi-clipboard2-check"></i> Inventario
+                            </a>
+                        </li>
+                        <li class="pb-1">
+                            <a href="/ventas" class="text-black link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover ps-2">
+                                <i class="bi bi-bag-check"></i> Ventas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button class="dropdown-toggle border-0 bg-transparent text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-people-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="pb-1">
+                            <a href="/clientes" class="text-black link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover ps-2">
+                                <i class="bi bi-people"></i> Clientes
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <a class="cart_icon fs-3 generarFactura_exit" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="display:none">
+                    <div style="position: relative">
+                        <p class="totalQuantityOfCart" style="display:none; position:absolute; top:0; right:-5px; font-size:10px; color:white; background-color:red; border-radius:50%; padding:0 2px; text-align:center; min-width:15px; height:15px">0</p>
+                        <i class='bx bxs-cart'></i>
+                    </div>
+                </a>
             </div>
         </nav>
 

@@ -1,7 +1,12 @@
 $(document).ready(function() {
-    //Obtener todos los productos al recargar la página
+    $('.div_title').html(`
+        <div class="input-group">
+            <input id="search" name="search" type="search" class="form-control input-search rounded-0 me-2">
+            <button class="btn btn-info rounded-0 text-light fs-6 border-0 m-0" type="button" id="btn-search button-addon2">Buscar</button>
+        </div>`)
+    $('.cart_icon').show();
+    
     getProducts();
-    cartProducts();
 });
 
 //Valor del input Search
@@ -11,7 +16,7 @@ let inputValue = "";
 let offset = 0
 $('body').on('click', '.btn_verMas', function (e) {
     e.preventDefault();
-    offset += 4
+    offset += 5
     getProducts(inputValue, offset);
 });
 
@@ -21,17 +26,20 @@ $('body').on('click', '#btn-search', function(e){
     if(inputValue){
         offset = 0
         getProducts(inputValue)
-        offset +=4
+        offset += 5
     }
 });
 
 $('body').on('click',  '.btn_addToCart', function(e){
     e.preventDefault();
     let id = $(this).data('id');
-
-    const productInString = $(`.data_products_${id}`).val();
-    const stringToObject = JSON.parse(productInString);
-    localStorageCart(stringToObject);   
+    if( parseInt( $(`.card_product_${id}`).find('.cardProduct_disponible').text() ) > 0){
+        const productInString = $(`.data_products_${id}`).val();
+        const stringToObject = JSON.parse(productInString);
+        localStorageCart(stringToObject);
+    }   
 });
+
+
 
 

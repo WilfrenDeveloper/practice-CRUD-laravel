@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/', 'App\Http\Controllers\ProductosFacturasController');
 
-Route::resource('/inventario', 'App\Http\Controllers\ProductoController');
+Route::get('/inventario', function(){
+    return view('inventario.inventario');
+});
 
 Route::get('/ventas', 'App\Http\Controllers\FacturasController@index');
 
 Route::get('/facturas/ventas', 'App\Http\Controllers\FacturasController@getAllFacturas');
 
-//Route::get('/facturas/ventas/search', 'App\Http\Controllers\FacturasController@searchFacturas');
-
-Route::resource('/productos', 'App\Http\Controllers\ProductoController');
+Route::get('/productos/{id}/edit', 'App\Http\Controllers\ProductoController@show');
 
 Route::put('/productos/{id}/update', [ProductoController::class, 'update']);
 

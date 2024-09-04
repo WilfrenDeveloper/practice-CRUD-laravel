@@ -48,4 +48,4 @@
 </div>
 @include('facturas/generarFactura')
     
-<script src="{{asset('js/cart/productOfCart.js')}}"></script>
+<script src="{{asset('js/cart/cartProducts.js')}}"></script>

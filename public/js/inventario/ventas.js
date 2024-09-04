@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $('.div_title').html('<h1>Ventas</h1>')
     const search = $('.ventas_form_search').serializeArray();
     $('.ventas_tbody').html('');
     getAllFacturas(0, search);

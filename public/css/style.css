@@ -11,7 +11,7 @@ html{
 
 .card_product:hover{
     margin:-8px;
-    box-shadow: 0 0 8px #a5ffff;
+    box-shadow: 0 0 8px #00c7c050;
 }
 
 .img_product{
@@ -26,15 +26,6 @@ a{
     cursor: pointer;
 }
 
-
-#div_input{
-    position: relative;
-}
-
-div>.scroll{
-    position: relative;
-}
-
 #error{
     display: none;
     color: rgb(185, 0, 0) ;
@@ -42,27 +33,15 @@ div>.scroll{
     font-size: 13px;
 }
 
-.input{
-    height: 30px;
-    width: 296px;
-    border: 1px solid rgb(100, 100, 100);
-    padding: 5px;
-}
-
-.input:hover{
-    border: 1px solid rgb(131, 131, 255);
-    height: 30px;
+select:hover,
+input:hover{
+    border: 1px solid #9a9afc;
+    box-shadow: 0 0 5px #9a9afc9d;
 }
 
 .bx-cart{
     font-size: 30px;
     color: white;
-}
-
-.form_search{
-    position: relative;
-    top: -80px;
-    margin: 0;
 }
 
 .card_factura{
@@ -73,13 +52,7 @@ div>.scroll{
     scale: 1.2;
 }
 
-.title{
-    position: relative;
-    top: -100px;
-}
 
-#modal_crearProducto,
-#modal_editarProducto,
 #modal_crearCliente,
 #modal_editarCliente{
     position:fixed;
@@ -107,21 +80,28 @@ div>.scroll{
     border-radius: 5px;
 }
 
-.btn_style{
-    transition: 0.2s;
-    cursor: pointer;
-}
-.btn_style:hover{
+button:hover{
+    opacity: 0.85;
     scale:1.05;
-    opacity: 0.8;
 }
 
-.btn_style:active{
-    scale:0.9;
+button:active{
+    scale:0.95;
 }
 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+#search{
+    width: 25vw;
+}
+
+@media (max-width:610px) {
+    #search{
+        width: 200px;
+    }
+    
 }

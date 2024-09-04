@@ -22,41 +22,6 @@ class FacturasController extends Controller
         return view('inventario.ventas');
     }
 
-
-/*
-    public function getAllFacturas(Request $request){
-
-        try {
-            DB::beginTransaction();
-            $offset = $request->input('offset');
-
-            $facturas = Factura::with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
-            ->offset($offset)
-            ->limit(10)
-            ->orderby('id','asc')
-            ->get(['id', 'codigo', 'fecha_de_compra', 'valor_total','id_cliente']);
-
-            DB::commit();
-
-            
-            return response()->json([
-                'message' => 'la petición se ha realizado exitosamente',
-                'facturas' => $facturas,
-            ]);
-
-        } catch (\Throwable $th) {
-            //throw $th;
-            DB::rollBack();
-            return response()->json([
-                'status' => 500,
-                'message' => $th->getMessage(),
-                'trace' => $th->getTrace(),
-            ]);
-        }
-        
-    }*/
-
-
     public function getAllFacturas(Request $request){
 
         try {
@@ -83,7 +48,9 @@ class FacturasController extends Controller
             ->getFacturaByDate($desde, $hasta)
             ->getFacturaByMetodoDePago($metodo_de_pago)
             ->getFacturaByRangoDePrecios($rango_precio)
-            ->with('factura_metodoDePago.metodoDePago', 'cliente', 'productos.productoDeLaFactura')
+            ->with('factura_metodoDePago.metodoDePago:id,forma_de_pago',
+                'cliente:id,nombre,apellido',
+                'productos.productoDeLaFactura:id,producto,marca,modelo,sistema,cantidad')
             ->offset($offset)
             ->limit(10)
             ->orderby('id','desc')
@@ -123,29 +90,6 @@ class FacturasController extends Controller
      */
     public function store(Request $request, $productoId)
     {
-        $request->validate([
-            'id_cliente' => 'required|exists:clientes,id',
-        ]);
-
-        // Crear nueva factura
-        $ultimoCodigo = Factura::latest('id')->value('codigo');
-        $numero = $ultimoCodigo ? intval(substr($ultimoCodigo, 3)) + 1 : 1;
-        $nuevocodigo = "VEN" . str_pad($numero, 3, '0', STR_PAD_LEFT);
-
-        $factura = new Factura();
-        $factura->codigo = $nuevocodigo;
-        $factura->fecha_de_compra = date('Y-m-d');
-        $factura->save();
-
-        // Obtener el último factura creada
-        $id_Factura = $factura->id;
-
-        $pivote = new ProductosFacturas();
-        $pivote->id_producto = $productoId;
-        $pivote->id_cliente = $request->input('id_cliente');
-        $pivote->id_factura = $id_Factura;
-        $pivote->save();
-
         return redirect('/ventas');
     }
 
@@ -210,6 +154,7 @@ class FacturasController extends Controller
             //throw new Exception("Error interno");
             $id_products = [];
             
+            $productsSales = [];
             foreach ($cartDataArray as $prod) {
                 $productoFactura = new ProductosFacturas();
                 $productoFactura->id_producto = $prod['productId'];
@@ -223,13 +168,16 @@ class FacturasController extends Controller
                 $producto->cantidad -= $prod['quantity'];
                 $producto->save();
 
-                $id_products[] = $producto->id; 
+                $productSale = [];
+                $productSale['id'] = $producto->id;
+                $productSale['cantidad'] = $producto->cantidad;
+                $productsSales[] = $productSale;
             };
 
             DB::commit();
             
             return response()->json([
-                'cart' => $id_products,
+                'productsSales' => $productsSales,
             ]);
 
         } catch (\Throwable $th) {

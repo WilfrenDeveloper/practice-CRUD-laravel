@@ -1,7 +1,6 @@
 
-<form id="productsForm" class="form_create_product" enctype="multipart/form-data" style="background-color:white; border: 1px solid rgb(218, 216, 216) ">
+<form id="productsForm" class="form_create_product" enctype="multipart/form-data">
     @csrf
-    <h1 style="margin: 0">Crear Nuevo Producto</h1>
     <div class="mb-3">
         <label for="producto" class="form-label">Producto</label>
         <div id="div_input">
@@ -60,9 +59,8 @@
             $('#sistema').css('background-color', 'white'),
             $('#imagen').css('background-color', 'white'),
             $('#imagen').css('border', 'none'),
-            $('[id="error"]').hide(),
-            $('#modal_crearProducto').hide()
-        });
+            $('[id="error"]').hide()
+        })
 
         $('.form_create_product').on('submit', function(e){
             e.preventDefault();
@@ -83,7 +81,6 @@
                         
                         //escodemos el modal crear cliente y lo reseteamos
                         $('.form_create_product')[0].reset();
-                        $('#modal_crearProducto').hide();
 
                         
                         alert('Cliente Creado Exitosamente');

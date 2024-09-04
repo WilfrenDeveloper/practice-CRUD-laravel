@@ -3,65 +3,73 @@
 
                 
     <div style="display: flex; justify-content:center; align-items:center; flex-direction:column; position:relative">
-        
-        <h1 class="title" style="position: absolute">Inventario</h1>
-
-        <div style="margin:10px 0; width:600px; display: flex; justify-content:space-between; align-items:center;">              
-                <a href="/ventas" style="text-decoration:none; color:black; padding:10px 20px; text-align:center; font-size:28px">Ventas</a>
-                <button id="btn_crearProducto" class="a_editar" style="text-decoration:none; border: 1px rgba(220, 182, 182, 0) solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</button>
+       
+        <div style="margin:10px 0; width:600px;">              
+                <button id="btn_crearProducto" class="a_editar" type="button" data-bs-toggle="modal" data-bs-target="#modal_crearProducto" style="text-decoration:none; border: 1px rgba(220, 182, 182, 0) solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</button>
         </div>
-
+        
         <table style="border: 1px solid gray; background-color:white">
             <thead  style="background-color: black; color:white; text-aling:center;" >
+                <th style="padding: 10px">imagen</th>
                 <th style="padding: 10px">producto</th>
                 <th style="padding: 10px">marca</th>
                 <th style="padding: 10px">modelo</th>
                 <th style="padding: 10px">sistema operativo</th>
+                <th style="padding: 10px">cantidad</th>
                 <th style="padding: 10px">precio</th>
-                <th style="padding: 10px">imagen</th>
-                <th style="padding: 10px">operaciones</th>
+                <th style="padding: 10px">acciones</th>
             </thead>
-            <tbody class="tbody_productos">
-                @foreach ($productos as $producto)
-                    <tr class="tr_product_{{$producto->id}}">
-                        <td>{{$producto->producto}}</td>
-                        <td>{{$producto->marca}}</td>
-                        <td>{{$producto->modelo}}</td>
-                        <td>{{$producto->sistema}}</td>
-                        <td>{{$producto->precio}}</td>
-                        <td style="display:flex; justify-content:center; padding:0 5px; align-items:center">
-                            <img src="/imagen/{{$producto->imagen}}" alt="" style="max-width:100px; max-height:60px">
-                        </td>
-                        <td style="padding-left: 20px">
-                            <div class="modal_eliminar_producto modal-{{$producto->id}}" style="display: none">
-                                @csrf
-                                        <div id="div_modal_eliminar">
-                                            <p>Estás seguro de querer eliminar el producto <br> <strong>{{$producto->producto}} {{$producto->marca}} {{$producto->modelo}}</strong></p>
-                                            <button onclick="cancelarEliminarProducto({{$producto->id}})" href="/inventario" id="btn_confirm-cancel" class="a_editar" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</button>
-                                            <button onclick="aceptarEliminarProducto({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(31, 209, 0)">Aceptar</button>
-                                        </div>
-                            </div>
-                            <button onclick="modalEditarProducto({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</button>
-                            <button onclick="modalEliminarProducto({{$producto->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
-                        </td>
-                    </tr>
-                @endforeach
+            <tbody class="tbody_productosInventario">
+                
             </tbody>
         </table>
+        <br>
+        <button class="btn_verMas_inventario btn btn-info rounded-0 text-light fs-6" >Ver más...</button>
     </div>
+
     
-    <article id="modal_crearProducto" style="width:100%; height:100%; top:0; display:flex; justify-content:center; align-items:center ;background-color: rgba(255, 255, 255, 0.792)">
-        @include('productos.crearProducto')
-    </article>
+    <!-- Modal ver Producto -->
+    <div class="modal fade" id="modal_verProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Información del Producto</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @include('productos.editarProducto')
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
-    <article id="modal_editarProducto" style="width:100%; height:100%; top:0; display:flex; justify-content:center; align-items:center ;background-color: rgba(255, 255, 255, 0.792)">
-        @include('productos.editarProducto')
-    </article>
+    
 
+    <div class="modal fade" id="modal_crearProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar Nuevo Producto</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @include('productos.crearProducto')
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+<script src="{{asset('js/inventario/inventario.js')}}"></script>
 
     <script>
-        $('#modal_crearProducto').hide();
-        $('#modal_editarProducto').hide();
 
         $.ajaxSetup({
             headers: {
@@ -78,30 +86,6 @@
         function cancelarEliminarProducto(id){
             $(`.modal-${id}`).css('display', 'none');
         }
-        
-        //Botón Editar que activa el modal Editar Producto
-        function modalEditarProducto(id) { 
-            //id.preventDefault();
-            $('#modal_editarProducto').show();
-
-            $.ajax({
-                type: "GET",
-                url: `/productos/${id}/edit`,
-                success: function(res){
-                    $(".producto_id").val(res.id)
-                    $(".edit_producto").val(res.producto);
-                    $(".edit_marca").val(res.marca);
-                    $(".edit_modelo").val(res.modelo);
-                    $(".edit_sistema").val(res.sistema);
-                    $("#img_actual").attr('src', `/imagen/${res.imagen}`);;
-                    
-                    $("#form_editarProducto").attr('action', `/inventario/${res.id}`);
-                },
-                error: function(error) {
-                    console.error('error', error);
-                },
-            });
-        };
 
         //Botón Aceptar que confirma el modal Eliminar Producto
         function aceptarEliminarProducto(id) {
@@ -118,14 +102,5 @@
                 },
             });
         };
-
-        
-        $(document).ready(function () {
-            $('#btn_crearProducto').click(function (e) { 
-                e.preventDefault();
-                $('#modal_crearProducto').show();
-                return;
-            }); 
-        });
     </script>
 @endsection

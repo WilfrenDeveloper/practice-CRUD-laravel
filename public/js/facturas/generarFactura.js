@@ -67,6 +67,8 @@ function generarFactura(cliente, cart, precio_total, metodo){
             metodo,
         },
         success: function(res) {
+            $('.generarFactura_exit').trigger('click');
+            $('.btn-close').trigger('click');
             console.log(res)
             localStorage.removeItem('cart');
             $('.container_productsOfCart').find('tbody').html('');
@@ -76,12 +78,11 @@ function generarFactura(cliente, cart, precio_total, metodo){
             //$('.offcanvas-backdrop').remove();
             //$('body').css('overflow', 'auto');
             $(".products_added").text('0');
-
-            res.cart.forEach(id => {
-                let disponible = $(`.card_product_${id}`).find('.cardProduct_disponible').text();
-                console.log(disponible)
-                $(`.card_product_${id}`).find('.cardProduct_disponible').attr('data-disponible', `${disponible}`)
-            });
+            
+            for(const producto of res.productsSales){
+                $(`.card_product_${producto.id}`).find('.cardProduct_disponibleOnDB').val(producto.cantidad);
+                $(`.card_product_${producto.id}`).find('.cardProduct_disponible').text(producto.cantidad)
+            }
             
             Swal.fire({
                 title: "Felicidades por tu Compra",
