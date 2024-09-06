@@ -37,7 +37,7 @@ class ClienteController extends Controller
                 ->getClientesByNacimiento($nacimiento)
                 ->getClientesByTelefono($telefono)
                 ->with(['factura' => function($query) {$query->select('id', 'codigo', 'fecha_de_compra', 'valor_total', 'id_cliente');}, 
-                    'factura.productos',
+                    'factura.productos.productoDeLaFactura',
                 ])
                 ->offset($offset)
                 ->limit($limit)
@@ -134,7 +134,7 @@ class ClienteController extends Controller
         };
 
         $cliente = Cliente::with(['factura' => function($query) {$query->select('id', 'codigo', 'fecha_de_compra', 'valor_total', 'id_cliente');}, 
-                    'factura.productos',
+                    'factura.productos.productoDeLaFactura',
                 ])
                 ->find($id, ['id', 'nombre','apellido', 'nacimiento', 'direccion', 'telefono']);
         $cliente->nombre = $datosDelNuevoCliente['nombre'];

@@ -55,5 +55,4 @@
     </tbody>
 </table>
 
-
 <button class="btn_eliminar_cliente btn btn-danger" type="button" style="display: none" data-bs-toggle="modal" data-bs-target="#modal_eliminar_cliente">Eliminar</button>

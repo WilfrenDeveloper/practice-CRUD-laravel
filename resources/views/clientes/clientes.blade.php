@@ -69,8 +69,93 @@
                 @include('clientes.datosDelCliente')
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
             <button type="button" class="btn_aceptar_modal_verCliente btn btn-info text-white">Aceptar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Factura Individual -->
+    <div class="clientes_modalFacturaDelCliente modal fade" id="modalFacturaDelCliente" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Factura</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="overflow: auto">
+                <div class="d-flex gap-2 justify-content-between" style="width: 100%">
+                    <div>
+                        <p class="m-0">Nombre: <strong class="clientes_modalFacturaDelCliente_nombre"></strong></p>
+                        <p class="m-0">Fecha de Nacimiento: <strong class="clientes_modalFacturaDelCliente_nacimiento"></strong></p>
+                        <p class="m-0">Dirección: <strong class="clientes_modalFacturaDelCliente_direccion"></strong></p>
+                        <p class="m-0">Telefono: <strong class="clientes_modalFacturaDelCliente_telefono"></strong></p>
+                    </div>
+
+                    <div>
+                        <p class="m-0">Fecha de Compra: <strong class="clientes_modalFacturaDelCliente_fecha"></strong></p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="table-dark text-center">
+                        <th>Producto</th>
+                        <th>Sistema Operativo</th>
+                        <th>Precio Unidad</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>% Descuento</th>
+                        <th>Valor de Descuento</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody class="clientes_modalFacturaDelCliente_tbody">
+                    </tbody>
+
+                    <thead class="text-end table-dark border-white">
+                    <th class="bg-transparent"></th>
+                    <th class="bg-transparent"></th>
+                    <th><span class="factura_valorBruto"></span></th>
+                    <th class="text-center"><span class="factura_cantidad"></span></th>
+                    <th><span class="factura_subtotal"></span></th>
+                    <th class="bg-transparent"></th>
+                    <th><span class="factura_descuento"></span></th>
+                    <th><span class="factura_valorTotal"></span></th>
+                    </thead>
+                </table>
+
+                <br>
+                
+                <table class="table table-bordered border-primary" style="width:300px">
+                <thead>
+                    <tr>
+                    <th>Valor Bruto</th>
+                    <th><span class="factura_valorBruto"></span></th>
+                    </tr>
+                    <tr>
+                    <th>Cantidad</th>
+                    <th><span class="factura_cantidad"></span></th>
+                    </tr>
+                    <tr>
+                    <th>Subtotal</th>
+                    <th><span class="factura_subtotal"></span></th>
+                    </tr>
+                    <tr>
+                    <th>Descuento</th>
+                    <th><span class="factura_descuento"></span></th>
+                    </tr>
+                    <tr>
+                    <th>Valor Total</th>
+                    <th><span class="factura_valorTotal"></span></th>
+                    </tr>
+                </thead>
+                </table>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#modal_verCliente" data-bs-toggle="modal">Regresar</button>
             </div>
         </div>
         </div>

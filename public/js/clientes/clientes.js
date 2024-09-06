@@ -51,11 +51,15 @@ $('body').on('click', '.btn_ver_cliente', function (e) {
 
     const facturasDelCliente = cliente.factura;
     $('.facturasDelCliente_modalDatosDelCliente>tbody').html('');
-    
+    console.log(cliente.factura)
     for (const factura of facturasDelCliente) {
         $('.facturasDelCliente_modalDatosDelCliente>tbody').append(`
             <tr>
-                <td class="btn btn-link">${factura.codigo}</td>
+                <td>
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalFacturaDelCliente">
+                    ${factura.codigo}
+                    </button>
+                </td>
                 <td>${factura.fecha_de_compra}</td>
                 <td>${factura.productos.length}</td>
                 <td>${numeral(factura.valor_total).format('0,0.00')}</td>
@@ -168,3 +172,68 @@ function editarDatosDelCliente(id, data){
 function eliminarClienteById(id) {
     return '';
 }
+
+$('body').on('click', '.ventas_factura', function(e) {
+    e.preventDefault()
+    const data_factura = $(this).next().text();
+    const factura = JSON.parse(data_factura);
+    $('.clientes_modalFacturaDelCliente h1').html(`Factura ${factura.codigo}`)
+    $('.clientes_modalFacturaDelCliente_nombre').html(`${factura.cliente?.nombre} ${factura.cliente?.apellido}`)
+    $('.clientes_modalFacturaDelCliente_nacimiento').html(`${factura.cliente?.nacimiento ?? ''}`)
+    $('.clientes_modalFacturaDelCliente_direccion').html(`${factura.cliente?.direccion ?? ''}`)
+    $('.clientes_modalFacturaDelCliente_telefono').html(`${factura.cliente?.telefono ?? ''}`)
+    $('.clientes_modalFacturaDelCliente_fecha').html(`${factura.fecha_de_compra ?? ''}`)
+    $('.clientes_modalFacturaDelCliente tbody').html('')
+    const productos = factura.productos
+    productos.forEach(producto => {
+        $('.clientes_modalFacturaDelCliente_tbody').append(modalDataOfFactura(producto))
+    });
+    calcularTotalesdeLaFactura(factura);
+});
+
+function modalDataOfFactura(producto){
+    console.log(producto)
+    return `
+       <tr>
+        <td>${producto.producto_de_la_factura.producto} ${producto.producto_de_la_factura.marca} ${producto.producto_de_la_factura.modelo}</td>
+        <td>${producto.producto_de_la_factura.sistema}</td>
+        <td class="productsOfFactura_precioUnidad text-end">${numeral(producto.producto_de_la_factura.precio).format('0,0.00')}</td>
+        <td class="productsOfFactura_cantidad text-center">${producto.cantidad}</td>
+        <td class="productsOfFactura_subtotal text-end">${numeral(producto.producto_de_la_factura.precio * producto.cantidad).format('0,0.00')}</td>
+        <td class="text-center">${producto.descuento} %</td>
+        <td class="productsOfFactura_descuento text-end">${numeral(producto.producto_de_la_factura.precio * producto.cantidad * producto.descuento/100).format('0,0.00')}</td>
+        <td class="productsOfFactura_valorTotal text-end">${numeral(producto.precio_total).format('0,0.00')}</td>
+       </tr>
+    `
+}
+
+function calcularTotalesdeLaFactura(){
+    const elements = $('.clientes_modalFacturaDelCliente_tbody').children();
+    let totalBruto = 0;
+    let cantidad = 0;
+    let subtotal = 0;
+    let descuentos = 0;
+    let valorTotal = 0;
+
+    elements.each(function() {
+        const element = $(this);
+        const precioUnidad = parseFloat(element.find('.productsOfFactura_precioUnidad').text().replace(/,/g, ''));
+        const cantidadProd = parseInt(element.find('.productsOfFactura_cantidad').text());
+        const subtotalProd = parseFloat(element.find('.productsOfFactura_subtotal').text().replace(/,/g, ''));
+        const descuentoProd = parseFloat(element.find('.productsOfFactura_descuento').text().replace(/,/g, ''));
+        const totalProd = parseFloat(element.find('.productsOfFactura_valorTotal').text().replace(/,/g, ''));
+     
+        totalBruto += precioUnidad;
+        cantidad += cantidadProd;
+        subtotal += subtotalProd;
+        descuentos += descuentoProd;
+        valorTotal += totalProd;
+    });
+
+    
+    $('.factura_valorBruto').text(numeral(totalBruto).format('0,0.00'));
+    $('.factura_cantidad').text(cantidad);
+    $('.factura_subtotal').text(numeral(subtotal).format('0,0.00'));
+    $('.factura_descuento').text(numeral(descuentos).format('0,0.00'));
+    $('.factura_valorTotal').text(numeral(valorTotal).format('0,0.00'));
+};

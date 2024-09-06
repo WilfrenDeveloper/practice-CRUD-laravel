@@ -51,7 +51,7 @@ class FacturasController extends Controller
             ->getFacturaByRangoDePrecios($rango_precio)
             ->with('factura_metodoDePago.metodoDePago:id,forma_de_pago',
                 'cliente:id,nombre,apellido',
-                'productos.productoDeLaFactura:id,producto,marca,modelo,sistema,cantidad')
+                'productos.productoDeLaFactura:id,producto,marca,modelo,sistema,cantidad,precio')
             ->offset($offset)
             ->limit($limit)
             ->orderby('id','desc')

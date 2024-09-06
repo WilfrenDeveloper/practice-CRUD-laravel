@@ -94,11 +94,11 @@ function addAllFacturasInTable(factura){
             <td class="text-end">${factura.fecha_de_compra}</td>
             <td class="text-end">${factura.productos.length}</td>
         </tr>
-    `
-    
+    `  
 };
 
 function modalDataOfFactura(producto){
+    console.log(producto)
     return `
        <tr>
         <td>${producto.producto_de_la_factura.producto} ${producto.producto_de_la_factura.marca} ${producto.producto_de_la_factura.modelo}</td>

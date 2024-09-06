@@ -41,7 +41,7 @@
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="telefono" class="form-label" >Telefono</label>
                         <div id="div_input">
-                            <input id="telefono" type="number" name="telefono" class="input" tabindex="3">
+                            <input id="telefono" type="tel" name="telefono" class="input" maxlength="10" tabindex="3">
                             <p id="error">Inserta un número de 10 dígitos</p>
                             <p id="error">El número de teléfono debe comenzar con 3</p>
                         </div>
