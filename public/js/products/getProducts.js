@@ -9,7 +9,6 @@ function getProducts(search, offset = 0, limit){
         },
         success: function (res) {
             let productos = res.productos
-            console.log(res.productos);
 
             (productos.length < limit) ? $('.btn_verMas').hide() : $('.btn_verMas').show() ;
             

@@ -48,17 +48,26 @@ $('body').on('click', '.btn_ver_cliente', function (e) {
     $('#form_dataCliente').find('#telefono').val(`${cliente.telefono}`);
 
     
+    $('.clientes_modalFacturaDelCliente_nombre').html(`${cliente?.nombre} ${cliente?.apellido}`)
+    $('.clientes_modalFacturaDelCliente_nacimiento').html(`${cliente?.nacimiento ?? ''}`)
+    $('.clientes_modalFacturaDelCliente_direccion').html(`${cliente?.direccion ?? ''}`)
+    $('.clientes_modalFacturaDelCliente_telefono').html(`${cliente?.telefono ?? ''}`)
+    
+
+    
 
     const facturasDelCliente = cliente.factura;
     $('.facturasDelCliente_modalDatosDelCliente>tbody').html('');
     console.log(cliente.factura)
     for (const factura of facturasDelCliente) {
+        const dataFactura = JSON.stringify(factura);
         $('.facturasDelCliente_modalDatosDelCliente>tbody').append(`
             <tr>
                 <td>
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalFacturaDelCliente">
+                    <button type="button" class="btn_verFactura_modal_clientes btn btn-link" data-bs-toggle="modal" data-bs-target="#modalFacturaDelCliente">
                     ${factura.codigo}
                     </button>
+                    <input type="hidden" value='${dataFactura}'>
                 </td>
                 <td>${factura.fecha_de_compra}</td>
                 <td>${factura.productos.length}</td>
@@ -173,15 +182,12 @@ function eliminarClienteById(id) {
     return '';
 }
 
-$('body').on('click', '.ventas_factura', function(e) {
+$('body').on('click', '.btn_verFactura_modal_clientes ', function(e) {
     e.preventDefault()
-    const data_factura = $(this).next().text();
+    const data_factura = $(this).next().val();
+
     const factura = JSON.parse(data_factura);
     $('.clientes_modalFacturaDelCliente h1').html(`Factura ${factura.codigo}`)
-    $('.clientes_modalFacturaDelCliente_nombre').html(`${factura.cliente?.nombre} ${factura.cliente?.apellido}`)
-    $('.clientes_modalFacturaDelCliente_nacimiento').html(`${factura.cliente?.nacimiento ?? ''}`)
-    $('.clientes_modalFacturaDelCliente_direccion').html(`${factura.cliente?.direccion ?? ''}`)
-    $('.clientes_modalFacturaDelCliente_telefono').html(`${factura.cliente?.telefono ?? ''}`)
     $('.clientes_modalFacturaDelCliente_fecha').html(`${factura.fecha_de_compra ?? ''}`)
     $('.clientes_modalFacturaDelCliente tbody').html('')
     const productos = factura.productos
@@ -192,7 +198,6 @@ $('body').on('click', '.ventas_factura', function(e) {
 });
 
 function modalDataOfFactura(producto){
-    console.log(producto)
     return `
        <tr>
         <td>${producto.producto_de_la_factura.producto} ${producto.producto_de_la_factura.marca} ${producto.producto_de_la_factura.modelo}</td>
