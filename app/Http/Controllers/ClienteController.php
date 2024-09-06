@@ -126,28 +126,28 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validación de los datos de entrada
-        $validatedData = $request->validate([
-            'nombre' => 'required|max:255',
-            'apellido' => 'required|max:255',
-            'nacimiento' => 'required|date|before_or_equal:' . now()->subYears(18)->format('Y-m-d'),
-            'telefono' => 'required|digits:10',
-        ]);
+        $data = $request->input('data');
 
-        $cliente = Cliente::find($id);
-        $cliente->nombre = $validatedData['nombre'];
-        $cliente->apellido = $validatedData['apellido'];
-        $cliente->nacimiento = $validatedData['nacimiento'];
-        $cliente->telefono = $validatedData['telefono'];
+        $datosDelNuevoCliente = [];
+        foreach ($data as $dato) {
+            $datosDelNuevoCliente[$dato['name']] = $dato['value'];
+        };
+
+        $cliente = Cliente::with(['factura' => function($query) {$query->select('id', 'codigo', 'fecha_de_compra', 'valor_total', 'id_cliente');}, 
+                    'factura.productos',
+                ])
+                ->find($id, ['id', 'nombre','apellido', 'nacimiento', 'direccion', 'telefono']);
+        $cliente->nombre = $datosDelNuevoCliente['nombre'];
+        $cliente->apellido = $datosDelNuevoCliente['apellido'];
+        $cliente->nacimiento = $datosDelNuevoCliente['nacimiento'];
+        $cliente->direccion = $datosDelNuevoCliente['direccion'];
+        $cliente->telefono = $datosDelNuevoCliente['telefono'];
 
         $cliente->save();
 
         return response()->json([
-            'id' => $cliente->id,
-            'html' => view('clientes.dataCliente', compact('cliente'))->render(),
+            'cliente' => $cliente,
         ]);
-
-        //return response()->json($cliente);
     }
 
     /**

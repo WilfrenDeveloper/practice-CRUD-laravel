@@ -30,6 +30,8 @@ Route::get('/clientes/all', 'App\Http\Controllers\ClienteController@index');
 
 Route::get('/cliente/{id}', 'App\Http\Controllers\ClienteController@show');
 
+Route::put('/cliente/{id}/edit', 'App\Http\Controllers\ClienteController@update');
+
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 
 Route::get('/getproducts', [ProductoController::class, 'getProducts']);

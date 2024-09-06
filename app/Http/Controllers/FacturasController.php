@@ -153,7 +153,6 @@ class FacturasController extends Controller
             $metodo_de_pago->save();
     
             //throw new Exception("Error interno");
-            $id_products = [];
             
             $productsSales = [];
             foreach ($cartDataArray as $prod) {

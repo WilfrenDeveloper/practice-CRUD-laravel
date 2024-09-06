@@ -69,7 +69,6 @@ function generarFactura(cliente, cart, precio_total, metodo){
         success: function(res) {
             $('.generarFactura_exit').trigger('click');
             $('.btn-close').trigger('click');
-            console.log(res)
             localStorage.removeItem('cart');
             $('.container_productsOfCart').find('tbody').html('');
             $('.totalQuantityOfCart').html('');

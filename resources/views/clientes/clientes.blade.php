@@ -16,7 +16,7 @@
             
                 <div class="col mb-3">
                     <label class="form-label me-2" for="telefono">Teléfono</label>
-                    <input id="" name="telefono" type="number" class="form-control form-control-sm" >
+                    <input id="" name="telefono" type="tel" maxlength="10" class="form-control form-control-sm" >
                 </div>
             
                 <div class="col-auto mb-3">
@@ -38,7 +38,7 @@
                     <option value="100">x100</option>
                 </select>
             </div>
-            <button id="btn_crearCliente" class="btn_crear_cliente btn rounded-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#modal_crearCliente" style="background-color: rgb(0, 192, 0); align-self:flex-end">Ingresar Nuevo Cliente</button>
+            <button id="btn_ingresar_nuevo_cliente" class="btn_ingresar_nuevo_cliente btn rounded-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#modal_crearCliente" style="background-color: rgb(0, 192, 0); align-self:flex-end">Ingresar Nuevo Cliente</button>
         </div>
 
         <table style="border: 1px solid gray; background-color:white">            
@@ -48,7 +48,6 @@
                 <th style="padding: 10px">Fecha de Nacimiento</th>
                 <th style="padding: 10px">Dirección</th>
                 <th style="padding: 10px">Teléfono</th>
-                <th style="padding: 10px">Historial</th>
                 <th style="padding: 10px">Acciones</th>
             </thead>
             <tbody class="tbody_clientes">
@@ -60,7 +59,7 @@
 
     <!-- Modal ver Cliente -->
     <div class="modal fade" id="modal_verCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">Información del Cliente</h1>
@@ -70,14 +69,14 @@
                 @include('clientes.datosDelCliente')
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-info text-white">Editar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+            <button type="button" class="btn_aceptar_modal_verCliente btn btn-info text-white">Aceptar</button>
             </div>
         </div>
         </div>
     </div>
 
-    
+    <!-- Modal Crear Nuevo Cliente -->
 
     <div class="modal fade" id="modal_crearCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -87,81 +86,37 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @include('clientes.datosDelCliente')
+                @include('clientes.crearCliente')
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-info text-white">Crear</button>
+            <button type="button" class="btn_crear_cliente btn btn-info text-white">Crear</button>
             </div>
         </div>
         </div>
     </div>
 
+    <!-- Modal Eliminar Cliente -->
+
+    <div class="modal fade" id="modal_eliminar_cliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5><span>Estás seguro de eliminar al usuario</span> <strong class="modal_eliminar_cliente_strong"></strong></h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn_aceptar_modal_eliminar_cliente btn btn-primary" >Aceptar</button>
+              <input class="input_id_cliente_modal_eliminar_cliente" type="hidden" val="">
+            </div>
+          </div>
+        </div>
+    </div>
     
 
 <script src="{{asset('js/clientes/clientes.js')}}"></script>
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        //Botón Editar Cliente que activa el modal
-        function editarClienteForm(id) {
-            $('#modal_editarCliente').show();
-            $.ajax({
-                type: "GET",
-                url: `/clientes/${id}/edit`,
-                success: function(res){
-                    $(".edit_nombre").val(res.nombre);
-                    $(".edit_apellido").val(res.apellido);
-                    $(".edit_nacimiento").val(res.nacimiento);
-                    $(".edit_telefono").val(res.telefono);
-                    $(".cliente_id").val(res.id);
-                }
-            });
-            return;
-        };
-        
-        //Botón Elminar que activa el modal
-        function activarmodalEliminar(id){
-            $(`.modal_${id}`).css('display', 'flex');
-        };
-        
-        
-        //Botón Cancelar la eliminacion del cliente
-        function cancelarEliminarCliente(id){
-            $(`.modal_${id}`).css('display', 'none');
-        };
-        
-        //Confirmar Eliminar Cliente
-        function confirmarEliminarCliente(id){
-            $.ajax({
-                type: "DELETE",
-                url: `/clientes/${id}`,
-                success: function (response) {
-                    let id = response.id_cliente;
-                    $(`.tr_${id}`).remove();
-                },
-                error: function (error){
-                        //manejo de errores
-                        console.error('error', error);
-                    }
-                });
-                
-                $(`.modal_${id}`).css('display', 'none');
-            };
-            
-            
-            $(document).ready(function () {
-                //botón crear Nuevo Cliente
-                $('#btn_crearCliente').click(function (e) { 
-                    e.preventDefault();
-                    $('#modal_crearCliente').show();
-                    return;
-                });
-            });
-            
-    </script>
 
 @endsection

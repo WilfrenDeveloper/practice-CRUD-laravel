@@ -87,7 +87,6 @@
                     },
                     error: function (error) {
                         console.error('error', error);
-                        console.log(error.responseJSON);
                     }
                 });
             };
