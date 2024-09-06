@@ -1,34 +1,20 @@
-function getProducts(search = "", offset = 0){
+function getProducts(search, offset = 0, limit){
     $.ajax({
         type: "GET",
         url: "/getproducts",
         data: {
             search,
-            offset
+            offset,
+            limit,
         },
         success: function (res) {
-            let productos = res.productos;
-            let message = res.message;
+            let productos = res.productos
+            console.log(res.productos);
 
-            (productos.length === 0) ? $('.btn_verMas').hide() : $('.btn_verMas').show() ;
+            (productos.length < limit) ? $('.btn_verMas').hide() : $('.btn_verMas').show() ;
             
-            if(message){
-                $('.div_message').html(`<i class='bx bx-error-circle' style='font-size: 30px;color:#d90000;'></i> 
-                    <p class="p_message" style="font-size: 20px">${message}</p>`);
-            } else {
-                $('.div_message').html('');
-            };
-            
-            if(offset == 0){
-                $('.cards_products').html('');
-                addCardsProducts(productos);
-            } else {
-                addCardsProducts(productos);
-            }
-            
-            function addCardsProducts(productos){
-                productos.forEach(product => {
-                var formattedNumber = numeral(product.precio).format('0,0');
+            productos.forEach(product => {
+            var formattedNumber = numeral(product.precio).format('0,0');
                 const array = JSON.stringify(product);
                     $('.cards_products').append(`
                         <div class="card_product_${product.id} card_product" style="width:240px; border: 1px solid #e9e9e9; padding:10px">
@@ -60,8 +46,14 @@ function getProducts(search = "", offset = 0){
                     `);
                 });
 
-                cartProducts();
-            }                         
+            cartProducts();
+            if($('.cards_products').children().length === 0 ){
+                $('.div_message').html(`<i class='bx bx-error-circle' style='font-size: 30px;color:#d90000;'></i> 
+                    <p class="p_message" style="font-size: 20px">El producto que buscas no se encuentra</p>`);
+            } else {
+                $('.div_message').html('');
+            };
+                                  
             
         },
         error: function(error) {

@@ -3,16 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(){
-        $clientes = Cliente::all();
-        return response()->json($clientes);
+    public function index(Request $request){ 
+        try {
+            DB::beginTransaction();
+
+            $search = ($request->input('search')) ? $request->input('search'): "";
+            $offset = ($request->input('offset')) ? $request->input('offset'): 0;
+            $limit = ($request->input('limit')) ? $request->input('limit'): 10;
+
+            $buscar = [];
+            if($search){
+                foreach($search as $item){
+                    $buscar[$item['name']] = $item['value'];
+                };
+            };
+
+            $cliente = $buscar['cliente'];
+            $direccion = $buscar['direccion'];
+            $nacimiento = $buscar['nacimiento'];
+            $telefono = $buscar['telefono'];
+
+            $clientes = Cliente::getClientesByName($cliente)
+                ->getClientesByDireccion($direccion)
+                ->getClientesByNacimiento($nacimiento)
+                ->getClientesByTelefono($telefono)
+                ->with(['factura' => function($query) {$query->select('id', 'codigo', 'fecha_de_compra', 'valor_total', 'id_cliente');}, 
+                    'factura.productos',
+                ])
+                ->offset($offset)
+                ->limit($limit)
+                ->orderby('id','desc')
+                ->get(['id', 'nombre','apellido', 'nacimiento', 'direccion', 'telefono']);
+
+            DB::commit();
+
+            return response()->json([
+                'clientes' => $clientes,
+                'buscar' => $buscar
+            ]);
+            
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $th->getMessage(),
+                'trace' => $th->getTrace(),
+            ]);
+        }
     }
 
 
@@ -96,8 +142,6 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        //return redirect('/clientes');
-        //$clientes = Cliente::all();
         return response()->json([
             'id' => $cliente->id,
             'html' => view('clientes.dataCliente', compact('cliente'))->render(),

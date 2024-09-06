@@ -5,7 +5,7 @@
     <div style="display: flex; justify-content:center; align-items:center; flex-direction:column; position:relative">
        
         <div style="margin:10px 0; width:600px;">              
-                <button id="btn_crearProducto" class="a_editar" type="button" data-bs-toggle="modal" data-bs-target="#modal_crearProducto" style="text-decoration:none; border: 1px rgba(220, 182, 182, 0) solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</button>
+                <button id="btn_crearProducto" class="a_editar btn rounded-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#modal_crearProducto" style="background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</button>
         </div>
         
         <table style="border: 1px solid gray; background-color:white">
@@ -37,11 +37,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @include('productos.editarProducto')
+                @include('productos.datosDelProducto')
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-info text-white">Editar</button>
             </div>
         </div>
         </div>
@@ -57,11 +57,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @include('productos.crearProducto')
+                @include('productos.datosDelProducto')
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-info text-white">Crear</button>
             </div>
         </div>
         </div>

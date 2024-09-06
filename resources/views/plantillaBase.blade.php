@@ -111,7 +111,7 @@
                 @yield('newProduct')
             </div>
             
-            <div style="display: flex; justify-content:center; align-items:center">
+            <div style="display: flex; flex-direction:column; justify-content:center; align-items:center">
                 @yield('clientes')
             </div>
 

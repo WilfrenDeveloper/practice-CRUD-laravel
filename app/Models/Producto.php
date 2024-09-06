@@ -23,9 +23,8 @@ class Producto extends Model
     
 
     public function scopeGetProductBySearch(Builder $query, $search){
-        if($search){
-            $products = explode(' ', $search);
-
+        if(trim($search) !== ""){
+            $products = explode(' ', trim($search));
             return $query->where(function($q) use ($products){
                 foreach($products as $product){
                     $q->where(function ($subQuery) use ($product) {
@@ -38,6 +37,6 @@ class Producto extends Model
             });
         }
 
-        return $query;
+        if(trim($search) === "") return $query;
     }
 };

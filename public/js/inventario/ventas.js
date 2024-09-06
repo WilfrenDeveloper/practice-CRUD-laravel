@@ -2,16 +2,27 @@ $(document).ready(function () {
     $('.div_title').html('<h1>Ventas</h1>')
     const search = $('.ventas_form_search').serializeArray();
     $('.ventas_tbody').html('');
-    getAllFacturas(0, search);
+    getAllFacturas(search);
     formaDePago();
 });
 
 let offset = 0;
-$('body').on('click', '.ventas_btn_verMas', function(){
-    offset += 10;
+let limit = parseInt($('.ventas_select_mostrar').val());
+
+$('body').on('change','.ventas_select_mostrar', function () { 
+    limit = parseInt($(this).val());
+    offset = 0
     $('.ventas_noFound').hide();
     const search = $('.ventas_form_search').serializeArray();
-    getAllFacturas(offset, search);
+    $('.ventas_tbody').html('');
+    getAllFacturas(search, offset, limit);
+});
+
+$('body').on('click', '.ventas_btn_verMas', function(){
+    offset += limit;
+    $('.ventas_noFound').hide();
+    const search = $('.ventas_form_search').serializeArray();
+    getAllFacturas(search, offset, limit);
 })
 
 $('body').on('click', '.btn_ventas_form_search', function(e){
@@ -20,8 +31,7 @@ $('body').on('click', '.btn_ventas_form_search', function(e){
     $('.ventas_noFound').hide();
     const search = $('.ventas_form_search').serializeArray();
     $('.ventas_tbody').html('');
-    getAllFacturas(offset, search);
-
+    getAllFacturas(search, offset, limit);
 })
 
 $('body').on('click', '.ventas_factura', function(e) {
@@ -43,18 +53,16 @@ $('body').on('click', '.ventas_factura', function(e) {
 });
 
 
-function getAllFacturas(offset=0, search = []){
+function getAllFacturas(search = [], offset, limit){
     $.ajax({
         type: "GET",
         url: "/facturas/ventas",
         data: {
             offset,
             search,
+            limit,
         },
         success: function (response) {
-            //console.log(response.message)
-            //console.log(response.buscar)
-            //console.log(response.facturas)
             $('.ventas_btn_verMas').show();
             response.facturas.forEach(factura => {
                 $('.ventas_tbody').append(addAllFacturasInTable(factura));
@@ -83,8 +91,8 @@ function addAllFacturasInTable(factura){
             <td>${factura.cliente.nombre} ${factura.cliente.apellido}</td>
             <td class="text-end">${numeral(factura.valor_total).format('0,0.00')}</td>
             <td>${factura.factura_metodo_de_pago[0]?.metodo_de_pago.forma_de_pago ?? 'No registra'}</td>
-            <td>${factura.fecha_de_compra}</td>
-            <td>${factura.productos.length}</td>
+            <td class="text-end">${factura.fecha_de_compra}</td>
+            <td class="text-end">${factura.productos.length}</td>
         </tr>
     `
     

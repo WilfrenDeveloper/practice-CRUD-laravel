@@ -1,64 +1,106 @@
 @extends('../plantillaBase')
 @section('clientes')
 
-    <div style="display: flex; justify-content:center; align-items:center; flex-direction:column; position:relative">
-        <h1 class="title" style="position: absolute">Clientes</h1>
+    <div class="d-flex justify-content-center align-items-center flex-column mt-3">
+        <form class="form_search_clientes form container mb-3">
+            <div class="row d-flex ">
+                <div class="col mb-3">
+                    <label class="form-label me-2" for="cliente">Nombre</label>
+                    <input id="" name="cliente" type="text" class="form-control form-control-sm" >
+                </div>
 
-        <div style="margin-top:40px">
-            <div class="a_editar">
-                <button id="btn_crearCliente" style="text-decoration:none; border: 1px solid; color:white; padding:10px 20px; text-align:center; background-color: rgb(0, 192, 0)">Ingresar Nuevo Cliente</button>
+                <div class="col mb-3">
+                    <label class="form-label me-2" for="direccion">Direccion</label>
+                    <input id="" name="direccion" type="text" class="form-control form-control-sm" >
+                </div>
+            
+                <div class="col mb-3">
+                    <label class="form-label me-2" for="telefono">Teléfono</label>
+                    <input id="" name="telefono" type="number" class="form-control form-control-sm" >
+                </div>
+            
+                <div class="col-auto mb-3">
+                    <label class="form-label me-2" for="nacimiento">Fecha de Nacimiento</label>
+                    <input id="" name="nacimiento" type="date" class="form-control form-control-sm">
+                </div>
             </div>
+            <button class="btn_search_form_clientes btn btn-primary me-2 rounded 0">Buscar</button>
+        </form>
+
+        <div class="container d-flex justify-content-between mb-3">
+            <div class="">
+                <label class="form-label me-2" for="hasta">Mostrar registros</label>
+                <br>
+                <select name="mostrar" id="mostrar" class="clientes_select_mostrar">
+                    <option value="10" selected>x10</option>
+                    <option value="25">x25</option>
+                    <option value="50">x50</option>
+                    <option value="100">x100</option>
+                </select>
+            </div>
+            <button id="btn_crearCliente" class="btn_crear_cliente btn rounded-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#modal_crearCliente" style="background-color: rgb(0, 192, 0); align-self:flex-end">Ingresar Nuevo Cliente</button>
         </div>
-        <table style="margin-top:40px;border: 1px solid gray; background-color:white">
+
+        <table style="border: 1px solid gray; background-color:white">            
             <thead style="background-color: black; color:white; text-aling:center;" >
                 <th style="padding: 10px">Nombre</th>
                 <th style="padding: 10px">Apellido</th>
                 <th style="padding: 10px">Fecha de Nacimiento</th>
+                <th style="padding: 10px">Dirección</th>
                 <th style="padding: 10px">Teléfono</th>
-                <th style="padding: 10px">Operaciones</th>
                 <th style="padding: 10px">Historial</th>
+                <th style="padding: 10px">Acciones</th>
             </thead>
             <tbody class="tbody_clientes">
-                @foreach ($clientes as $cliente)
-                <tr class="tr_operaciones tr_{{$cliente->id}}" style="height:40px" data-id="{{$cliente->id}}">
-                    <td class="td_nombre">{{$cliente->nombre}}</td>
-                    <td class="td_apellido">{{$cliente->apellido}}</td>
-                    <td class="td_nacimiento">{{$cliente->nacimiento}}</td>
-                    <td class="td_telefono">{{$cliente->telefono}}</td>
-                    <td style="padding-left: 20px; ">
-                        <a href="/clientes/{{$cliente->id}}" style="text-decoration:none;  padding:12px 20px; text-align:center">Ver historial de compras</a>
-                    </td>
-                    <td style="padding-left: 20px">
-                        <!-- modal confirmar eliminacion -->
-                        <div class="modal_eliminar_cliente modal_{{$cliente->id}}" style="display: none">
-                            <div id="div_modal_eliminar">
-                                @csrf
-                                <p>Estás seguro de querer eliminar el Cliente <br> <strong>{{$cliente->nombre}} {{$cliente->apellido}}</strong></p>
-                                <button onclick="cancelarEliminarCliente({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Cancelar</button>
-                                <button onclick="confirmarEliminarCliente({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(9, 218, 43)">Aceptar</button>
-                            </div>
-                        </div>
-                        <button onclick="editarClienteForm({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:10px 20px; text-align:center; background-color: rgb(104, 104, 104)">Editar</button>
-                        <button onclick="activarmodalEliminar({{$cliente->id}})" style="text-decoration:none; border: 1px solid; border-radius:5px; color:white; padding:12px 20px; text-align:center; background-color: rgb(255, 59, 59)">Eliminar</button>
-                    </td>
-                </tr>
-                @endforeach
+               
             </tbody>
         </table>
+        <button class="btn_verMas_clientes btn btn-dark rounded-0 text-light fs-6" >Ver más...</button>
     </div>
 
-    <article id="modal_crearCliente" style="width:100%; height:100%; top:0; display:flex; justify-content:center; align-items:center; background-color: rgba(255, 255, 255, 0.874)">
-        @include('clientes.crearCliente')
-    </article>
+    <!-- Modal ver Cliente -->
+    <div class="modal fade" id="modal_verCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Información del Cliente</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @include('clientes.datosDelCliente')
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-info text-white">Editar</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
-    <article id="modal_editarCliente" style="width:100%; height:100%; top:0; display:flex; justify-content:center; align-items:center; background-color: rgba(255, 255, 255, 0.874)">
-        @include('clientes.editarCliente')
-    </article>
+    
 
+    <div class="modal fade" id="modal_crearCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar Nuevo Cliente</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @include('clientes.datosDelCliente')
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-info text-white">Crear</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
+    
+
+<script src="{{asset('js/clientes/clientes.js')}}"></script>
     <script>
-        $('#modal_crearCliente').hide();
-        $('#modal_editarCliente').hide();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

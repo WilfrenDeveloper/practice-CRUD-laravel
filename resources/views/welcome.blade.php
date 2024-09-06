@@ -1,12 +1,9 @@
 @extends('plantillaBase')
 
-
 @section('script_head')
 <script src="{{asset('js/products/getProducts.js')}}"></script>
 <script src="{{asset('js/localStorage/localStorageCart.js')}}"></script>
 <script src="{{asset('js/cart/cartProducts.js')}}"></script>
-<script src="{{asset('js/cart/productOfCart.js')}}"></script>
-<script src="{{asset('js/clientes/getAllClientes.js')}}"></script>
 @endsection
 
 
@@ -27,11 +24,6 @@
     <div class="modal_cartProducts">
         @include('cart/cartProducts')
     </div>
-
-   
-    
-    
-
 
     <script src="{{asset('js/view_welcome/welcome.js')}}"></script>
 @endsection

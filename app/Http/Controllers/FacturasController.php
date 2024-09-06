@@ -26,8 +26,9 @@ class FacturasController extends Controller
 
         try {
             DB::beginTransaction();
-            $search = $request->input('search');
-            $offset = $request->input('offset');
+            $search = $request->input('search') ? $request->input('search') : "";
+            $offset = $request->input('offset') ? $request->input('offset') : 0;
+            $limit = $request->input('limit') ? $request->input('limit') : 10;
 
             $buscar = [];
             if ($search) {
@@ -52,7 +53,7 @@ class FacturasController extends Controller
                 'cliente:id,nombre,apellido',
                 'productos.productoDeLaFactura:id,producto,marca,modelo,sistema,cantidad')
             ->offset($offset)
-            ->limit(10)
+            ->limit($limit)
             ->orderby('id','desc')
             ->get(['id', 'codigo', 'fecha_de_compra', 'valor_total','id_cliente']);
 

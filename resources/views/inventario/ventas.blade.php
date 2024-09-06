@@ -39,6 +39,16 @@
         <label class="form-label me-2" for="hasta">Hasta</label>
         <input id="" name="hasta" type="date" class="form-control form-control-sm" value="{{date('Y-m-d')}}" max="{{date('Y-m-d')}}">
       </div>
+      <div class="col-auto">
+        <label class="form-label me-2" for="hasta">Mostrar registros</label>
+        <br>
+        <select name="mostrar" id="mostrar" class="ventas_select_mostrar">
+          <option value="10" selected>x10</option>
+          <option value="25">x25</option>
+          <option value="50">x50</option>
+          <option value="100">x100</option>
+        </select>
+      </div>
       <div class="col position-relative">
         <button class="btn_ventas_form_search btn btn-primary position-absolute end-0 bottom-0 me-2">Buscar</button>
       </div>

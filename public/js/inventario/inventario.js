@@ -3,20 +3,32 @@ $(document).ready(function () {
     getProductsToInventario();
 });
 
+$('body').on('click', '#btn_crearProducto', function() {
+    $('.div_img_actual').html('');
+    $('.form_datosDelproducto input').val('');
+});
+
+
 $('body').on('click', '.btn_ver_inventario', function() {
     const value = $(this).closest('.tr_inventario').find('.inventario_input_producto').val();
     const producto = JSON.parse(value);
-    stringToObject(producto);     
+    stringToObject(producto);
 });
 
 function stringToObject(producto){
     $("#form_editarProducto").attr('action', `/inventario/${producto.id}`);
-    $(".producto_id").val(producto.id)
-    $(".edit_producto").val(producto.producto);
-    $(".edit_marca").val(producto.marca);
-    $(".edit_modelo").val(producto.modelo);
-    $(".edit_sistema").val(producto.sistema);
-    $("#img_actual").attr('src', `/imagen/${producto.imagen}`);
+    $("#producto_id").val(producto.id)
+    $("#producto").val(producto.producto);
+    $("#marca").val(producto.marca);
+    $("#modelo").val(producto.modelo);
+    $("#sistema").val(producto.sistema);
+    $("#precio").val(numeral(producto.precio).format('0,0.00'));
+    $("#cantidad").val(producto.cantidad);
+
+    $('.div_img_actual').html(`
+        <label for="edit_imagen">Imagen actual:</label>
+        <img src="/imagen/${producto.imagen}" alt="Imagen actual" id="img_actual" style="max-width:80px; max-height:80px;">
+    `)
 }
 
 

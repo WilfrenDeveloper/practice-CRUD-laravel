@@ -19,24 +19,16 @@ class ProductoController extends Controller
         $search = ($request->input('search'))? $request->input('search') : "" ;
         $offset = ($request->input('offset'))? $request->input('offset') : 0;
         $limit = ($request->input('limit'))? $request->input('limit') : 5;
-        $message="";
             
         $productos = Producto::getProductBySearch($search)
-            ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'imagen', 'precio']);
-        
-        if ($productos->isEmpty()) {
-            $productos = [];
-            $message = "El producto que buscas no se encuentra disponible";
-        } else {
-            $productos = Producto::getProductBySearch($search)
-                ->offset($offset)
-                ->limit($limit)
-                ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'cantidad', 'imagen', 'precio']);
-        }
+            ->offset($offset)
+            ->limit($limit)
+            ->orderby('id', 'desc')
+            ->get(['id', 'producto', 'marca', 'modelo', 'sistema', 'cantidad', 'imagen', 'precio']);
 
         return response()->json([
             'productos' => $productos,
-            'message' => $message]);
+            ]);
     }
 
     /**
@@ -150,13 +142,8 @@ class ProductoController extends Controller
         }
 
         $producto->save();
+        
 
-        $productos = Producto::all();
-        /***** 
-        return response()->json([
-            'html' => view('productos.dataProducto', compact('productos'))->render(),
-        ]);
-        */
         $productos = Producto::all();
         return view('inventario.inventario')->with('productos', $productos);
     }

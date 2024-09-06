@@ -22,9 +22,13 @@ Route::get('/productos/{id}/edit', 'App\Http\Controllers\ProductoController@show
 
 Route::put('/productos/{id}/update', [ProductoController::class, 'update']);
 
-Route::resource('/clientes', 'App\Http\Controllers\ClienteController');
+Route::get('/clientes', function(){
+    return view('clientes.clientes');
+});
 
-Route::resource('/facturas', 'App\Http\Controllers\FacturasController');
+Route::get('/clientes/all', 'App\Http\Controllers\ClienteController@index');
+
+Route::get('/cliente/{id}', 'App\Http\Controllers\ClienteController@show');
 
 Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
 

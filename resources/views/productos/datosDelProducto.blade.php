@@ -1,55 +1,60 @@
 
-        <form id="form_editarProducto" class="form_edit_product"  method="POST" onsubmit="return validateEditProduct()" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+        <form id="form_datosDelProducto" class="form_datosDelproducto"  method="POST" onsubmit="return validateEditProduct()" enctype="multipart/form-data">
+        
             <input id="producto_id" name="producto_id" class="producto_id" type="hidden" >
-            <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+            <div class="mb-3">
                 <label for="producto" class="form-label">Producto</label>
                 <div id="div_input">
-                    <input id="producto" value="" type="text" name="producto" class="edit_producto form-control form-control-sm" tabindex="1">
+                    <input id="producto" type="text" name="producto" class="form-control form-control-sm" tabindex="1">
                     <p id="error">Debes insertar el nombre del producto</p>
                 </div>
             </div>
-            <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+            <div class="mb-3">
                 <label for="marca" class="form-label">Marca</label>
                 <div id="div_input">
-                    <input id="marca" value="" type="text" name="marca" class="edit_marca form-control form-control-sm" tabindex="2">
+                    <input id="marca" type="text" name="marca" class="form-control form-control-sm" tabindex="2">
                     <p id="error">Debes insertar la marca del producto</p>
                 </div>
             </div>
-            <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+            <div class="mb-3">
                 <label for="modelo" class="form-label">Modelo</label>
                 <div id="div_input">
-                    <input id="modelo" value="" type="text" name="modelo" class="edit_modelo form-control form-control-sm" tabindex="3">
+                    <input id="modelo" type="text" name="modelo" class="form-control form-control-sm" tabindex="3">
                     <p id="error">Debes insertar el modelo</p>
                 </div>
             </div>
-            <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+            <div class="mb-3">
                 <label for="sistema" class="form-label">Sistema Operativo</label>
                 <div id="div_input">
-                    <input id="sistema" value="" type="text" name="sistema" class="edit_sistema form-control form-control-sm" tabindex="4">
+                    <input id="sistema" type="text" name="sistema" class="form-control form-control-sm" tabindex="4">
                     <p id="error">Debes insertar el sistema Operativo</p>
                 </div>
             </div>
-            <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
+            <div class="mb-3">
                 <label for="precio" class="form-label">Precio</label>
                 <div id="div_input">
-                    <input id="precio" value="" type="precio" name="precio" class="edit_precio form-control form-control-sm" tabindex="4">
+                    <input id="precio" type="text" name="precio" class="form-control form-control-sm" tabindex="4">
                     <p id="error">Debes insertar el precio</p>
                 </div>
             </div>
-            <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
-                <label for="edit_imagen">Imagen actual:</label>
-                <img src="" alt="Imagen actual" id="img_actual" style="max-width:80px; max-height:80px;">
-                <label for="imagen" class="form-label">Selecciona la imagen</label>
+            <div class="mb-3">
+                <label for="cantidad" class="form-label">Cantidad</label>
                 <div id="div_input">
-                    <input id="imagen" value=""  type="file" name="imagen" class="edit_imagen" accept=".jpg,.jpeg,.png" tabindex="5"  >
+                    <input id="cantidad" type="number" name="cantidad" class="form-control form-control-sm" tabindex="4">
+                    <p id="error">Debes insertar el precio</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="div_img_actual">
+                </div>
+                <label for="imagen" class="form-label">Selecciona la imagen</label>
+                <div class="mb-3" id="div_input">
+                    <input id="imagen" class="form-control form-control-sm" value="" name="imagen" type="file"accept=".jpg,.jpeg,.png" >
                     <p id="error">Debes adjuntar una imagen formato: jpg, jpeg o png</p>
                 </div>
             </div>
             <div>
                 <button type="submit" style="border-style:none; padding: 12px 30px; color:white; background-color:rgb(73, 199, 61)" tabindex="4">Editar</button>
-                <a class="btn_edit_product_cancel a_editar"  style="text-decoration:none; padding: 10px 30px; color:white; background-color:rgb(104, 104, 104) " tabindex="5">Cancelar</a>
             </div>
         </form>
 
