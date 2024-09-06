@@ -175,7 +175,7 @@
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn_crear_cliente btn btn-info text-white">Crear</button>
+            <button type="button" class="btn_crear_modalCrearCliente btn btn-info text-white">Crear</button>
             </div>
         </div>
         </div>

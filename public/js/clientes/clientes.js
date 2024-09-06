@@ -79,16 +79,47 @@ $('body').on('click', '.btn_ver_cliente', function (e) {
 
 $('body').on('click', '.btn_ingresar_nuevo_cliente', function (e) {
     e.preventDefault();
-    $('#form_dataCliente input').val('');
+    $('#form_crearCliente input').val('');
 });
 
-$('body').on('click', '.btn_crear_cliente', function(){
-    const dataNuevocliente = $('.form_dataCliente');
+$('body').on('click', '.btn_crear_modalCrearCliente', function(e){
+    e.preventDefault();
+    const dataNuevocliente = $('.form_crearCliente').serializeArray();
+    crearNuevoCliente(dataNuevocliente)
 });
 
-$('body').on('click', '.btn_crear_cliente', function(){
-    const dataNuevocliente = $('.form_dataCliente');
-});
+function crearNuevoCliente(datosDelCliente){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "clientes/crear",
+        data: {
+            data : datosDelCliente,
+        },
+        success: function (response) {
+            const cliente = response.cliente; 
+            console.log(response);
+            $('.tbody_clientes').prepend(`
+                <tr class="tr_cliente tr_cliente_${cliente.id}" style="height:40px" data-id="${cliente.id}">
+                ${addDataClienteToTable(cliente)}
+                </tr>
+            `)
+            $('.btn-close').trigger('click');
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Cliente creado exitosamente",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
+}
 
 $('body').on('click', '.btn_editar_datos_modal_verCliente', function (e) {
     e.preventDefault();
@@ -131,11 +162,10 @@ function getAllClientes (search, offset, limit){
             let clientes = response.clientes;
             (clientes.length < limit) ? $('.btn_verMas_clientes').hide() : $('.btn_verMas_clientes').show();
             for (const cliente of clientes) {
-                $('.tbody_clientes').append(
-                `
-                <tr class="tr_cliente tr_cliente_${cliente.id}" style="height:40px" data-id="${cliente.id}">
-                ${addDataClienteToTable(cliente)}
-                </tr>
+                $('.tbody_clientes').append(`
+                    <tr class="tr_cliente tr_cliente_${cliente.id}" style="height:40px" data-id="${cliente.id}">
+                    ${addDataClienteToTable(cliente)}
+                    </tr>
                 `)
             }
         },

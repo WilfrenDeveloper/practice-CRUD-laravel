@@ -62,64 +62,33 @@ class ClienteController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function crearNuevoCliente(Request $request)
     {
-        return view('clientes.crearCliente');
-    }
+        $data = $request->input('data');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // Validación de los datos de entrada
-        $validatedData = $request->validate([
-            'nombre' => 'required|max:100',
-            'apellido' => 'required|max:100',
-            'nacimiento' => 'required|date|before_or_equal:' . now()->subYears(18)->format('Y-m-d'),
-            'telefono' => 'required|digits:10',
-        ]);
+        $datosDelCliente = [];
+        foreach ($data as $item) {
+            $datosDelCliente[$item['name']] = $item['value'];
+        };
 
         // Creación del nuevo cliente
         $cliente = new Cliente();
-        $cliente->nombre = $validatedData['nombre'];
-        $cliente->apellido = $validatedData['apellido'];
-        $cliente->nacimiento = $validatedData['nacimiento'];
-        $cliente->telefono = $validatedData['telefono'];
+        $cliente->nombre = $datosDelCliente['nombre'];
+        $cliente->apellido = $datosDelCliente['apellido'];
+        $cliente->nacimiento = $datosDelCliente['nacimiento'];
+        $cliente->direccion = ($datosDelCliente['direccion'])? $datosDelCliente['nacimiento'] : "";
+        $cliente->telefono = ($datosDelCliente['telefono'])? $datosDelCliente['nacimiento'] : "";
 
         // Guardar el cliente en la base de datos
         $cliente->save();
-
-        $cliente = $cliente;
 
         // retornar el cliente creado
         //return redirect('/clientes');
         return response()->json([
             'cliente' => $cliente,
-            'html' => view('clientes.dataCliente', compact('cliente'))->render(),
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $cliente = Cliente::find($id);
-        return view('clientes.comprasDelCliente', compact('cliente'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $cliente = Cliente::find($id);
-        return response()->json($cliente);
-    }
 
     /**
      * Update the specified resource in storage.
@@ -153,7 +122,7 @@ class ClienteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function eliminarCliente(string $id)
     {
         $cliente = Cliente::find($id);
         $cliente->delete();

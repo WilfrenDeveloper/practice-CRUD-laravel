@@ -1,4 +1,4 @@
-function getProducts(search, offset = 0, limit){
+function getProducts(search, offset = 0, limit = 5){
     $.ajax({
         type: "GET",
         url: "/getproducts",
@@ -9,8 +9,6 @@ function getProducts(search, offset = 0, limit){
         },
         success: function (res) {
             let productos = res.productos
-
-            (productos.length < limit) ? $('.btn_verMas').hide() : $('.btn_verMas').show() ;
             
             productos.forEach(product => {
             var formattedNumber = numeral(product.precio).format('0,0');
@@ -52,7 +50,8 @@ function getProducts(search, offset = 0, limit){
             } else {
                 $('.div_message').html('');
             };
-                                  
+                  
+            (productos.length < limit) ? $('.btn_verMas').hide() : $('.btn_verMas').show() ;
             
         },
         error: function(error) {

@@ -84,10 +84,12 @@ function generarFactura(cliente, cart, precio_total, metodo){
             }
             
             Swal.fire({
-                title: "Felicidades por tu Compra",
-                text: "La compra fué realizada exitosamente",
-                icon: "success"
-              });
+                position: "center",
+                icon: "success",
+                title: "Felicidades por ti compra",
+                showConfirmButton: false,
+                timer: 1500
+            });
         },
         error: function (error) {
             console.error(error);

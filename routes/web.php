@@ -22,17 +22,21 @@ Route::get('/productos/{id}/edit', 'App\Http\Controllers\ProductoController@show
 
 Route::put('/productos/{id}/update', [ProductoController::class, 'update']);
 
+
+
 Route::get('/clientes', function(){
     return view('clientes.clientes');
 });
 
 Route::get('/clientes/all', 'App\Http\Controllers\ClienteController@index');
 
-Route::get('/cliente/{id}', 'App\Http\Controllers\ClienteController@show');
+Route::post('/clientes/crear', 'App\Http\Controllers\ClienteController@crearNuevoCliente');
 
 Route::put('/cliente/{id}/edit', 'App\Http\Controllers\ClienteController@update');
 
-Route::get('/crearcliente', 'App\Http\Controllers\ClienteController@create');
+Route::delete('/cliente/{id}/delete', 'App\Http\Controllers\ClienteController@eliminarCliente');
+
+
 
 Route::get('/getproducts', [ProductoController::class, 'getProducts']);
 
