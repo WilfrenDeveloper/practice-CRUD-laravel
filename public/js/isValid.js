@@ -200,15 +200,8 @@ function validateCliente(nombre, apellido, direccion, nacimiento, telefono) {
         isValid = false;
         apellido.classList.add('bg-danger-subtle', 'border-danger');
         apellido.closest('#container').querySelector('#error').style.display = "block";
-        /*
-        apellido.closest('#container').querySelector('#error').style.display = "block";
-        */
     } else {
         apellido.closest('#container').querySelector('#error').style.display = "none";
-        /*
-        apellido.nextSibling.nextSibling.style.display = "none";
-        apellido.style.backgroundColor = '';
-        */
     }
 
     if(direccion.value.trim().length < 5) {

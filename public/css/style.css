@@ -113,6 +113,11 @@ input[type=number]::-webkit-inner-spin-button {
     border-color: #9a9afc;
 }
 
+#form_dataCliente #error,
+#form_crearCliente #error{
+    background-color: grey;
+}
+
 @media (max-width:610px) {
     #search{
         width: 200px;

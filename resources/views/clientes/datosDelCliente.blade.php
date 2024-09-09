@@ -1,50 +1,50 @@
 <form id="form_dataCliente" class="form_dataCliente d-flex flex-wrap" >
     @csrf
     <input id="cliente_id" class="cliente_id" type="hidden" value="">
-    <div class="me-3">
+    <div id="container" class="me-3">
         <div class="input-group mb-3" style="filter: drop-shadow( 0 0 5px #9a9afc9d)">
             <label for="nombre" class="input-group-text" id="inputGroup-sizing-sm">Nombre</label>
             <input id="nombre" type="text" name="nombre" class="form-control" disabled tabindex="1">
         </div>
         <div id="error">
-            <p>No debe contener números. <br> No debe contener carateres especiales: #$%&/-+*</p>
+            <p class="m-0 p-0">No debe contener números. <br> No debe contener carateres especiales: #$%&/-+*</p>
         </div>
     </div>
-    <div class="me-3">
+    <div id="container" class="me-3">
         <div class="input-group mb-3" style="filter: drop-shadow( 0 0 5px #9a9afc9d)">
             <label for="apellido" class="input-group-text" id="inputGroup-sizing-sm">Apellido</label>
             <input id="apellido" type="text" name="apellido" class="form-control" disabled tabindex="2">
         </div>
         <div id="error">
-            <p>No debe contener números, <br> No debe contener carateres especiales: #$%&/-+*</p>
+            <p class="m-0 p-0">No debe contener números, <br> No debe contener carateres especiales: #$%&/-+*</p>
         </div>
     </div>
-    <div class="me-3">
+    <div id="container" class="me-3">
         <div class="input-group mb-3" style="filter: drop-shadow( 0 0 5px #9a9afc9d)">
             <label for="direccion" class="input-group-text" id="inputGroup-sizing-sm">Dirección</label>
             <input id="direccion" type="text" name="direccion" class="form-control" disabled tabindex="3" min="01-01-1900" max="01-01-2001">
         </div>
         <div id="error">
-            <p>Debes insertar una dirección</p>
+            <p class="m-0 p-0">Debes insertar una dirección</p>
         </div>
     </div>
-    <div class="me-3">
+    <div id="container" class="me-3">
         <div class="input-group mb-3" style="filter: drop-shadow( 0 0 5px #9a9afc9d)">
             <label for="nacimiento" class="input-group-text" id="inputGroup-sizing-sm">Fecha de nacimiento</label>
             <input id="nacimiento" type="date" name="nacimiento" class="form-control" disabled tabindex="4" min="01-01-1900" max="01-01-2001">
         </div>
         <div id="error">
-            <p>Debes ser mayor de 18 años</p>
+            <p class="m-0 p-0">Debes ser mayor de 18 años</p>
         </div>
     </div>
-    <div class="me-3">
+    <div id="container" class="me-3">
         <div class="input-group mb-3" style="filter: drop-shadow( 0 0 5px #9a9afc9d)">
             <label for="telefono" class="input-group-text" id="inputGroup-sizing-sm">Telefono</label>
             <input id="telefono" type="tel" name="telefono" class="form-control" disabled tabindex="5" maxlength="10" >
         </div>
         <div id="error">
-            <p>Inserta un número de 10 dígitos</p>
-            <p>El número de teléfono debe comenzar con 3</p>
+            <p class="m-0 p-0">Inserta un número de 10 dígitos</p>
+            <p class="m-0 p-0">El número de teléfono debe comenzar con 3</p>
         </div>
     </div>
 
