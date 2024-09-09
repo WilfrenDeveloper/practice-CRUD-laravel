@@ -14,13 +14,17 @@ Route::get('/inventario', function(){
     return view('inventario.inventario');
 });
 
+Route::post('/productos/create', 'App\Http\Controllers\ProductoController@create');
+
+Route::post('/productos/{id}/update', [ProductoController::class, 'update']);
+
+Route::delete('/productos/{id}/delete', [ProductoController::class, 'destroy']);
+
+
+
 Route::get('/ventas', 'App\Http\Controllers\FacturasController@index');
 
 Route::get('/facturas/ventas', 'App\Http\Controllers\FacturasController@getAllFacturas');
-
-Route::get('/productos/{id}/edit', 'App\Http\Controllers\ProductoController@show');
-
-Route::put('/productos/{id}/update', [ProductoController::class, 'update']);
 
 
 

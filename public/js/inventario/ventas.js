@@ -9,7 +9,7 @@ $(document).ready(function () {
 let offset = 0;
 let limit = parseInt($('.ventas_select_mostrar').val());
 
-$('body').on('change','.ventas_select_mostrar', function () { 
+$('body').on('input','.ventas_select_mostrar', function () { 
     limit = parseInt($(this).val());
     offset = 0
     $('.ventas_noFound').hide();

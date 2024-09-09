@@ -1,6 +1,7 @@
 @extends('../plantillaBase')
-@section('clientes')
 
+
+@section('clientes')
     <div class="d-flex justify-content-center align-items-center flex-column mt-3">
         <form class="form_search_clientes form container mb-3">
             <div class="row d-flex ">

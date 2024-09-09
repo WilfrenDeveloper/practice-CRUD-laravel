@@ -20,28 +20,28 @@
                     <div style="display: flex; flex-direction:column; gap:5px; padding-top:0" class="mb-3">
                         <label for="nombre" class="form-label" >Nombre</label>
                         <div id="div_input">
-                            <input id="nombre" type="text" name="nombre" class="input" tabindex="1">
+                            <input id="nombre" type="text" name="nombre" class="form-control" tabindex="1">
                             <p id="error">No debe contener números. <br> No debe contener carateres especiales: #$%&/-+*</p>
                         </div>
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="apellido" class="form-label" >Apellido</label>
                         <div id="div_input">
-                            <input id="apellido" type="text" name="apellido" class="input" tabindex="2">
+                            <input id="apellido" type="text" name="apellido" class="form-control" tabindex="2">
                             <p id="error">No debe contener números, <br> No debe contener carateres especiales: #$%&/-+*</p>
                         </div>
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="direccion" class="form-label" >Dirección</label>
                         <div id="div_input">
-                            <input id="direccion" type="text" name="direccion" class="input" tabindex="3">
+                            <input id="direccion" type="text" name="direccion" class="form-control" tabindex="3">
                             <p id="error">Debes insertar una dirección correcta</p>
                         </div>
                     </div>
                     <div style="display: flex; flex-direction:column; gap:5px" class="mb-3">
                         <label for="telefono" class="form-label" >Telefono</label>
                         <div id="div_input">
-                            <input id="telefono" type="tel" name="telefono" class="input" maxlength="10" tabindex="3">
+                            <input id="telefono" type="tel" name="telefono" class="form-control" maxlength="10" tabindex="3">
                             <p id="error">Inserta un número de 10 dígitos</p>
                             <p id="error">El número de teléfono debe comenzar con 3</p>
                         </div>

@@ -1,11 +1,10 @@
 @extends('../plantillaBase')
 @section('inventario')
 
-                
     <div style="display: flex; justify-content:center; align-items:center; flex-direction:column; position:relative">
        
         <div style="margin:10px 0; width:600px;">              
-                <button id="btn_crearProducto" class="a_editar btn rounded-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#modal_crearProducto" style="background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</button>
+                <button id="btn_ingresarNuevoProducto" class="btn rounded-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#modal_datosDelProducto" style="background-color: rgb(0, 192, 0)">Ingresar Nuevo Producto</button>
         </div>
         
         <table style="border: 1px solid gray; background-color:white">
@@ -29,7 +28,8 @@
 
     
     <!-- Modal ver Producto -->
-    <div class="modal fade" id="modal_verProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal fade" id="modal_datosDelProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -40,67 +40,36 @@
                 @include('productos.datosDelProducto')
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-info text-white">Editar</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
+            <button id="btn_crearEditar_datosDelProducto" type="button" class=" btn btn-info text-white">Editar</button>
             </div>
         </div>
         </div>
     </div>
 
-    
-
-    <div class="modal fade" id="modal_crearProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar Nuevo Producto</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @include('productos.datosDelProducto')
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-info text-white">Crear</button>
-            </div>
+    <!-- Modal confirmar eliminar Producto-->
+<div class="modal fade" id="confirmarEliminarProductoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+            <p>
+                <span>Estás seguro de eliminar el producto:</span>
+                <br>
+                <strong></strong>
+            </p>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn_confirmar_eliminarProducto_inventario btn btn-primary">Confirmar</button>
+        </div>
+      </div>
     </div>
+  </div>
 
 <script src="{{asset('js/inventario/inventario.js')}}"></script>
 
-    <script>
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        //Botón eliminar que activa el modal Eliminar Producto
-        function modalEliminarProducto(id) {
-            $(`.modal-${id}`).css('display', 'flex');
-        };
-
-        //Botón Cancelar que esconde el modal eliminar producto
-        function cancelarEliminarProducto(id){
-            $(`.modal-${id}`).css('display', 'none');
-        }
-
-        //Botón Aceptar que confirma el modal Eliminar Producto
-        function aceptarEliminarProducto(id) {
-            $('.modal_eliminar_producto').css('display', 'none');
-            $.ajax({
-                type: "DELETE",
-                url: `/inventario/${id}`,
-                success: function (res) {
-                    $('.tbody_productos').html(res.html);
-                    alert('El Producto ha sido eliminado satisfactoriamente');
-                },
-                error: function(error){
-                    console.error(error);
-                },
-            });
-        };
-    </script>
 @endsection

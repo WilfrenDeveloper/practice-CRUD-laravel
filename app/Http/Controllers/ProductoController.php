@@ -33,17 +33,21 @@ class ProductoController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('productos.crearProducto');
-    }
+*/
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function create(Request $request)
+    {   
+        $producto = new Producto();
+        $producto->producto = $request->input('producto');
+        $producto->marca = $request->input('marca');
+        $producto->modelo = $request->input('modelo');
+        $producto->sistema = $request->input('sistema');
+        $producto->precio = $request->input('precio');
+        $producto->cantidad = $request->input('cantidad');
+        /*
         $validateData = $request->validate([
             'producto' => 'required|max:200|min:2',
             'marca' => 'required|max:200|min:2',
@@ -60,7 +64,8 @@ class ProductoController extends Controller
         $producto->sistema = $validateData['sistema'];
         $producto->imagen = $validateData['imagen'];
         $producto->precio = $validateData['precio'];
-
+        $producto->cantidad = $request->input('cantidad');
+*/
         // Procesar y almacenar la imagen
         if ($imagen = $request->file('imagen')) {
             $rutaGuardarImagen = 'imagen/';
@@ -75,10 +80,8 @@ class ProductoController extends Controller
 
         $producto->save();
 
-        $productos = Producto::all();
-
         return response()->json([
-            'html' => view('productos.dataproducto', compact('productos'))->render(),
+            'producto' => $producto,
         ]);
     }
 
@@ -109,7 +112,15 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        $producto = Producto::find($id);
+        //$producto->producto = $request->input('producto');
+        $producto->producto = $request->string(('producto'));
+        $producto->marca = $request->input('marca');
+        $producto->modelo = $request->input('modelo');
+        $producto->sistema = $request->input('sistema');
+        $producto->precio = $request->input('precio');
+        $producto->cantidad = $request->input('cantidad');
+        /*
         //validacion de lo datos
         $validateData = $request->validate([
             'producto' => 'required|max:200|min:2',
@@ -129,6 +140,7 @@ class ProductoController extends Controller
         $producto->sistema = $validateData['sistema'];
         $producto->imagen = $validateData['imagen'];
         $producto->precio = $validateData['precio'];
+        */
 
         if ($imagen = $request->file('imagen')) {
             $rutaGuardarImagen = 'imagen/';
@@ -143,9 +155,9 @@ class ProductoController extends Controller
 
         $producto->save();
         
-
-        $productos = Producto::all();
-        return view('inventario.inventario')->with('productos', $productos);
+        return response()->json([
+            'producto' => $producto,
+        ]);
     }
 
     /**
@@ -166,9 +178,9 @@ class ProductoController extends Controller
         }
 
         $producto->delete();
-        $productos = Producto::all();
+
         return response()->json([
-            'html' => view('productos.dataproducto', compact('productos'))->render(),
+            'message' => 'el producto ha sido eliminado',
         ]);
     }
 }

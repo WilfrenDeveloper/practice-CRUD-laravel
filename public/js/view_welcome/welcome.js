@@ -9,10 +9,14 @@ $(document).ready(function() {
     getProducts()
 });
 
-
 //Obtener productos al presionar el botón VER MAS...
 let offset = 0;
 const limit = 5;
+
+$('input').on('input', function (e) { 
+    e.preventDefault();
+    $(this).removeClass('bg-danger-subtle border-danger');
+});
 
 $('body').on('click', '.btn_verMas', function (e) {
     e.preventDefault();

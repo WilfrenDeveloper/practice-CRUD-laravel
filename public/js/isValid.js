@@ -2,40 +2,78 @@
 function validateEditProduct(){
     
     // Obtener elementos del DOM
-    const producto = document.querySelector('.edit_producto');
-    const marca = document.querySelector('.edit_marca');
-    const modelo = document.querySelector('.edit_modelo');
-    const sistema = document.querySelector('.edit_sistema');
-    const precio = document.querySelector('.edit_precio');
-    const imagen = document.querySelector('.edit_imagen');
+    const element = document.querySelector('#form_datosDelProducto')
+    const producto = element.querySelector('#producto');
+    const marca = element.querySelector('#marca');
+    const modelo = element.querySelector('#modelo');
+    const sistema = element.querySelector('#sistema');
+    const precio = element.querySelector('#precio');
+    const cantidad = element.querySelector('#cantidad');
+    const imagen = element.querySelector('#imagen');
 
-    //  console.log(producto.value)
-    //  console.log(marca.value)
-    //  console.log(modelo.value)
-    //  console.log(sistema.value)
-    //  console.log(imagen.value)
+    let isValid = true;
 
-    let isValid = validateProduct(producto, marca, modelo, sistema, precio, imagen)
-    console.log(isValid)
+    const elements = [producto, marca, modelo, sistema, precio, cantidad];
+
+    for (const element of elements) {
+        if(element.value.trim().length < 1){
+            element.classList.add('bg-danger-subtle', 'border-danger');
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Debes llenar todos los campos!"
+              });
+        }
+    };
+
+   
     return isValid;
 }
 
 function validateFormProduct(){
     
     // Obtener elementos del DOM
-    const producto = document.getElementById('producto');
-    const marca = document.getElementById('marca');
-    const modelo = document.getElementById('modelo');
-    const sistema = document.getElementById('sistema');
-    const precio = document.getElementById('precio');
-    const imagen = document.getElementById('imagen');
+    const element = document.querySelector('#form_datosDelProducto')
+    const producto = element.querySelector('#producto');
+    const marca = element.querySelector('#marca');
+    const modelo = element.querySelector('#modelo');
+    const sistema = element.querySelector('#sistema');
+    const precio = element.querySelector('#precio');
+    const cantidad = element.querySelector('#cantidad');
+    const imagen = element.querySelector('#imagen');
 
-    let isValid = validateProduct(producto, marca, modelo, sistema, precio, imagen)
+    let isValid = true;
+    
+    const elements = [producto, marca, modelo, sistema, precio, cantidad, imagen];
+
+    for (const element of elements) {
+        if(element.value.trim().length < 1){
+            element.classList.add('bg-danger-subtle', 'border-danger');
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Debes llenar todos los campos!"
+              });
+        } else if(imagen.value.trim().endsWith("jpg") || imagen.value.trim().endsWith("jpeg") || imagen.value.trim().endsWith("png")|| imagen.value.trim().endsWith("PNG")){
+            imagen.closest('label').classList.remove('bg-danger-subtle', 'border-danger');   
+        } else {
+            imagen.closest('label').classList.add('bg-danger-subtle', 'border-danger');
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Debes adjuntar una imagen formato: jpg, jpeg o png"
+            });
+        };
+    };
 
     return isValid;
 }
 
-function validateProduct(producto, marca, modelo, sistema, precio, imagen) {
+/*
+function validateProduct(producto, marca, modelo, sistema, precio, cantidad, imagen) {
 
     let isValid = true;
 
@@ -44,37 +82,35 @@ function validateProduct(producto, marca, modelo, sistema, precio, imagen) {
         return /^[a-zA-ZÀ-ÿ\s]+$/.test(str);
     }
 
-    const element = [producto, marca, modelo, sistema, precio];
+    const elements = [producto, marca, modelo, sistema, precio, cantidad, imagen];
 
-    function validateInfo(element){
-        if(element.value.trim().length < 2){
-            element.style.backgroundColor = "var(--color-error)";
-            element.nextElementSibling.style.display = "block";
+    for (const element of elements) {
+        if(element.value.trim().length < 1){
+            element.classList.add('bg-danger-subtle', 'border-danger');
             isValid = false;
-         } else {
-            element.nextElementSibling.style.display = "none";
-            element.removeAttribute('style');
-         };
-    }
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Debes llenar todos los campos!"
+              });
+        } else if(imagen.value.trim().endsWith("jpg") || imagen.value.trim().endsWith("jpeg") || imagen.value.trim().endsWith("png")|| imagen.value.trim().endsWith("PNG")){
+            imagen.closest('label').classList.remove('bg-danger-subtle', 'border-danger');   
+        } else {
+            imagen.closest('label').classList.add('bg-danger-subtle', 'border-danger');
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Debes adjuntar una imagen formato: jpg, jpeg o png"
+            });
+        };
+    };
 
-    element.forEach(element => {
-        validateInfo(element)
-    });
-
-     if(imagen.value.trim().endsWith("jpg") || imagen.value.trim().endsWith("jpeg") || imagen.value.trim().endsWith("png")|| imagen.value.trim().endsWith("PNG")){
-        imagen.nextElementSibling.style.display = "none";
-        imagen.removeAttribute('style');
-     } else {
-        imagen.style.backgroundColor = "var(--color-error)";
-        imagen.style.border = "1px solid red";
-        imagen.nextElementSibling.style.display = "block";
-        imagen.nextElementSibling.style.top = "20px";
-        isValid = false;
-     };
+    
 
     return isValid;
 };
-
+*/
 
 /******************************************** */
 /****         VALIDAR DATOS DEL CLIENTE   *****/
@@ -84,14 +120,16 @@ function validateProduct(producto, marca, modelo, sistema, precio, imagen) {
 function validateEditCliente(){
 
     // Obtener elementos del DOM
-    const nombre = document.querySelector('.edit_nombre');
-    const apellido = document.querySelector('.edit_apellido');
-    const nacimiento = document.querySelector('.edit_nacimiento');
-    const telefono = document.querySelector('.edit_telefono');
+    const element = document.querySelector('#form_dataCliente');
+    const nombre = element.querySelector('#nombre');
+    const apellido = element.querySelector('#apellido');
+    const direccion = element.querySelector('#direccion');
+    const nacimiento = element.querySelector('#nacimiento');
+    const telefono = element.querySelector('#telefono');
 
 
     // Recibir el valor de ValidateCliente()
-    let isValid = validateCliente(nombre, apellido, nacimiento, telefono);
+    let isValid = validateCliente(nombre, apellido, direccion, nacimiento, telefono);
 
     return isValid;
 }
@@ -101,19 +139,21 @@ function validateEditCliente(){
 function validateFormCliente(){
 
     // Obtener elementos del DOM
-    const nombre = document.querySelector('#nombre');
-    const apellido = document.querySelector('#apellido');
-    const nacimiento = document.querySelector('#nacimiento');
-    const telefono = document.querySelector('#telefono');
+    const element = document.querySelector('#form_crearCliente');
+    const nombre = element.querySelector('#nombre');
+    const apellido = element.querySelector('#apellido');
+    const direccion = element.querySelector('#direccion');
+    const nacimiento = element.querySelector('#nacimiento');
+    const telefono = element.querySelector('#telefono');
     
     // Recibir el valor de ValidateCliente()
-    let isValid = validateCliente(nombre, apellido, nacimiento, telefono);
+    let isValid = validateCliente(nombre, apellido, direccion, nacimiento, telefono);
 
     return isValid;
 }
 /********************************************************* */
 
-function validateCliente(nombre, apellido, nacimiento, telefono) {
+function validateCliente(nombre, apellido, direccion, nacimiento, telefono) {
 
     let isValid = true;
 
@@ -142,54 +182,61 @@ function validateCliente(nombre, apellido, nacimiento, telefono) {
 
     if (nombre.value.trim().length < 3) {
         isValid = false;
+        nombre.classList.add('bg-danger-subtle', 'border-danger')
         nombre.value = '';
-        nombre.setAttribute('placeholder', 'Inserta un nombre');
-        nombre.style.backgroundColor = 'var(--color-error)';
-        
     } else if(!esNombre) {
         isValid = false;
-        nombre.nextSibling.nextSibling.style.display = "block";
+        nombre.classList.add('bg-danger-subtle', 'border-danger')
+        nombre.closest('#container').querySelector('#error').style.display = "block";
     } else {
-        nombre.nextSibling.nextSibling.style.display = "none";
-        nombre.style.backgroundColor = '';
+        nombre.closest('#container').querySelector('#error').style.display = "none";
     };
 
     if (apellido.value.trim().length < 3) {
         isValid = false;
+        apellido.classList.add('bg-danger-subtle', 'border-danger')
         apellido.value = '';
-        apellido.setAttribute('placeholder', 'Inserta un apellido');
-        apellido.style.backgroundColor = 'var(--color-error)';
     } else if(!esApellido) {
         isValid = false;
-        apellido.nextSibling.nextSibling.style.display = "block";
+        apellido.classList.add('bg-danger-subtle', 'border-danger');
+        apellido.closest('#container').querySelector('#error').style.display = "block";
+        /*
+        apellido.closest('#container').querySelector('#error').style.display = "block";
+        */
     } else {
+        apellido.closest('#container').querySelector('#error').style.display = "none";
+        /*
         apellido.nextSibling.nextSibling.style.display = "none";
         apellido.style.backgroundColor = '';
+        */
+    }
+
+    if(direccion.value.trim().length < 5) {
+        isValid = false;
+        direccion.classList.add('bg-danger-subtle', 'border-danger')
+        apellido.closest('#container').querySelector('#error').style.display = "block";
     }
 
     if (!isDateValid) {
         isValid = false;
-        nacimiento.style.backgroundColor = 'var(--color-error)';
-        nacimiento.nextSibling.nextSibling.style.display = "block";
+        nacimiento.classList.add('bg-danger-subtle', 'border-danger');
+        nacimiento.closest('#container').querySelector('#error').style.display = "block";
     } else {
-        nacimiento.style.backgroundColor = '';
-        nacimiento.nextSibling.nextSibling.style.display = "none";
+        nacimiento.closest('#container').querySelector('#error').style.display = "none";
     }
 
     if (!isCel || telefono.value.trim().length !== 10) {
         isValid = false;
+        telefono.classList.add('bg-danger-subtle', 'border-danger');
         telefono.setAttribute('placeholder', 'Inserta un número de teléfono');
-        telefono.style.backgroundColor = 'var(--color-error)';
-        telefono.nextElementSibling.style.display = "block";
+        telefono.closest('#container').querySelector('#error').style.display = "block";
     } else if (telefono.value.trim()[0] != '3'){
         isValid = false;
+        telefono.classList.add('bg-danger-subtle', 'border-danger')
         telefono.style.backgroundColor = 'var(--color-error)';
-        telefono.nextElementSibling.style.display = "none";
-        telefono.nextElementSibling.nextElementSibling.style.display = "block";
+        telefono.closest('#container').querySelector('#error').style.display = "none";
     } else {
-        telefono.style.backgroundColor = '';
-        telefono.nextSibling.nextSibling.style.display = "none";
-        telefono.nextElementSibling.nextElementSibling.style.display = "none";
+        telefono.closest('#container').querySelector('#error').style.display = "none";
     }
 
     return isValid;
@@ -226,50 +273,46 @@ function validateClienteOfCart() {
         isValid = false;
         nombre.value = '';
         nombre.setAttribute('placeholder', 'Inserta un nombre');
-        nombre.style.backgroundColor = 'var(--color-error)';
+        nombre.classList.add('bg-danger-subtle', 'border-danger');
         
     } else if(!esNombre) {
         isValid = false;
         nombre.nextSibling.nextSibling.style.display = "block";
     } else {
         nombre.nextSibling.nextSibling.style.display = "none";
-        nombre.style.backgroundColor = '';
     };
 
     if (apellido.value.trim().length < 3) {
         isValid = false;
         apellido.value = '';
         apellido.setAttribute('placeholder', 'Inserta un apellido');
-        apellido.style.backgroundColor = 'var(--color-error)';
+        apellido.classList.add('bg-danger-subtle', 'border-danger');
     } else if(!esApellido) {
         isValid = false;
         apellido.nextSibling.nextSibling.style.display = "block";
     } else {
         apellido.nextSibling.nextSibling.style.display = "none";
-        apellido.style.backgroundColor = '';
     }
 
     if (direccion.value.length < 5) {
         isValid = false;
-        direccion.style.backgroundColor = 'var(--color-error)';
+        direccion.classList.add('bg-danger-subtle', 'border-danger');
         direccion.nextElementSibling.style.display = "block";
     } else {
-        direccion.style.backgroundColor = '';
         direccion.nextElementSibling.style.display = "none";
     }
 
     if (!isCel || telefono.value.trim().length !== 10) {
         isValid = false;
         telefono.setAttribute('placeholder', 'Inserta un número de teléfono');
-        telefono.style.backgroundColor = 'var(--color-error)';
+        telefono.classList.add('bg-danger-subtle', 'border-danger');
         telefono.nextElementSibling.style.display = "block";
     } else if (telefono.value.trim()[0] != '3'){
         isValid = false;
-        telefono.style.backgroundColor = 'var(--color-error)';
+        telefono.classList.add('bg-danger-subtle', 'border-danger');
         telefono.nextElementSibling.style.display = "none";
         telefono.nextElementSibling.nextElementSibling.style.display = "block";
     } else {
-        telefono.style.backgroundColor = '';
         telefono.nextSibling.nextSibling.style.display = "none";
         telefono.nextElementSibling.nextElementSibling.style.display = "none";
     }

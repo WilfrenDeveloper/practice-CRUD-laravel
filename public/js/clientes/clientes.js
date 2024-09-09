@@ -8,7 +8,12 @@ $(document).ready(function () {
 let offset = 0;
 let limit = parseInt($('.clientes_select_mostrar').val());
 
-$('body').on('change','.clientes_select_mostrar', function () { 
+$('input').on('input', function (e) { 
+    e.preventDefault();
+    $(this).removeClass('bg-danger-subtle border-danger');
+});
+
+$('body').on('input','.clientes_select_mostrar', function () { 
     limit = parseInt($(this).val());
     offset = 0
     $('.clientes_noFound').hide();
@@ -21,7 +26,6 @@ $('body').on('click', '.btn_verMas_clientes', function(e){
     e.preventDefault();
     offset += limit;
     const search = $('.form_search_clientes').serializeArray();
-    //console.log(limit)
     getAllClientes (search, offset, limit);
 });
 
@@ -36,17 +40,18 @@ $('body').on('click', '.btn_search_form_clientes', function(e){
 
 $('body').on('click', '.btn_ver_cliente', function (e) {
     e.preventDefault();
+    $('#form_dataCliente input').removeClass('bg-danger-subtle border-danger');
     $('.btn_aceptar_modal_verCliente').hide();
     $('#form_dataCliente input').attr('disabled', true);
     const value = $(this).closest('.tr_cliente').find('.input_data_cliente').val();
     const cliente = JSON.parse(value);
+    
     $('#form_dataCliente').find('#cliente_id').val(`${cliente.id}`);
-    $('#form_dataCliente').find('#nombre').val(`${cliente.nombre}`);
-    $('#form_dataCliente').find('#apellido').val(`${cliente.apellido}`);
-    $('#form_dataCliente').find('#direccion').val(`${cliente.direccion}`);
-    $('#form_dataCliente').find('#nacimiento').val(`${cliente.nacimiento}`);
-    $('#form_dataCliente').find('#telefono').val(`${cliente.telefono}`);
-
+    $('#form_dataCliente').find('#nombre').val(`${cliente.nombre}`).data('nombre', `${cliente.nombre}`)
+    $('#form_dataCliente').find('#apellido').val(`${cliente.apellido}`).data('apellido', `${cliente.apellido}`)
+    $('#form_dataCliente').find('#direccion').val(`${cliente.direccion}`).data('direccion', `${cliente.direccion}`)
+    $('#form_dataCliente').find('#nacimiento').val(`${cliente.nacimiento}`).data('nacimiento', `${cliente.nacimiento}`)
+    $('#form_dataCliente').find('#telefono').val(`${cliente.telefono}`).data('telefono', `${cliente.telefono}`)
     
     $('.clientes_modalFacturaDelCliente_nombre').html(`${cliente?.nombre} ${cliente?.apellido}`)
     $('.clientes_modalFacturaDelCliente_nacimiento').html(`${cliente?.nacimiento ?? ''}`)
@@ -58,7 +63,6 @@ $('body').on('click', '.btn_ver_cliente', function (e) {
 
     const facturasDelCliente = cliente.factura;
     $('.facturasDelCliente_modalDatosDelCliente>tbody').html('');
-    console.log(cliente.factura)
     for (const factura of facturasDelCliente) {
         const dataFactura = JSON.stringify(factura);
         $('.facturasDelCliente_modalDatosDelCliente>tbody').append(`
@@ -79,13 +83,16 @@ $('body').on('click', '.btn_ver_cliente', function (e) {
 
 $('body').on('click', '.btn_ingresar_nuevo_cliente', function (e) {
     e.preventDefault();
+    $('#form_crearCliente input').removeClass('bg-danger-subtle border-danger');
     $('#form_crearCliente input').val('');
 });
 
 $('body').on('click', '.btn_crear_modalCrearCliente', function(e){
     e.preventDefault();
     const dataNuevocliente = $('.form_crearCliente').serializeArray();
-    crearNuevoCliente(dataNuevocliente)
+    if(validateFormCliente()){
+        crearNuevoCliente(dataNuevocliente)
+    }
 });
 
 function crearNuevoCliente(datosDelCliente){
@@ -102,7 +109,6 @@ function crearNuevoCliente(datosDelCliente){
         },
         success: function (response) {
             const cliente = response.cliente; 
-            console.log(response);
             $('.tbody_clientes').prepend(`
                 <tr class="tr_cliente tr_cliente_${cliente.id}" style="height:40px" data-id="${cliente.id}">
                 ${addDataClienteToTable(cliente)}
@@ -121,17 +127,40 @@ function crearNuevoCliente(datosDelCliente){
     });
 }
 
-$('body').on('click', '.btn_editar_datos_modal_verCliente', function (e) {
+$('body').on('click', '#btn_editar_datos_modal_verCliente', function (e) {
     e.preventDefault();
     $('.btn_aceptar_modal_verCliente').show();
-    $('#form_dataCliente input').attr('disabled', false);
+    $('#form_dataCliente input').attr('disabled', false); 
+    $(this).attr('id', 'btn_editarDatos_modal_verCliente')
+});
+
+$('body').on('click', '#btn_editarDatos_modal_verCliente', function (e) {
+    e.preventDefault();
+    $('#form_dataCliente input').removeClass('bg-danger-subtle border-danger');
+    $('.btn_aceptar_modal_verCliente').hide();
+    $('#form_dataCliente input').attr('disabled', true);
+    $(this).attr('id', 'btn_editar_datos_modal_verCliente')
+
+    const nombre = $('#form_dataCliente').find('#nombre');
+    const apellido = $('#form_dataCliente').find('#apellido');
+    const direccion = $('#form_dataCliente').find('#direccion');
+    const nacimiento = $('#form_dataCliente').find('#nacimiento');
+    const telefono = $('#form_dataCliente').find('#telefono');
+
+    nombre.val(nombre.data('nombre'));
+    apellido.val(apellido.data('apellido'));
+    direccion.val(direccion.data('direccion'));
+    nacimiento.val(nacimiento.data('nacimiento'));
+    telefono.val(telefono.data('telefono'));
 });
 
 $('body').on('click', '.btn_aceptar_modal_verCliente', function (e) {
     e.preventDefault();
     const id = $('#form_dataCliente').find('#cliente_id').val();
     const datosDelCliente = $('#form_dataCliente').serializeArray();
-    editarDatosDelCliente(id, datosDelCliente)
+    if(validateEditCliente()){
+        editarDatosDelCliente(id, datosDelCliente)
+    }
 });
 
 $('body').on('click', '.btn_eliminar_cliente', function(){
@@ -204,6 +233,14 @@ function editarDatosDelCliente(id, data){
             const cliente = response.cliente;
             $('.tbody_clientes').find(`.tr_cliente_${cliente.id}`).html(addDataClienteToTable(cliente));
             $('.btn-close').trigger('click');
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Los datos del cliente han sido actualizados",
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     });
 }

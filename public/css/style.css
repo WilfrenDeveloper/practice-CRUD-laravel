@@ -99,6 +99,20 @@ input[type=number]::-webkit-inner-spin-button {
     width: 25vw;
 }
 
+.border-dashed{
+    border: 3px dashed #cacaca;
+    color: #cacaca;
+}
+
+.hidden{
+    display: none;
+}
+
+.hover-purple:hover{
+    color: #9a9afc;
+    border-color: #9a9afc;
+}
+
 @media (max-width:610px) {
     #search{
         width: 200px;
