@@ -8,12 +8,12 @@ $(document).ready(function () {
 let offset = 0;
 let limit = parseInt($('.clientes_select_mostrar').val());
 
-$('input').on('input', function (e) { 
+$('input').on('input', function (e) {
     e.preventDefault();
     $(this).removeClass('bg-danger-subtle border-danger');
 });
 
-$('body').on('input','.clientes_select_mostrar', function () { 
+$('body').on('input','.clientes_select_mostrar', function () {
     limit = parseInt($(this).val());
     offset = 0
     $('.clientes_noFound').hide();
@@ -45,21 +45,19 @@ $('body').on('click', '.btn_ver_cliente', function (e) {
     $('#form_dataCliente input').attr('disabled', true);
     const value = $(this).closest('.tr_cliente').find('.input_data_cliente').val();
     const cliente = JSON.parse(value);
-    
+
     $('#form_dataCliente').find('#cliente_id').val(`${cliente.id}`);
     $('#form_dataCliente').find('#nombre').val(`${cliente.nombre}`).data('nombre', `${cliente.nombre}`)
     $('#form_dataCliente').find('#apellido').val(`${cliente.apellido}`).data('apellido', `${cliente.apellido}`)
     $('#form_dataCliente').find('#direccion').val(`${cliente.direccion}`).data('direccion', `${cliente.direccion}`)
     $('#form_dataCliente').find('#nacimiento').val(`${cliente.nacimiento}`).data('nacimiento', `${cliente.nacimiento}`)
     $('#form_dataCliente').find('#telefono').val(`${cliente.telefono}`).data('telefono', `${cliente.telefono}`)
-    
+
     $('.clientes_modalFacturaDelCliente_nombre').html(`${cliente?.nombre} ${cliente?.apellido}`)
     $('.clientes_modalFacturaDelCliente_nacimiento').html(`${cliente?.nacimiento ?? ''}`)
     $('.clientes_modalFacturaDelCliente_direccion').html(`${cliente?.direccion ?? ''}`)
     $('.clientes_modalFacturaDelCliente_telefono').html(`${cliente?.telefono ?? ''}`)
-    
 
-    
 
     const facturasDelCliente = cliente.factura;
     $('.facturasDelCliente_modalDatosDelCliente>tbody').html('');
@@ -76,7 +74,7 @@ $('body').on('click', '.btn_ver_cliente', function (e) {
                 <td>${factura.fecha_de_compra}</td>
                 <td>${factura.productos.length}</td>
                 <td>${numeral(factura.valor_total).format('0,0.00')}</td>
-            </tr>    
+            </tr>
         `);
     }
 });
@@ -108,7 +106,7 @@ function crearNuevoCliente(datosDelCliente){
             data : datosDelCliente,
         },
         success: function (response) {
-            const cliente = response.cliente; 
+            const cliente = response.cliente;
             $('.tbody_clientes').prepend(`
                 <tr class="tr_cliente tr_cliente_${cliente.id}" style="height:40px" data-id="${cliente.id}">
                 ${addDataClienteToTable(cliente)}
@@ -130,7 +128,7 @@ function crearNuevoCliente(datosDelCliente){
 $('body').on('click', '#btn_editar_datos_modal_verCliente', function (e) {
     e.preventDefault();
     $('.btn_aceptar_modal_verCliente').show();
-    $('#form_dataCliente input').attr('disabled', false); 
+    $('#form_dataCliente input').attr('disabled', false);
     $(this).attr('id', 'btn_editarDatos_modal_verCliente')
 });
 
@@ -176,7 +174,7 @@ $('body').on('click', '.btn_aceptar_modal_eliminar_cliente', function(){
     ('aceptaste eliminar el cliente');
     let id = $(this).siblings('.input_id_cliente_modal_eliminar_cliente').val();
     //eliminarClienteById(id);
-}); 
+});
 
 function getAllClientes (search, offset, limit){
     $.ajax({
@@ -294,7 +292,7 @@ function calcularTotalesdeLaFactura(){
         const subtotalProd = parseFloat(element.find('.productsOfFactura_subtotal').text().replace(/,/g, ''));
         const descuentoProd = parseFloat(element.find('.productsOfFactura_descuento').text().replace(/,/g, ''));
         const totalProd = parseFloat(element.find('.productsOfFactura_valorTotal').text().replace(/,/g, ''));
-     
+
         totalBruto += precioUnidad;
         cantidad += cantidadProd;
         subtotal += subtotalProd;
@@ -302,7 +300,7 @@ function calcularTotalesdeLaFactura(){
         valorTotal += totalProd;
     });
 
-    
+
     $('.factura_valorBruto').text(numeral(totalBruto).format('0,0.00'));
     $('.factura_cantidad').text(cantidad);
     $('.factura_subtotal').text(numeral(subtotal).format('0,0.00'));

@@ -10,7 +10,6 @@ function cartProducts() {
     totalPriceAllProductsOfCart();
 }
 
-
 $('body').on('click', '.btn_cartProducts-comprar', function (e) {
     e.preventDefault();
     const getItemCart = localStorage.getItem('cart');
@@ -40,13 +39,13 @@ $('body').on('input', '.productOfCart_product_quantity', function(){
     editElementOfLocalStorage(id);
 })
 
-$('body').on('input', '.productOfCart_descuento', function(){
+$('body').on('change', '.productOfCart_descuento', function(){
     const id = $(this).closest('.tr_product').data('id');
     const valueInput = $(this);
     let desc = parseFloat(valueInput.val().replace(/,/g, ''));
     desc = Math.abs(desc);
     if(parseFloat(desc) > 100){desc = 100};
-    valueInput.val((Number.isInteger(desc))?desc:numeral(desc).format('0,0.00'));
+    valueInput.val((Number.isInteger(desc)) ? desc : numeral(desc).format('0,0.00'));
 
     updateSubtotalOfProductOfCart(id)
     editElementOfLocalStorage(id);
